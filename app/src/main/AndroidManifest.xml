@@ -33,6 +33,7 @@
 
         <service android:name=".BLeSerialPortService" />
 
+
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -40,6 +41,7 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
         public static final int COMMUNICATION_SUCCESS = 0;
         public static final int COMMUNICATION_TIMEOUT = -1;
     }
+
 
     private Context context;
     private WeakHashMap<Callback, Object> callbacks;
@@ -130,6 +132,7 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
     // Send data to connected ble serial port device.
     public void send(byte[] data) {
         long beginMillis = System.currentTimeMillis();
+
         if (tx == null || data == null || data.length == 0) {
             // Do nothing if there is no connection or message to send.
             return;
@@ -149,21 +152,25 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
     // Send data to connected ble serial port device. We can only send 20 bytes per packet,
     // so break longer messages up into 20 byte payloads
     public void send(String string) {
+
         int len = string.length(); int pos = 0;
         StringBuilder stringBuilder = new StringBuilder();
 
-        while (len != 0) {
-            stringBuilder.setLength(0);
-            if (len >= 20) {
-                stringBuilder.append(string.toCharArray(), pos, 20);
-                len -= 20;
-                pos += 20;
-            } else {
-                stringBuilder.append(string.toCharArray(), pos, len);
-                len = 0;
+            while (len != 0) {
+                stringBuilder.setLength(0);
+                if (len >= 20) {
+                    stringBuilder.append(string.toCharArray(), pos, 20);
+                    len -= 20;
+                    pos += 20;
+                } else {
+                    stringBuilder.append(string.toCharArray(), pos, len);
+                    len = 0;
+                }
+                send(stringBuilder.toString().getBytes());
+
             }
-            send(stringBuilder.toString().getBytes());
-        }
+
+
     }
 
     public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
@@ -539,5 +546,13 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
 
     private void showMessage(String msg){
         Log.e(BLeSerialPortService.class.getSimpleName(),msg);
+    }
+
+    public void espera() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

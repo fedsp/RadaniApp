@@ -15,7 +15,6 @@ import android.util.Log;
  * Created by sash0k on 29.01.14.
  */
 public class Utils {
-
     /**
      * Método geral para a saída de mensagens de depuração para o log
      */
@@ -182,8 +181,42 @@ public class Utils {
             commandString = "0" + commandString;
         }
         byte[] result = (bolha ? Utils.toHex(commandString) : commandString.getBytes());
+
         return result;
     }
+
+    public static String obterHeader(String hexatual)
+    {
+        String header;
+        header = hexatual.substring(2,4);
+        Integer valornumero;
+        valornumero = Integer.parseInt(header,16);
+        header = String.valueOf(valornumero);
+        return header;
+    }
+
+
+    public static String obterCodigo(String hexatual)
+    {
+        String codigo;
+        Integer intcodigo;
+        codigo = hexatual.substring(6,8);
+        intcodigo = Integer.parseInt(codigo,16);
+        codigo = String.valueOf(intcodigo);
+        codigo = "P"+codigo;
+        return codigo;
+    }
+
+    public static String obterValor(String hexatual)
+    {
+        String valor;
+        valor = hexatual.substring(8,10);
+        Integer valornumero;
+        valornumero = Integer.parseInt(valor,16);
+        valor = String.valueOf(valornumero);
+        return valor;
+    }
+
 
 
 }

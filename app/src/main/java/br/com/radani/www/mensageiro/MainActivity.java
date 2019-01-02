@@ -12,7 +12,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -28,11 +27,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class MainActivity extends AppCompatActivity implements BLeSerialPortService.Callback, View.OnClickListener {
 
     gerenciadorBanco meuBanco;
-
     public String query = "";
 
     // UI elements
@@ -64,6 +64,12 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         viewPager.setAdapter(adapter);
     }
 
+    public void controlePacotes(String comandotexto)
+    {
+        serialPort.send(Utils.comando(comandotexto));
+        espera();
+        return ;
+    }
 
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -142,10 +148,35 @@ private final boolean bolha = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         meuBanco = new gerenciadorBanco(this);
         query = gerenciadorBanco.retornaquery(query);
 
-        meuBanco.insertData("P00","Tmp.Ciclos",0.0,8.0,0.5,"texto1", "texto2", "texto3", "texto4", "texto5", "texto6", "texto7", "texto8");
+        meuBanco.insertData_PARAM_1("P00","Tmp.Ciclos",0.0,8.0,0.5, null, null, null, null, null, null, null, null,"s");
+        meuBanco.insertData_PARAM_1("P01","Sel.Ciclo", null, null, null,"Contínuo", "Único", null, null, null, null, null, null,"s");
+        meuBanco.insertData_PARAM_1("P02","Impressão", null, null, null,"Monocolor", "Bicolor", "Tricolor", "Estendido", null, null, null, null,null);
+        meuBanco.insertData_PARAM_1("P03","Nr.Mistura",1.0,5.0,1.0, null, null, null, null, null, null, null, null,null);
+        meuBanco.insertData_PARAM_1("P05","Tempo 01",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s");
+        meuBanco.insertData_PARAM_1("P06","Tempo Topo",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s");
+        meuBanco.insertData_PARAM_1("P07","Tp. Clic.Av",0.0,0.5,0.1, null, null, null, null, null, null, null, null,"s");
+        meuBanco.insertData_PARAM_1("P09","Acel.Imp.",0.0,0.5,0.01, null, null, null, null, null, null, null, null,"s");
+
+        // cria 32 linhas na tabela com os ID's
+
+        for (int i = 0; i < 31; i++){
+            Integer codigo_numero;
+            String codigo;
+            codigo_numero = i;
+                if (i<=9){
+                codigo = "P0" + String.valueOf(codigo_numero);
+            }
+                else     {
+                codigo = "P" + String.valueOf(codigo_numero);
+            }
+            meuBanco.insertData_PARAM_ATUAL(codigo,null);
+        }
+
 
         Log.d(TAG, "Request Location Permissions:");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -274,6 +305,7 @@ private final boolean bolha = true;
 
                 // Onde dispara as mensagens iniciais
 
+
                 serialPort.send(Utils.comando("FA54000054"));
                 serialPort.send(Utils.comando("FA54000155"));
                 serialPort.send(Utils.comando("FA54000256"));
@@ -306,6 +338,7 @@ private final boolean bolha = true;
                 serialPort.send(Utils.comando("FA54001E4A"));
                 serialPort.send(Utils.comando("FA54001F4B"));
                 serialPort.send(Utils.comando("FA54002074"));
+
             }
         });
     }
@@ -348,15 +381,32 @@ private final boolean bolha = true;
         }
     }
 
+    // quando recebe os dados bluetooth
+
     @Override
     public void onReceive(Context context, BluetoothGattCharacteristic rx) {
 
-
+        meuBanco = new gerenciadorBanco(this);
+        String hexatual;
+        String codigo;
+        String valor;
+        String header;
         String msg = rx.getStringValue(0);
         rindex = rindex + msg.length();
         byte[] msgbyte = rx.getValue();
         writeLine(Utils.bytesToHex(msgbyte));
+        hexatual = Utils.bytesToHex(msgbyte);
+        codigo = Utils.obterCodigo(hexatual);
+        header = Utils.obterHeader(hexatual);
+        valor = Utils.obterValor(hexatual);
 
+        if(!header.equals("19")) {
+            writeLine(codigo);
+            writeLine(valor);
+            writeLine(header);
+//            meuBanco.insertData_PARAM_ATUAL(codigo,valor);
+        }
+        else {}
     }
 
     @Override
@@ -401,5 +451,16 @@ private final boolean bolha = true;
     private void showMessage(String msg) {
         Log.e(MainActivity.class.getSimpleName(), msg);
     }
+
+
+    public void espera() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
