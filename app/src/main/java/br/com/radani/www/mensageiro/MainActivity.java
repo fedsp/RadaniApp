@@ -343,6 +343,7 @@ private final boolean bolha = true;
         });
     }
 
+    
     @Override
     public void onConnectFailed(Context context) {
         // when some error occured which prevented serial port connection from completing.
