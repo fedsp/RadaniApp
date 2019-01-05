@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.concurrent.TimeUnit;
 
 
@@ -49,7 +48,10 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
     private BLeSerialPortService serialPort;
     private final int REQUEST_DEVICE = 3;
     private final int REQUEST_ENABLE_BT = 2;
-    private  int rindex = 0;
+    private int rindex = 0;
+
+
+    Globals sharedData = Globals.getInstance();
 
 
     private void setupViewPager(ViewPager viewPager) {
@@ -64,11 +66,20 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         viewPager.setAdapter(adapter);
     }
 
-    public void controlePacotes(String comandotexto)
+
+    // controla para que só envie uma segunda mensagem depois que a primeira for respondida
+    public String controlePacotes(String comandotexto)
     {
-        serialPort.send(Utils.comando(comandotexto));
-        espera();
-        return ;
+
+        Boolean flagControle;
+        flagControle = sharedData.getValue();
+
+
+        while (!flagControle){
+            flagControle = sharedData.getValue();
+            }
+
+        return comandotexto;
     }
 
 
@@ -88,15 +99,11 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         }
     };
 
-    // Write some text to the messages text view.
+    // Escreve textos na textview
     private void writeLine(final CharSequence text) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-
-
-
 
                 messages.append(text);
                 messages.append("\n");
@@ -145,13 +152,20 @@ private final boolean bolha = true;
     }
 
 
+    // Assim que main activity é criada
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
 
+
         meuBanco = new gerenciadorBanco(this);
         query = gerenciadorBanco.retornaquery(query);
+
+
+        // começa liberando solicitar dados
+
 
         meuBanco.insertData_PARAM_1("P00","Tmp.Ciclos",0.0,8.0,0.5, null, null, null, null, null, null, null, null,"s");
         meuBanco.insertData_PARAM_1("P01","Sel.Ciclo", null, null, null,"Contínuo", "Único", null, null, null, null, null, null,"s");
@@ -176,6 +190,20 @@ private final boolean bolha = true;
             }
             meuBanco.insertData_PARAM_ATUAL(codigo,null);
         }
+
+        for (int i = 0; i < 63; i++){
+            Integer codigo_numero;
+            String codigo;
+            codigo_numero = i;
+            if (i<=9){
+                codigo = "P0" + String.valueOf(codigo_numero);
+            }
+            else     {
+                codigo = "P" + String.valueOf(codigo_numero);
+            }
+            meuBanco.insertData_CONFIG_ATUAL(codigo,null);
+        }
+
 
 
         Log.d(TAG, "Request Location Permissions:");
@@ -304,46 +332,111 @@ private final boolean bolha = true;
                 connect.setText(R.string.send);
 
                 // Onde dispara as mensagens iniciais
+                sharedData.setValue(true);
 
+                String n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+                serialPort.send(Utils.comando(controlePacotes("FA54000054")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
 
-                serialPort.send(Utils.comando("FA54000054"));
-                serialPort.send(Utils.comando("FA54000155"));
-                serialPort.send(Utils.comando("FA54000256"));
-                serialPort.send(Utils.comando("FA54000357"));
-                serialPort.send(Utils.comando("FA54000450"));
-                serialPort.send(Utils.comando("FA54000551"));
-                serialPort.send(Utils.comando("FA54000652"));
-                serialPort.send(Utils.comando("FA54000753"));
-                serialPort.send(Utils.comando("FA5400085C"));
-                serialPort.send(Utils.comando("FA5400095D"));
-                serialPort.send(Utils.comando("FA54000A5E"));
-                serialPort.send(Utils.comando("FA54000B5F"));
-                serialPort.send(Utils.comando("FA54000C58"));
-                serialPort.send(Utils.comando("FA54000D59"));
-                serialPort.send(Utils.comando("FA54000E5A"));
-                serialPort.send(Utils.comando("FA54000F5B"));
-                serialPort.send(Utils.comando("FA54001044"));
-                serialPort.send(Utils.comando("FA54001145"));
-                serialPort.send(Utils.comando("FA54001246"));
-                serialPort.send(Utils.comando("FA54001347"));
-                serialPort.send(Utils.comando("FA54001440"));
-                serialPort.send(Utils.comando("FA54001541"));
-                serialPort.send(Utils.comando("FA54001743"));
-                serialPort.send(Utils.comando("FA5400184C"));
-                serialPort.send(Utils.comando("FA5400194D"));
-                serialPort.send(Utils.comando("FA54001A4E"));
-                serialPort.send(Utils.comando("FA54001B4F"));
-                serialPort.send(Utils.comando("FA54001C48"));
-                serialPort.send(Utils.comando("FA54001D49"));
-                serialPort.send(Utils.comando("FA54001E4A"));
-                serialPort.send(Utils.comando("FA54001F4B"));
-                serialPort.send(Utils.comando("FA54002074"));
+                serialPort.send(Utils.comando(controlePacotes("FA54000155")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000256")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000357")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000450")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000551")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000652")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000753")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA5400085C")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA5400095D")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000A5E")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000B5F")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000C58")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000D59")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000E5A")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54000F5B")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001044")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001145")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001246")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001347")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001440")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001541")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001743")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA5400184C")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA5400194D")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001A4E")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001B4F")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001C48")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001D49")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001E4A")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54001F4B")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
+                serialPort.send(Utils.comando(controlePacotes("FA54002074")));
+                sharedData.setValue(false);n = String.valueOf(sharedData.getValue());Log.d("DEBUGAR",n);
+
 
             }
         });
     }
 
-    
+
     @Override
     public void onConnectFailed(Context context) {
         // when some error occured which prevented serial port connection from completing.
@@ -383,7 +476,6 @@ private final boolean bolha = true;
     }
 
     // quando recebe os dados bluetooth
-
     @Override
     public void onReceive(Context context, BluetoothGattCharacteristic rx) {
 
@@ -401,13 +493,19 @@ private final boolean bolha = true;
         header = Utils.obterHeader(hexatual);
         valor = Utils.obterValor(hexatual);
 
+
+
         if(!header.equals("19")) {
             writeLine(codigo);
             writeLine(valor);
             writeLine(header);
 //            meuBanco.insertData_PARAM_ATUAL(codigo,valor);
+                sharedData.setValue(true);
         }
-        else {}
+        else {
+            sharedData.setValue(true);
+        }
+
     }
 
     @Override
@@ -456,12 +554,11 @@ private final boolean bolha = true;
 
     public void espera() {
         try {
-            TimeUnit.MILLISECONDS.sleep(300);
+            TimeUnit.MILLISECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
 
 
 }

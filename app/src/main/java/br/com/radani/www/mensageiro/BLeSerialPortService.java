@@ -42,6 +42,7 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
         public static final int COMMUNICATION_TIMEOUT = -1;
     }
 
+    Globals sharedData = Globals.getInstance();
 
     private Context context;
     private WeakHashMap<Callback, Object> callbacks;
@@ -147,6 +148,7 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
                 break;
             }
         } ; // Wait for the flag to clear in onCharacteristicWrite
+
     }
 
     // Send data to connected ble serial port device. We can only send 20 bytes per packet,
@@ -338,6 +340,7 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
             notifyOnReceive(context, characteristic);
+
         }
 
         @Override
@@ -457,6 +460,7 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
             if (cb != null ) {
                 cb.onReceive(context, rx);
                 showMessage(rx.getStringValue(0));
+
             }
         }
     }
@@ -546,13 +550,7 @@ public class BLeSerialPortService extends Service implements BluetoothAdapter.Le
 
     private void showMessage(String msg){
         Log.e(BLeSerialPortService.class.getSimpleName(),msg);
+
     }
 
-    public void espera() {
-        try {
-            TimeUnit.MILLISECONDS.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }

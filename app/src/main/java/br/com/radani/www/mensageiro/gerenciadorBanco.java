@@ -13,7 +13,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "banco.db";
 
     //cria tabela de parametro para maquina 1
-
     public static final String PARAM_1_TABLE_NAME = "parametros_1";
     public static final String PARAM_1_col_1 = "codigo";
     public static final String PARAM_1_col_2 = "label";
@@ -29,8 +28,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     public static final String PARAM_1_col_12 = "texto_7";
     public static final String PARAM_1_col_13 = "texto_8";
     public static final String PARAM_1_col_14 = "unidade_medida";
-
-
     public static final String cria_parametro_1 = "CREATE TABLE "
             + PARAM_1_TABLE_NAME + "(" + PARAM_1_col_1 + " TEXT PRIMARY KEY, " + PARAM_1_col_2
             + " TEXT, " + PARAM_1_col_3 + " REAL," + PARAM_1_col_4
@@ -48,15 +45,20 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
 
 
     //cria tabela de parametro atual
-
     public static final String PARAM_ATUAL_TABLE_NAME = "parametro_atual";
     public static final String PARAM_ATUAL_col_1 = "codigo";
     public static final String PARAM_ATUAL_col_2 = "valor";
-
-
-
     public static final String cria_parametro_atual = "CREATE TABLE "
             + PARAM_ATUAL_TABLE_NAME + "(" + PARAM_ATUAL_col_1 + " TEXT PRIMARY KEY, " + PARAM_ATUAL_col_2
+            + " TEXT)";
+
+
+    //cria tabela de configuração atual
+    public static final String CONFIG_ATUAL_TABLE_NAME = "parametro_atual";
+    public static final String CONFIG_ATUAL_col_1 = "codigo";
+    public static final String CONFIG_ATUAL_col_2 = "valor";
+    public static final String cria_configuracao_atual = "CREATE TABLE "
+            + CONFIG_ATUAL_TABLE_NAME + "(" + CONFIG_ATUAL_col_1 + " TEXT PRIMARY KEY, " + CONFIG_ATUAL_col_2
             + " TEXT)";
 
 
@@ -68,10 +70,9 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(cria_parametro_1);
         db.execSQL(cria_parametro_atual);
-
+        db.execSQL(cria_configuracao_atual);
     }
 
 
@@ -88,6 +89,8 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ PARAM_ATUAL_TABLE_NAME);
         onCreate(db);
     }
+
+
 
     public boolean insertData_PARAM_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String unidademedida) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -123,6 +126,21 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
 
 
         long result_do_insert = db.insert(PARAM_ATUAL_TABLE_NAME, null, contentValues);
+        if (result_do_insert == -1)
+            return false;
+        else
+            return true;
+
+    }
+
+    public boolean insertData_CONFIG_ATUAL(String codigo, String valor) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CONFIG_ATUAL_col_1, codigo);
+        contentValues.put(CONFIG_ATUAL_col_2, valor);
+
+
+        long result_do_insert = db.insert(CONFIG_ATUAL_TABLE_NAME, null, contentValues);
         if (result_do_insert == -1)
             return false;
         else
