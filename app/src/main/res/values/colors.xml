@@ -5,7 +5,7 @@
 
 
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#C0C0C0</color>
     <color name="colorConfiguracao">#ff9a72</color>
     <color name="colorDisplay">#ffe271</color>
     <color name="colorFalhas">#b5ff71</color>

@@ -202,8 +202,14 @@ public class Utils {
         Integer intcodigo;
         codigo = hexatual.substring(6,8);
         intcodigo = Integer.parseInt(codigo,16);
-        codigo = String.valueOf(intcodigo);
-        codigo = "P"+codigo;
+        if (intcodigo <= 9){
+            codigo = String.valueOf(intcodigo);
+            codigo = "P"+"0"+codigo;
+        }
+        else{
+            codigo = String.valueOf(intcodigo);
+            codigo = "P" + codigo;
+        }
         return codigo;
     }
 
@@ -217,6 +223,15 @@ public class Utils {
         return valor;
     }
 
+    public static String obterTipoDado(String hexatual)
+    {
+        String valor;
+        valor = hexatual.substring(2,3);
+        Integer valornumero;
+        valornumero = Integer.parseInt(valor,16);
+        valor = String.valueOf(valornumero);
+        return valor;
+    }
 
 
 }
