@@ -5,7 +5,7 @@
     android:background="@color/colorSequencia">
 
     <TextView
-        android:id="@+id/messagesSequencia"
+        android:id="@+id/messagesSequenciaInicial"
         android:layout_width="match_parent"
         android:layout_height="83dp"
         android:fontFamily="monospace"

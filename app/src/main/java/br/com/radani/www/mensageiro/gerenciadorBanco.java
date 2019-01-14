@@ -95,6 +95,38 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             + " TEXT)";
 
 
+    //cria tabela de display para maquina 1
+    public static final String DISPLAY_1_TABLE_NAME = "display_1";
+    public static final String DISPLAY_1_col_1 = "codigo";
+    public static final String DISPLAY_1_col_2 = "label";
+    public static final String DISPLAY_1_col_3 = "valor_min";
+    public static final String DISPLAY_1_col_4 = "valor_max";
+    public static final String DISPLAY_1_col_5 = "passo";
+    public static final String DISPLAY_1_col_6 = "texto_1";
+    public static final String DISPLAY_1_col_7 = "texto_2";
+    public static final String DISPLAY_1_col_8 = "texto_3";
+    public static final String DISPLAY_1_col_9 = "texto_4";
+    public static final String DISPLAY_1_col_10 = "texto_5";
+    public static final String DISPLAY_1_col_11 = "texto_6";
+    public static final String DISPLAY_1_col_12 = "texto_7";
+    public static final String DISPLAY_1_col_13 = "texto_8";
+    public static final String DISPLAY_1_col_14 = "unidade_medida";
+    public static final String cria_display_1 = "CREATE TABLE IF NOT EXISTS "
+            + DISPLAY_1_TABLE_NAME + "(" + DISPLAY_1_col_1 + " TEXT PRIMARY KEY, " + DISPLAY_1_col_2
+            + " TEXT, " + DISPLAY_1_col_3 + " REAL," + DISPLAY_1_col_4
+            + " REAL, " + DISPLAY_1_col_5
+            + " REAL, " + DISPLAY_1_col_6
+            + " TEXT, " + DISPLAY_1_col_7
+            + " TEXT, " + DISPLAY_1_col_8
+            + " TEXT, " + DISPLAY_1_col_9
+            + " TEXT, " + DISPLAY_1_col_10
+            + " TEXT, " + DISPLAY_1_col_11
+            + " TEXT, " + DISPLAY_1_col_12
+            + " TEXT, " + DISPLAY_1_col_13
+            + " TEXT, " + DISPLAY_1_col_14
+            + " TEXT" + ")";
+
+
     //cria tabela de display atual
     public static final String DISPLAY_ATUAL_TABLE_NAME = "display_atual";
     public static final String DISPLAY_ATUAL_col_1 = "codigo";
@@ -260,6 +292,8 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         return res;
     }
 
+
+    // obtém dados da tabela mestre de Parâmetros 1
     public String getLabelParametro(String codigo) {
         Cursor res;
         String label;
@@ -294,6 +328,43 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
 
         return valor;
     }
+
+    // obtém dados da tabela mestre de Configurações 1
+    public String getLabelConfig(String codigo) {
+        Cursor res;
+        String label;
+        SQLiteDatabase db = this.getWritableDatabase();
+        res = db.rawQuery("SELECT "+ CONFIG_1_col_2 + " FROM " + CONFIG_1_TABLE_NAME + " WHERE " + CONFIG_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(res));
+        label = res.getString(0);
+        return label;
+    }
+
+    public String getValorConfig(String codigo, String valor) {
+        Cursor res;
+        String flagTexto;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        //descobre se é texto ou numero
+        res = db.rawQuery("SELECT "+ CONFIG_1_col_6 + " FROM " + CONFIG_1_TABLE_NAME + " WHERE " + CONFIG_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        flagTexto = res.getString(0);
+        if (flagTexto == null){
+        }
+        else {
+            int valorNumerico;
+            valorNumerico = Integer.valueOf(valor);
+            valorNumerico = valorNumerico + 1;
+            valor = Integer.toString(valorNumerico);
+            res = db.rawQuery("SELECT "+ "texto_" + valor + " FROM " + CONFIG_1_TABLE_NAME + " WHERE " + CONFIG_1_col_1 + "=" + "'"+codigo+"'", null);
+            res.moveToFirst();
+            valor = res.getString(0);
+        }
+
+        return valor;
+    }
+
 
 
 

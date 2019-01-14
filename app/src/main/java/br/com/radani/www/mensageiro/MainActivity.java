@@ -68,7 +68,11 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         adapter.addFragment(new leituraDisplay(), "Display");
         adapter.addFragment(new leituraFalhas(), "Falhas");
         adapter.addFragment(new leituraParametrizacao(), "Parametrização");
-        adapter.addFragment(new leituraSequencia(), "Sequência");
+        adapter.addFragment(new leituraSequenciaInicial(), "Seq. Inicial");
+        adapter.addFragment(new leituraSequencia(), "Seq. Cíclica");
+        adapter.addFragment(new leituraSequencia(), "Seq. Final");
+        adapter.addFragment(new leituraSequencia(), "Seq Rotina 1");
+        adapter.addFragment(new leituraSequencia(), "Seq Rotina 2");
 
         leituraConfiguracao fragmentConfiguracao = (leituraConfiguracao) adapter.getItem(0);
         fragmentConfiguracao.escreveConfiguracoes(bundleDados);
@@ -385,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
     public void onConnected(Context context) {
         // when serial port device is connected
         writeLine("Connected!");
-        writeLine(query);
+//        writeLine(query);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             CharSequence message = extras.getString("message");
@@ -600,6 +604,43 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
 //                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA64004024")));
 //                sharedData.setValue(false);
+
+                //pedido de configurações
+
+                serialPort.send(Utils.comando(controlePacotes("FA74000074")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74000175")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74000276")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74000377")));
+                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74000470")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74000571")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74000672")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74000773")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA7400087C")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA7400097D")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74001064")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74001165")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74001266")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74001367")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74001460")));
+//                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA74001561")));
+//                sharedData.setValue(false);
+
+
                 for (String key : bundletodosDados.keySet())
                 {
                     Log.d("Bundle Debug", key + " = \"" + bundletodosDados.get(key) + "\"");
@@ -671,21 +712,21 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         rindex = rindex + msg.length();
         byte[] msgbyte = rx.getValue();
         hexatual = Utils.bytesToHex(msgbyte);
-        codigo = Utils.obterCodigo(hexatual);
+        tipoDado = Utils.obterTipoDado(hexatual);
+        codigo = Utils.obterCodigo(hexatual,tipoDado);
         header = Utils.obterHeader(hexatual);
         valor = Utils.obterValor(hexatual);
-        tipoDado = Utils.obterTipoDado(hexatual);
+
 
         //trata o dado recebido se for do tipo 'Parametro' (5)
 
             if (tipoDado.equals("5")) {
                 if (!header.equals("19")) {
+                    writeLine("Param:"+hexatual);
                     label = meuBanco.getLabelParametro(codigo);
                     valor = meuBanco.getValorParametro(codigo,valor);
                     bundletodosDados.putString(codigo+"L",label);
-                    writeLine(codigo+"label"+label);
                     bundletodosDados.putString(codigo+"V",valor);
-                    writeLine(codigo+"valor"+valor);
                     //            meuBanco.insertData_PARAM_ATUAL(codigo,valor);
                     sharedData.setValue(true);
                 } else {
@@ -693,12 +734,14 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
                 }
             }
 
-            //trata o dado recebido se for do tipo 'Configuracao' (6)
             else if (tipoDado.equals("6")) {
                 if (!header.equals("19")) {
-                    writeLine(codigo);
-                    writeLine(valor);
-                    //            meuBanco.insertData_PARAM_ATUAL(codigo,valor);
+                    writeLine("Config:"+hexatual);
+                    label = meuBanco.getLabelConfig(codigo);
+                    valor = meuBanco.getValorConfig(codigo,valor);
+                    bundletodosDados.putString(codigo+"L",label);
+                    bundletodosDados.putString(codigo+"V",valor);
+                    //            meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
                     sharedData.setValue(true);
                 } else {
                     sharedData.setValue(true);
@@ -707,7 +750,7 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
 
             //trata se for um tipo de dado desconhecido
             else {
-//                writeLine("Tipo de dado Desconhecido");
+                writeLine("Tipo de dado Desconhecido:"+hexatual);
                 sharedData.setValue(true);
             }
     }

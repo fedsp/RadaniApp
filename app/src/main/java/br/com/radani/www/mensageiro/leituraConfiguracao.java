@@ -28,10 +28,15 @@ public class leituraConfiguracao extends Fragment {
                 String tipoDado;
                 String labelOuValor;
                 tipoDado = key.substring(0,1);
-                labelOuValor = key.substring(2,3);
-                if (tipoDado.equals("P")) {
-                    messagesConfiguracoes.append(dadosTotais.getString(labelOuValor));
-                    messagesConfiguracoes.append(dadosTotais.getString(key));
+                labelOuValor = key.substring(3,4);
+                if (tipoDado.equals("C")) {
+                    if (labelOuValor.equals("L")) {
+                        messagesConfiguracoes.append(dadosTotais.getString(key) + ":");
+                    }
+                    else if (labelOuValor.equals("V")) {
+                        messagesConfiguracoes.append(dadosTotais.getString(key)+"\n");
+                    }
+                    else {messagesConfiguracoes.append("[Dado inválido]");}
                 }
                 else {}
             }

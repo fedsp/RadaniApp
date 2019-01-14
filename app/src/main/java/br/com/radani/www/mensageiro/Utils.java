@@ -196,19 +196,36 @@ public class Utils {
     }
 
 
-    public static String obterCodigo(String hexatual)
+    public static String obterCodigo(String hexatual, String tipoDado)
     {
         String codigo;
         Integer intcodigo;
         codigo = hexatual.substring(6,8);
         intcodigo = Integer.parseInt(codigo,16);
-        if (intcodigo <= 9){
-            codigo = String.valueOf(intcodigo);
-            codigo = "P"+"0"+codigo;
-        }
-        else{
-            codigo = String.valueOf(intcodigo);
-            codigo = "P" + codigo;
+
+        switch (tipoDado) {
+            case "5":
+                if (intcodigo <= 9) {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "P" + "0" + codigo;
+                    break;
+                } else {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "P" + codigo;
+                    break;
+                }
+            case "6":
+                if (intcodigo <= 9) {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "C" + "0" + codigo;
+                    break;
+                } else {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "C" + codigo;
+                    break;
+                }
+            default:
+                break;
         }
         return codigo;
     }
