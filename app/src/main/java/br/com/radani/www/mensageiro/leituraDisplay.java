@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ public class leituraDisplay extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.leitura_display,container,false);
         messagesDisplay = view.findViewById(R.id.messagesDisplay);
+        messagesDisplay.setMovementMethod((new ScrollingMovementMethod()));
         if (dadosTotais != null) {
             for (String key : dadosTotais.keySet()) {
                 String tipoDado;

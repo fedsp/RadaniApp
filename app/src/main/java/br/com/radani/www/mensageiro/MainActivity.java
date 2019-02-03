@@ -64,15 +64,15 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
     private void setupViewPager(ViewPager viewPager, Bundle bundleDados) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new leituraConfiguracao(), "Configuração");
-        adapter.addFragment(new leituraDisplay(), "Display");
-        adapter.addFragment(new leituraFalhas(), "Falhas");
-        adapter.addFragment(new leituraParametrizacao(), "Parametrização");
-        adapter.addFragment(new leituraSequenciaInicial(), "Seq. Inicial");
-        adapter.addFragment(new leituraSequencia(), "Seq. Cíclica");
-        adapter.addFragment(new leituraSequencia(), "Seq. Final");
-        adapter.addFragment(new leituraSequencia(), "Seq Rotina 1");
-        adapter.addFragment(new leituraSequencia(), "Seq Rotina 2");
+        adapter.addFragment(new leituraConfiguracao(), "C");
+        adapter.addFragment(new leituraDisplay(), "D");
+        adapter.addFragment(new leituraFalhas(), "F");
+        adapter.addFragment(new leituraParametrizacao(), "P");
+        adapter.addFragment(new leituraSequenciaInicial(), "SI");
+        adapter.addFragment(new leituraSequenciaCiclica(), "SC");
+        adapter.addFragment(new leituraSequenciaFinal(), "SF");
+        adapter.addFragment(new leituraSequenciaRotina1(), "SR1");
+        adapter.addFragment(new leituraSequenciaRotina2(), "SR2");
 
         leituraConfiguracao fragmentConfiguracao = (leituraConfiguracao) adapter.getItem(0);
         fragmentConfiguracao.escreveConfiguracoes(bundleDados);
@@ -86,8 +86,20 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         leituraParametrizacao fragmentParametrizacao = (leituraParametrizacao) adapter.getItem(3);
         fragmentParametrizacao.escreveParametros(bundleDados);
 
-        leituraSequencia fragmentSequencia = (leituraSequencia) adapter.getItem(4);
-        fragmentSequencia.escreveSequencia(bundleDados);
+        leituraSequenciaInicial fragmentSequenciaInicial = (leituraSequenciaInicial) adapter.getItem(4);
+        fragmentSequenciaInicial.escreveSequenciaInicial(bundleDados);
+
+        leituraSequenciaCiclica fragmentSequenciaCiclica = (leituraSequenciaCiclica) adapter.getItem(5);
+        fragmentSequenciaCiclica.escreveSequenciaCiclica(bundleDados);
+
+        leituraSequenciaFinal fragmentSequenciaFinal = (leituraSequenciaFinal) adapter.getItem(6);
+        fragmentSequenciaFinal.escreveSequenciaFinal(bundleDados);
+
+        leituraSequenciaRotina1 fragmentSequenciaRotina1 = (leituraSequenciaRotina1) adapter.getItem(7);
+        fragmentSequenciaRotina1.escreveSequenciaRotina1(bundleDados);
+
+        leituraSequenciaRotina2 fragmentSequenciaRotina2 = (leituraSequenciaRotina2) adapter.getItem(8);
+        fragmentSequenciaRotina2.escreveSequenciaRotina2(bundleDados);
 
         viewPager.setAdapter(adapter);
 
@@ -215,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         meuBanco.insertData_CONFIG_1("C00","Salva",null,null,null,"Não","Sim",null,null,null,null,null,null,null);
         meuBanco.insertData_CONFIG_1("C01","Master",null,null,null,"Não","Sim",null,null,null,null,null,null,null);
         meuBanco.insertData_CONFIG_1("C02","Tmp.Sensor",0.0,10.0,0.5,null,null,null,null,null,null,null,null,"s");
-        meuBanco.insertData_CONFIG_1("C03","Modo _Start",null,null,null,"Start Unico","Start Uni/Const","Start OU Tecla","Start E Tecla","Start Nivel",null,null,null,null);
+        meuBanco.insertData_CONFIG_1("C03","Modo_Start",null,null,null,"Start Unico","Start Uni/Const","Start OU Tecla","Start E Tecla","Start Nivel",null,null,null,null);
         meuBanco.insertData_CONFIG_1("C04","Temp.Start",0.0,5.0,0.5,null,null,null,null,null,null,null,null,"s");
         meuBanco.insertData_CONFIG_1("C05","Fim Impr.",null,null,null,"Sensor Topo","Sensor Tint.","Sensor Peca",null,null,null,null,null,null);
         meuBanco.insertData_CONFIG_1("C06","Tmp AV/Rec",0.0,0.5,0.1,null,null,null,null,null,null,null,null,"s");
@@ -237,8 +249,17 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         meuBanco.insertData_CONFIG_1("C22","Bloqueio",null,null,null,"C+T","C+T+S","C+T+S+P","C+T+S+P+A","C+T+S+P+A+R","C+T+S+P+A+R+RT",null,null,null);
         meuBanco.insertData_CONFIG_1("C23","Tmp.Tp.Col",0.0,31.0,1.0,null,null,null,null,null,null,null,null,null);
 
+        // cria tabela de DISPLAY 1 já com valores
+        meuBanco.insertData_DISPLAY_1("D00","Contador",null,null,null, "Producao", "Lote de Pecas", null, null, null, null, null, null,null,null);
+        meuBanco.insertData_DISPLAY_1("D01","Valor Lote", 1.0, 9999.0, 1.0,null, null, null, null, null, null, null, null,null,"uni");
+        meuBanco.insertData_DISPLAY_1("D02","Val. Parada", 0.0, 8000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni");
+        meuBanco.insertData_DISPLAY_1("D03","Tol. Parada", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni");
+        meuBanco.insertData_DISPLAY_1("D04","Produtiv.",null,null,null, "Pecas/Hora", "Pecas/Min", null, null, null, null, null, null,null,null);
+        meuBanco.insertData_DISPLAY_1("D05","Info Linha",null,null,null, "Nenhuma", "Qtd.Pecas Lote", "Qtd.Pecas Prog", "Passo Seq.", "Tempo T0", "Tempo T1", "Tmp. Ent. Ciclos", "Tmp. Do Ciclo","Nr. da Receita",null);
+        meuBanco.insertData_DISPLAY_1("D06","Display Dummy1", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni");
+        meuBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni");
 
-        // cria 32 linhas iniciais na tabela atual com os ID's
+        // cria 32 linhas iniciais na tabela de parametro atual com os ID's
         for (int i = 0; i < 32; i++){
             Integer codigo_numero;
             String codigo;
@@ -252,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
             meuBanco.insertData_PARAM_ATUAL(codigo,null);
         }
 
-        // cria 64 linhas iniciais na tabela atual com os ID's
+        // cria 64 linhas iniciais na tabela de config atual com os ID's
         for (int i = 0; i < 64; i++){
             Integer codigo_numero;
             String codigo;
@@ -266,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
             meuBanco.insertData_CONFIG_ATUAL(codigo,null);
         }
 
-        // cria 16 linhas iniciais na tabela atual com os ID's
+        // cria 16 linhas iniciais na tabela de display atual com os ID's
         for (int i = 0; i < 16; i++){
             Integer codigo_numero;
             String codigo;
@@ -414,64 +435,64 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA54000357")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000450")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000551")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000652")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000753")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA5400085C")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA5400095D")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000A5E")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000B5F")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000C58")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000D59")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000E5A")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54000F5B")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001044")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001145")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001246")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001347")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001440")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001541")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001642")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001743")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA5400184C")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA5400194D")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001A4E")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001B4F")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001C48")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001D49")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001E4A")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54001F4B")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA54002074")));
-//                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000450")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000551")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000652")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000753")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA5400085C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA5400095D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000A5E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000B5F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000C58")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000D59")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000E5A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54000F5B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001044")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001145")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001246")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001347")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001440")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001541")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001642")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001743")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA5400184C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA5400194D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001A4E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001B4F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001C48")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001D49")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001E4A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54001F4B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA54002074")));
+                sharedData.setValue(false);
 
                 //pedido de configurações
                 serialPort.send(Utils.comando(controlePacotes("FA64000064")));
@@ -482,131 +503,130 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA64000367")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000460")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000561")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000662")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000763")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA6400086C")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA6400096D")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000A6E")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000B6F")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000C68")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000D69")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000E6A")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000F6B")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001074")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001175")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001276")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001377")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001470")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001571")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001672")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001773")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA6400187C")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA6400197D")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001A7E")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001B7F")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001C78")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001D79")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001E7A")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001F7B")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002044")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002145")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002246")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002347")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002440")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002541")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002642")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002743")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA6400284C")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA6400294D")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002A4E")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002B4F")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002C48")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002D49")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002E4A")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64002F4B")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003054")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003155")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003256")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003357")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003450")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003551")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003652")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003753")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA6400385C")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA6400395D")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003A5E")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003B5F")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003C58")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003D59")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003E5A")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64003F5B")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64004024")));
-//                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000460")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000561")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000662")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000763")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA6400086C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA6400096D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000A6E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000B6F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000C68")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000D69")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000E6A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000F6B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001074")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001175")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001276")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001377")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001470")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001571")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001672")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001773")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA6400187C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA6400197D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001A7E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001B7F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001C78")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001D79")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001E7A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001F7B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002044")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002145")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002246")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002347")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002440")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002541")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002642")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002743")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA6400284C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA6400294D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002A4E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002B4F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002C48")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002D49")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002E4A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64002F4B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003054")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003155")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003256")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003357")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003450")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003551")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003652")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003753")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA6400385C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA6400395D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003A5E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003B5F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003C58")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003D59")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003E5A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64003F5B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64004024")));
+                sharedData.setValue(false);
 
-                //pedido de configurações
-
+                //pedido de Display
                 serialPort.send(Utils.comando(controlePacotes("FA74000074")));
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA74000175")));
@@ -615,31 +635,368 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA74000377")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74000470")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74000571")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74000672")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74000773")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA7400087C")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA7400097D")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74001064")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74001165")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74001266")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74001367")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74001460")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74001561")));
-//                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74000470")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74000571")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74000672")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74000773")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA7400087C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA7400097D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74001064")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74001165")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74001266")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74001367")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74001460")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74001561")));
+                sharedData.setValue(false);
 
+
+                // Pedido de valores de Sequência Inicial
+                serialPort.send(Utils.comando(controlePacotes("FA04000004")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000105")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000206")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000307")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000400")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000501")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000602")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000703")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA0400080C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA0400090D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000A0E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000B0F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000C08")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000D09")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000E0A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000F0B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001014")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001115")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001216")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001317")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001410")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001511")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001612")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001713")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA0400181C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA0400191D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001A1E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001B1F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001C18")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001D19")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001E1A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04001F1B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04002024")));
+                sharedData.setValue(false);
+
+
+
+                // Pedido de valores de Sequência Cíclica
+                serialPort.send(Utils.comando(controlePacotes("FA14000014")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000115")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000216")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000317")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000410")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000511")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000612")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000713")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA1400081C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA1400091D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000A1E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000B1F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000C18")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000D19")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000E1A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14000F1B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001004")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001105")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001206")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001307")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001400")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001501")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001602")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001703")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA1400180C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA1400190D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001A0E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001B0F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001C08")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001D09")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001E0A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA14001F0B")));
+                sharedData.setValue(false);
+
+
+                // Pedido de valores de Sequência Final
+                serialPort.send(Utils.comando(controlePacotes("FA24000024")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000125")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000226")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000327")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000420")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000521")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000622")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000723")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA2400082C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA2400092D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000A2E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000B2F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000C28")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000D29")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000E2A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000F2B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001034")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001135")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001236")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001337")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001430")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001531")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001632")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001733")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA2400183C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA2400193D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001A3E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001B3F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001C38")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001D39")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001E3A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24001F3B")));
+                sharedData.setValue(false);
+
+
+                // Pedido de valores de Sequência Rotina 1
+                serialPort.send(Utils.comando(controlePacotes("FA34000034")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000135")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000236")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000337")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000430")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000531")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000632")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000733")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA3400083C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA3400093D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000A3E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000B3F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000C38")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000D39")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000E3A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000F3B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001024")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001125")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001226")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001327")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001420")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001521")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001622")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001723")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA3400182C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA3400192D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001A2E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001B2F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001C28")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001D29")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001E2A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34001F2B")));
+                sharedData.setValue(false);
+
+
+                // Pedido de valores de Sequência Rotina 2
+                serialPort.send(Utils.comando(controlePacotes("FA44000044")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000145")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000246")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000347")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000440")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000541")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000642")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000743")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA4400084C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA4400094D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000A4E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000B4F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000C48")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000D49")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000E4A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000F4B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001054")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001155")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001256")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001357")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001450")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001551")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001652")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001753")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA4400185C")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA4400195D")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001A5E")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001B5F")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001C58")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001D59")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001E5A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44001F5B")));
+                sharedData.setValue(false);
 
                 for (String key : bundletodosDados.keySet())
                 {
@@ -708,6 +1065,7 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         String header;
         String tipoDado;
         String label;
+        String tipoSequencia;
         String msg = rx.getStringValue(0);
         rindex = rindex + msg.length();
         byte[] msgbyte = rx.getValue();
@@ -715,11 +1073,10 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
         tipoDado = Utils.obterTipoDado(hexatual);
         codigo = Utils.obterCodigo(hexatual,tipoDado);
         header = Utils.obterHeader(hexatual);
-        valor = Utils.obterValor(hexatual);
-
+        valor = Utils.obterValor(hexatual,tipoDado);
+        tipoSequencia = Utils.obterTipoSequencia(hexatual);
 
         //trata o dado recebido se for do tipo 'Parametro' (5)
-
             if (tipoDado.equals("5")) {
                 if (!header.equals("19")) {
                     writeLine("Param:"+hexatual);
@@ -734,6 +1091,87 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
                 }
             }
 
+            //trata o dado recebido se for do tipo 'Sequência Inicial' (0)
+            else if (tipoDado.equals("0")) {
+                if (!header.equals("19")) {
+                    writeLine("Sequência Inicial:"+hexatual);
+
+                    writeLine("Tipo Sequencia:"+tipoSequencia);
+                    label = Utils.obterLabelSequencia(tipoSequencia);
+                    valor = Utils.obterValorSequencia(hexatual);
+                    bundletodosDados.putString(codigo+"L",label);
+                    bundletodosDados.putString(codigo+"V",valor);
+                    //            meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                    sharedData.setValue(true);
+                } else {
+                    sharedData.setValue(true);
+                }
+            }
+
+            //trata o dado recebido se for do tipo 'Sequência Cíclica' (1)
+            else if (tipoDado.equals("1")) {
+                if (!header.equals("19")) {
+                    writeLine("Sequência Cíclica:"+hexatual);
+
+                    label = Utils.obterLabelSequencia(tipoSequencia);
+                    valor = Utils.obterValorSequencia(hexatual);
+                    bundletodosDados.putString(codigo+"L",label);
+                    bundletodosDados.putString(codigo+"V",valor);
+                    //            meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                    sharedData.setValue(true);
+                } else {
+                    sharedData.setValue(true);
+                }
+            }
+
+            //trata o dado recebido se for do tipo 'Sequência Final' (2)
+            else if (tipoDado.equals("2")) {
+                if (!header.equals("19")) {
+                    writeLine("Sequência Final:"+hexatual);
+
+                    label = Utils.obterLabelSequencia(tipoSequencia);
+                    valor = Utils.obterValorSequencia(hexatual);
+                    bundletodosDados.putString(codigo+"L",label);
+                    bundletodosDados.putString(codigo+"V",valor);
+                    //            meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                    sharedData.setValue(true);
+                } else {
+                    sharedData.setValue(true);
+                }
+            }
+
+            //trata o dado recebido se for do tipo 'Sequência Rotina 1' (3)
+            else if (tipoDado.equals("3")) {
+                if (!header.equals("19")) {
+                    writeLine("Sequência Rotina 1:"+hexatual);
+
+                    label = Utils.obterLabelSequencia(tipoSequencia);
+                    valor = Utils.obterValorSequencia(hexatual);
+                    bundletodosDados.putString(codigo+"L",label);
+                    bundletodosDados.putString(codigo+"V",valor);
+                    //            meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                    sharedData.setValue(true);
+                } else {
+                    sharedData.setValue(true);
+                }
+            }
+
+            //trata o dado recebido se for do tipo 'Sequência Rotina 2' (4)
+            else if (tipoDado.equals("4")) {
+                if (!header.equals("19")) {
+                    writeLine("Sequência Rotina 2:"+hexatual);
+                    label = Utils.obterLabelSequencia(tipoSequencia);
+                    valor = Utils.obterValorSequencia(hexatual);
+                    bundletodosDados.putString(codigo+"L",label);
+                    bundletodosDados.putString(codigo+"V",valor);
+                    //            meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                    sharedData.setValue(true);
+                } else {
+                    sharedData.setValue(true);
+                }
+            }
+
+            //trata o dado recebido se for do tipo 'Configuração' (6)
             else if (tipoDado.equals("6")) {
                 if (!header.equals("19")) {
                     writeLine("Config:"+hexatual);
@@ -748,10 +1186,26 @@ public class MainActivity extends AppCompatActivity implements BLeSerialPortServ
                 }
             }
 
+            //trata o dado recebido se for do tipo 'Display' (7)
+            else if (tipoDado.equals("7")) {
+                if (!header.equals("19")) {
+                    writeLine("Display:"+hexatual);
+                    label = meuBanco.getLabelDisplay(codigo);
+                    valor = meuBanco.getValorDisplay(codigo,valor);
+                    bundletodosDados.putString(codigo+"L",label);
+                    bundletodosDados.putString(codigo+"V",valor);
+                    //            meuBanco.insertData_DISPLAY_ATUAL(codigo,valor);
+                    sharedData.setValue(true);
+                } else {
+                    sharedData.setValue(true);
+                }
+            }
+
             //trata se for um tipo de dado desconhecido
             else {
                 writeLine("Tipo de dado Desconhecido:"+hexatual);
                 sharedData.setValue(true);
+                writeLine(tipoDado);
             }
     }
 

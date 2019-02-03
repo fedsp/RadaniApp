@@ -10,7 +10,11 @@
     <color name="colorDisplay">#ffe271</color>
     <color name="colorFalhas">#b5ff71</color>
     <color name="colorParametrizacao">#71ffa7</color>
-    <color name="colorSequencia">#71bfff</color>
+    <color name="colorSequenciaInicial">#71bfff</color>
+    <color name="colorSequenciaCiclica">#ff99ff</color>
+    <color name="colorSequenciaFinal">#ff9999</color>
+    <color name="colorSequenciaRotina1">#cccc00</color>
+    <color name="colorSequenciaRotina2">#009933</color>
 
 
 

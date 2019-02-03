@@ -110,7 +110,8 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     public static final String DISPLAY_1_col_11 = "texto_6";
     public static final String DISPLAY_1_col_12 = "texto_7";
     public static final String DISPLAY_1_col_13 = "texto_8";
-    public static final String DISPLAY_1_col_14 = "unidade_medida";
+    public static final String DISPLAY_1_col_14 = "texto_9";
+    public static final String DISPLAY_1_col_15 = "unidade_medida";
     public static final String cria_display_1 = "CREATE TABLE IF NOT EXISTS "
             + DISPLAY_1_TABLE_NAME + "(" + DISPLAY_1_col_1 + " TEXT PRIMARY KEY, " + DISPLAY_1_col_2
             + " TEXT, " + DISPLAY_1_col_3 + " REAL," + DISPLAY_1_col_4
@@ -124,6 +125,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             + " TEXT, " + DISPLAY_1_col_12
             + " TEXT, " + DISPLAY_1_col_13
             + " TEXT, " + DISPLAY_1_col_14
+            + " TEXT, " + DISPLAY_1_col_15
             + " TEXT" + ")";
 
 
@@ -144,11 +146,11 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-
         db.execSQL(cria_parametro_1);
         db.execSQL(cria_parametro_atual);
         db.execSQL(cria_configuracao_1);
         db.execSQL(cria_configuracao_atual);
+        db.execSQL(cria_display_1);
         db.execSQL(cria_display_atual);
     }
 
@@ -252,6 +254,36 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         else
             return true;
     }
+
+
+    // metodo para inserir no parametro 1
+    public boolean insertData_DISPLAY_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String texto9, String unidademedida) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DISPLAY_1_col_1, codigo);
+        contentValues.put(DISPLAY_1_col_2, label);
+        contentValues.put(DISPLAY_1_col_3, valor_min);
+        contentValues.put(DISPLAY_1_col_4, valor_max);
+        contentValues.put(DISPLAY_1_col_5, passo);
+        contentValues.put(DISPLAY_1_col_6, texto1);
+        contentValues.put(DISPLAY_1_col_7, texto2);
+        contentValues.put(DISPLAY_1_col_8, texto3);
+        contentValues.put(DISPLAY_1_col_9, texto4);
+        contentValues.put(DISPLAY_1_col_10, texto5);
+        contentValues.put(DISPLAY_1_col_11, texto6);
+        contentValues.put(DISPLAY_1_col_12, texto7);
+        contentValues.put(DISPLAY_1_col_13, texto8);
+        contentValues.put(DISPLAY_1_col_14, texto9);
+        contentValues.put(DISPLAY_1_col_15, unidademedida);
+
+        long result_do_insert = db.insertWithOnConflict(DISPLAY_1_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
+        if (result_do_insert == -1)
+            return false;
+        else
+            return true;
+    }
+
+
 
     // metodo para inserir no display atual
     public boolean insertData_DISPLAY_ATUAL(String codigo, String valor) {
@@ -364,6 +396,44 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
 
         return valor;
     }
+
+    // obtém dados da tabela mestre de Display 1
+    public String getLabelDisplay(String codigo) {
+        Cursor res;
+        String label;
+        SQLiteDatabase db = this.getWritableDatabase();
+        res = db.rawQuery("SELECT "+ DISPLAY_1_col_2 + " FROM " + DISPLAY_1_TABLE_NAME + " WHERE " + DISPLAY_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        label = res.getString(0);
+        return label;
+    }
+
+    public String getValorDisplay(String codigo, String valor) {
+        Cursor res;
+        String flagTexto;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        //descobre se é texto ou numero
+        res = db.rawQuery("SELECT "+ DISPLAY_1_col_6 + " FROM " + DISPLAY_1_TABLE_NAME + " WHERE " + DISPLAY_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        flagTexto = res.getString(0);
+        if (flagTexto == null){
+        }
+        else {
+            int valorNumerico;
+            valorNumerico = Integer.valueOf(valor);
+            valorNumerico = valorNumerico + 1;
+            valor = Integer.toString(valorNumerico);
+            res = db.rawQuery("SELECT "+ "texto_" + valor + " FROM " + DISPLAY_1_TABLE_NAME + " WHERE " + DISPLAY_1_col_1 + "=" + "'"+codigo+"'", null);
+            res.moveToFirst();
+            valor = res.getString(0);
+        }
+
+        return valor;
+    }
+
+
+
 
 
 

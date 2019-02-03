@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,15 +21,20 @@ public class leituraSequenciaInicial extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.leitura_sequencia_inicial,container,false);
         messageSequenciaInicial = view.findViewById(R.id.messagesSequenciaInicial);
+        messageSequenciaInicial.setMovementMethod((new ScrollingMovementMethod()));
         if (dadosTotais != null) {
             for (String key : dadosTotais.keySet()) {
                 String tipoDado;
                 String labelOuValor;
-                tipoDado = key.substring(0,1);
-                labelOuValor = key.substring(3,4);
-                if (tipoDado.equals("S")) {
+                tipoDado = key.substring(0,2);
+
+                if (tipoDado.equals("SI")) {
+                    labelOuValor = key.substring(4,5);
                     if (labelOuValor.equals("L")) {
-                        messageSequenciaInicial.append(dadosTotais.getString(key) + ":");
+                        String passo;
+                        passo = key.substring(0,1)+key.substring(2,4);
+                        messageSequenciaInicial.append("["+passo+"] ");
+                        messageSequenciaInicial.append(dadosTotais.getString(key));
                     }
                     else if (labelOuValor.equals("V")) {
                         messageSequenciaInicial.append(dadosTotais.getString(key)+"\n");

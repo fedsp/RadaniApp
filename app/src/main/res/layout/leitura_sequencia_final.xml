@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFalhas">
+    android:background="@color/colorSequenciaFinal">
     <RelativeLayout android:layout_height="match_parent" android:layout_width="match_parent">
 
         <TextView
@@ -15,10 +15,10 @@
             android:textSize="24dp"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
-            android:text="Falhas \n" />
+            android:text="Sequência Final \n" />
 
         <TextView
-            android:id="@+id/messagesFalhas"
+            android:id="@+id/messagesSequenciaFinal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"

@@ -11,31 +11,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class leituraFalhas extends Fragment {
-    private static final String TAG = "leituraFalhas";
-    public TextView messagesFalhas;
+public class leituraSequenciaRotina1 extends Fragment {
+    private static final String TAG = "leituraSequenciaRotina1";
+    public TextView messageSequenciaRotina1;
     public Bundle dadosTotais;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.leitura_falhas,container,false);
-        messagesFalhas = view.findViewById(R.id.messagesFalhas);
-        messagesFalhas.setMovementMethod((new ScrollingMovementMethod()));
+        View view = inflater.inflate(R.layout.leitura_sequencia_rotina_1,container,false);
+        messageSequenciaRotina1 = view.findViewById(R.id.messagesSequenciaRotina1);
+        messageSequenciaRotina1.setMovementMethod((new ScrollingMovementMethod()));
         if (dadosTotais != null) {
             for (String key : dadosTotais.keySet()) {
                 String tipoDado;
                 String labelOuValor;
-                tipoDado = key.substring(0,1);
-                labelOuValor = key.substring(3,4);
-                if (tipoDado.equals("F")) {
+                tipoDado = key.substring(0,2);
+
+                if (tipoDado.equals("S1")) {
+                    labelOuValor = key.substring(4,5);
                     if (labelOuValor.equals("L")) {
-                        messagesFalhas.append(dadosTotais.getString(key) + ":");
+                        String passo;
+                        passo = key.substring(0,1)+key.substring(2,4);
+                        messageSequenciaRotina1.append("["+passo+"] ");
+                        messageSequenciaRotina1.append(dadosTotais.getString(key));
                     }
                     else if (labelOuValor.equals("V")) {
-                        messagesFalhas.append(dadosTotais.getString(key)+"\n");
+                        messageSequenciaRotina1.append(dadosTotais.getString(key)+"\n");
                     }
-                    else {messagesFalhas.append("[Dado inválido]");}
+                    else {messageSequenciaRotina1.append("[Dado inválido]");}
                 }
                 else {}
             }
@@ -44,7 +48,7 @@ public class leituraFalhas extends Fragment {
     }
 
 
-    public void escreveFalhas(Bundle dados) {
+    public void escreveSequenciaRotina1(Bundle dados) {
         if (dados != null) {
             for (String key : dados.keySet()) {
                 Log.d("Debug no Fragment", key + " = \"" + dados.get(key) + "\"");

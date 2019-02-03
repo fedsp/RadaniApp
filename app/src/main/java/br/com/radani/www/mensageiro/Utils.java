@@ -204,6 +204,56 @@ public class Utils {
         intcodigo = Integer.parseInt(codigo,16);
 
         switch (tipoDado) {
+            case "0":
+                if (intcodigo <= 9) {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "SI" + "0" + codigo;
+                    break;
+                } else {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "SI" + codigo;
+                    break;
+                }
+            case "1":
+                if (intcodigo <= 9) {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "SC" + "0" + codigo;
+                    break;
+                } else {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "SC" + codigo;
+                    break;
+                }
+            case "2":
+                if (intcodigo <= 9) {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "SF" + "0" + codigo;
+                    break;
+                } else {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "SF" + codigo;
+                    break;
+                }
+            case "3":
+                if (intcodigo <= 9) {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "S1" + "0" + codigo;
+                    break;
+                } else {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "S1" + codigo;
+                    break;
+                }
+            case "4":
+                if (intcodigo <= 9) {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "S2" + "0" + codigo;
+                    break;
+                } else {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "S2" + codigo;
+                    break;
+                }
             case "5":
                 if (intcodigo <= 9) {
                     codigo = String.valueOf(intcodigo);
@@ -224,20 +274,41 @@ public class Utils {
                     codigo = "C" + codigo;
                     break;
                 }
+            case "7":
+                if (intcodigo <= 9) {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "D" + "0" + codigo;
+                    break;
+                } else {
+                    codigo = String.valueOf(intcodigo);
+                    codigo = "D" + codigo;
+                    break;
+                }
             default:
                 break;
         }
         return codigo;
     }
 
-    public static String obterValor(String hexatual)
+    public static String obterValor(String hexatual,String tipoDado)
     {
-        String valor;
-        valor = hexatual.substring(8,10);
-        Integer valornumero;
-        valornumero = Integer.parseInt(valor,16);
-        valor = String.valueOf(valornumero);
-        return valor;
+        if (tipoDado.equals("0") | tipoDado.equals("1") | tipoDado.equals("2") | tipoDado.equals("3") | tipoDado.equals("4")) {
+            String valor;
+            valor = hexatual.substring(9, 10);
+
+//            Integer valornumero;
+//            valornumero = Integer.parseInt(valor, 16);
+//            valor = String.valueOf(valornumero);
+            return valor;
+        }
+        else {
+            String valor;
+            valor = hexatual.substring(8, 10);
+            Integer valornumero;
+            valornumero = Integer.parseInt(valor, 16);
+            valor = String.valueOf(valornumero);
+            return valor;
+        }
     }
 
     public static String obterTipoDado(String hexatual)
@@ -249,6 +320,58 @@ public class Utils {
         valor = String.valueOf(valornumero);
         return valor;
     }
+
+    public static String obterTipoSequencia(String hexatual)
+    {
+        String tipoSequencia;
+        tipoSequencia = hexatual.substring(9,10);
+        return tipoSequencia;
+    }
+
+    public static String obterValorSequencia(String hexatual)
+    {
+        String tipoSequencia;
+        tipoSequencia = hexatual.substring(9,10);
+        String valorSequencia;
+        valorSequencia = hexatual.substring(8,9);
+        if (tipoSequencia.equals("0") || tipoSequencia.equals("1") || tipoSequencia.equals("2") || tipoSequencia.equals("3")){
+            valorSequencia = "";
+        }
+        else {
+            valorSequencia = ": "+valorSequencia;
+        }
+        return valorSequencia;
+    }
+
+    public static String obterLabelSequencia(String tipoSequencia) {
+        switch (tipoSequencia) {
+            case "0":
+                tipoSequencia = "Fim da Sequência";
+                break;
+            case "1":
+                tipoSequencia = "Coleta";
+                break;
+            case "2":
+                tipoSequencia = "Impressão";
+                break;
+            case "3":
+                tipoSequencia = "Mistura";
+                break;
+            case "4":
+                tipoSequencia = "Aguarda Entrada ";
+                break;
+            case "5":
+                tipoSequencia = "Alterna Saída ";
+                break;
+            case "6":
+                tipoSequencia = "Aguarda Tempo ";
+                break;
+            default:
+                break;
+        }
+        return tipoSequencia;
+    }
+
 
 
 }
