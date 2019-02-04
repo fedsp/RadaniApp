@@ -14,5 +14,6 @@
     <string name="connect">connect</string>
     <string name="about">about</string>
     <string name="title_devices">RadaniApp</string>
+    <string name="title_activity_main_menu">mainMenu</string>
 
 </resources>

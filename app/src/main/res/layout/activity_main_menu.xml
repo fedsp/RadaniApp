@@ -1,0 +1,84 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mainMenu"
+    android:background="@drawable/fundo">
+
+
+    <android.support.v7.widget.ActionBarContainer
+        android:id="@+id/container_foto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/logo" />
+    </android.support.v7.widget.ActionBarContainer>
+
+    <TextView
+        android:id="@+id/tituloMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/container_foto"
+        android:layout_centerHorizontal="true"
+        android:textSize="40dp"
+        android:text="Radani App" />
+
+
+    <Button
+        android:id="@+id/botao_leitura"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tituloMain"
+        android:text="Ler dados da Placa"
+        android:onClick="vaiparaleitura"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/bot_leitura" />
+
+    <Button
+        android:id="@+id/botao_edicao"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tituloMain"
+        android:text="Editar dados da Placa"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/bot_escrita" />
+
+    <Button
+    android:id="@+id/botao_galeria"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:layout_marginLeft="50dp"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@+id/botao_leitura"
+    android:text="Galeria de dados"
+    android:background="@android:color/transparent"
+    android:drawableTop="@drawable/bot_galeria" />
+
+    <Button
+        android:id="@+id/botao_estatistica"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/botao_leitura"
+        android:text="Dados Estatísticos"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/but_estatistica" />
+
+</RelativeLayout>

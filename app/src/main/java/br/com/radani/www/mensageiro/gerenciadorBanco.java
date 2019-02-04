@@ -30,6 +30,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     public static final String PARAM_1_col_12 = "texto_7";
     public static final String PARAM_1_col_13 = "texto_8";
     public static final String PARAM_1_col_14 = "unidade_medida";
+    public static final String PARAM_1_col_15 = "multiplicador";
     public static final String cria_parametro_1 = "CREATE TABLE IF NOT EXISTS "
             + PARAM_1_TABLE_NAME + "(" + PARAM_1_col_1 + " TEXT PRIMARY KEY, " + PARAM_1_col_2
             + " TEXT, " + PARAM_1_col_3 + " REAL," + PARAM_1_col_4
@@ -43,6 +44,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             + " TEXT, " + PARAM_1_col_12
             + " TEXT, " + PARAM_1_col_13
             + " TEXT, " + PARAM_1_col_14
+            + " TEXT, " + PARAM_1_col_15
             + " TEXT" + ")";
 
 
@@ -70,6 +72,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     public static final String CONFIG_1_col_12 = "texto_7";
     public static final String CONFIG_1_col_13 = "texto_8";
     public static final String CONFIG_1_col_14 = "unidade_medida";
+    public static final String CONFIG_1_col_15 = "multiplicador";
     public static final String cria_configuracao_1 = "CREATE TABLE IF NOT EXISTS "
             + CONFIG_1_TABLE_NAME + "(" + CONFIG_1_col_1 + " TEXT PRIMARY KEY, " + CONFIG_1_col_2
             + " TEXT, " + CONFIG_1_col_3 + " REAL," + CONFIG_1_col_4
@@ -83,6 +86,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             + " TEXT, " + CONFIG_1_col_12
             + " TEXT, " + CONFIG_1_col_13
             + " TEXT, " + CONFIG_1_col_14
+            + " TEXT, " + CONFIG_1_col_15
             + " TEXT" + ")";
 
 
@@ -112,6 +116,8 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     public static final String DISPLAY_1_col_13 = "texto_8";
     public static final String DISPLAY_1_col_14 = "texto_9";
     public static final String DISPLAY_1_col_15 = "unidade_medida";
+    public static final String DISPLAY_1_col_16 = "multiplicador";
+
     public static final String cria_display_1 = "CREATE TABLE IF NOT EXISTS "
             + DISPLAY_1_TABLE_NAME + "(" + DISPLAY_1_col_1 + " TEXT PRIMARY KEY, " + DISPLAY_1_col_2
             + " TEXT, " + DISPLAY_1_col_3 + " REAL," + DISPLAY_1_col_4
@@ -126,6 +132,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             + " TEXT, " + DISPLAY_1_col_13
             + " TEXT, " + DISPLAY_1_col_14
             + " TEXT, " + DISPLAY_1_col_15
+            + " TEXT, " + DISPLAY_1_col_16
             + " TEXT" + ")";
 
 
@@ -174,7 +181,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
 
 
     // metodo para inserir no parametro 1
-    public boolean insertData_PARAM_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String unidademedida) {
+    public boolean insertData_PARAM_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String unidademedida, Double multiplicador) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(PARAM_1_col_1, codigo);
@@ -191,6 +198,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         contentValues.put(PARAM_1_col_12, texto7);
         contentValues.put(PARAM_1_col_13, texto8);
         contentValues.put(PARAM_1_col_14, unidademedida);
+        contentValues.put(PARAM_1_col_15, multiplicador);
 
         long result_do_insert = db.insertWithOnConflict(PARAM_1_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         if (result_do_insert == -1)
@@ -215,7 +223,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     }
 
     // metodo para inserir no configuracao 1
-    public boolean insertData_CONFIG_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String unidademedida) {
+    public boolean insertData_CONFIG_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String unidademedida, Double multiplicador) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(CONFIG_1_col_1, codigo);
@@ -232,6 +240,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         contentValues.put(CONFIG_1_col_12, texto7);
         contentValues.put(CONFIG_1_col_13, texto8);
         contentValues.put(CONFIG_1_col_14, unidademedida);
+        contentValues.put(CONFIG_1_col_15, multiplicador);
 
         long result_do_insert = db.insertWithOnConflict(CONFIG_1_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         if (result_do_insert == -1)
@@ -257,7 +266,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
 
 
     // metodo para inserir no parametro 1
-    public boolean insertData_DISPLAY_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String texto9, String unidademedida) {
+    public boolean insertData_DISPLAY_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String texto9, String unidademedida, Double multiplicador) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DISPLAY_1_col_1, codigo);
@@ -275,6 +284,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         contentValues.put(DISPLAY_1_col_13, texto8);
         contentValues.put(DISPLAY_1_col_14, texto9);
         contentValues.put(DISPLAY_1_col_15, unidademedida);
+        contentValues.put(DISPLAY_1_col_16, multiplicador);
 
         long result_do_insert = db.insertWithOnConflict(DISPLAY_1_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         if (result_do_insert == -1)
