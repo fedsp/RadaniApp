@@ -32,7 +32,7 @@ public class leituraParametrizacao extends Fragment {
                 labelOuValor = key.substring(3,4);
                 if (tipoDado.equals("P")) {
                     if (labelOuValor.equals("L")) {
-                        messagesParametrizacao.append(dadosTotais.getString(key) + ":");
+                        messagesParametrizacao.append("["+key.substring(0,3)+"] "+dadosTotais.getString(key) + ":");
                     }
                     else if (labelOuValor.equals("V")) {
                         messagesParametrizacao.append(dadosTotais.getString(key)+"\n");

@@ -30,7 +30,7 @@ public class leituraDisplay extends Fragment {
                 labelOuValor = key.substring(3,4);
                 if (tipoDado.equals("D")) {
                     if (labelOuValor.equals("L")) {
-                        messagesDisplay.append(dadosTotais.getString(key) + ":");
+                        messagesDisplay.append("["+key.substring(0,3)+"] "+dadosTotais.getString(key) + ":");
                     }
                     else if (labelOuValor.equals("V")) {
                         messagesDisplay.append(dadosTotais.getString(key)+"\n");

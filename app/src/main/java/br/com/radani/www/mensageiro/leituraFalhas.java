@@ -30,7 +30,7 @@ public class leituraFalhas extends Fragment {
                 labelOuValor = key.substring(3,4);
                 if (tipoDado.equals("F")) {
                     if (labelOuValor.equals("L")) {
-                        messagesFalhas.append(dadosTotais.getString(key) + ":");
+                        messagesFalhas.append("["+key.substring(0,3)+"] "+dadosTotais.getString(key) + ":");
                     }
                     else if (labelOuValor.equals("V")) {
                         messagesFalhas.append(dadosTotais.getString(key)+"\n");

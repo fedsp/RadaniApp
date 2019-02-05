@@ -33,7 +33,7 @@ public class leituraConfiguracao extends Fragment {
                 labelOuValor = key.substring(3,4);
                 if (tipoDado.equals("C")) {
                     if (labelOuValor.equals("L")) {
-                        messagesConfiguracoes.append(dadosTotais.getString(key) + ":");
+                        messagesConfiguracoes.append("["+key.substring(0,3)+"] "+dadosTotais.getString(key) + ":");
                     }
                     else if (labelOuValor.equals("V")) {
                         messagesConfiguracoes.append(dadosTotais.getString(key)+"\n");

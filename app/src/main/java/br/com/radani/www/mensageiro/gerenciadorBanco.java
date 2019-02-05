@@ -347,7 +347,26 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         return label;
     }
 
-    public String getValorParametro(String codigo, String valor) {
+    public Double getMultiplicadorParametro(String codigo) {
+        Cursor res;
+        String multiplicador;
+        Double multiplicadornumerico;
+        SQLiteDatabase db = this.getWritableDatabase();
+        res = db.rawQuery("SELECT "+ PARAM_1_col_15 + " FROM " + PARAM_1_TABLE_NAME + " WHERE " + PARAM_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(res));
+        multiplicador = res.getString(0);
+        if (multiplicador==null){
+            multiplicador="1.0";
+            multiplicadornumerico = Double.valueOf(multiplicador);
+        }
+        else {
+            multiplicadornumerico = Double.valueOf(multiplicador);
+        }
+        return multiplicadornumerico;
+    }
+
+    public String getValorParametro(String codigo, String valor, Double multiplicador) {
         Cursor res;
         String flagTexto;
 
@@ -359,13 +378,11 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         if (flagTexto == null){
         }
         else {
-            int valorNumerico;
-            valorNumerico = Integer.valueOf(valor);
+            Double valorNumerico;
+            valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico + 1;
-            valor = Integer.toString(valorNumerico);
-            res = db.rawQuery("SELECT "+ "texto_" + valor + " FROM " + PARAM_1_TABLE_NAME + " WHERE " + PARAM_1_col_1 + "=" + "'"+codigo+"'", null);
-            res.moveToFirst();
-            valor = res.getString(0);
+            valorNumerico = valorNumerico*multiplicador;
+            valor = Double.toString(valorNumerico);
         }
 
         return valor;
