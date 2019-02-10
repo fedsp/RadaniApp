@@ -380,11 +380,16 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         else {
             Double valorNumerico;
             valorNumerico = Double.valueOf(valor);
-            valorNumerico = valorNumerico + 1;
             valorNumerico = valorNumerico*multiplicador;
-            valor = Double.toString(valorNumerico);
-        }
 
+            if (valorNumerico - valorNumerico.intValue() == 0){
+                Integer valorInt;
+                valorInt = valorNumerico.intValue();
+                valor = Integer.toString(valorInt);
+            }
+            else{
+                valor = Double.toString(valorNumerico);}
+        }
         return valor;
     }
 
@@ -400,7 +405,26 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         return label;
     }
 
-    public String getValorConfig(String codigo, String valor) {
+    public Double getMultiplicadorConfig(String codigo) {
+        Cursor res;
+        String multiplicador;
+        Double multiplicadornumerico;
+        SQLiteDatabase db = this.getWritableDatabase();
+        res = db.rawQuery("SELECT "+ CONFIG_1_col_15 + " FROM " + CONFIG_1_TABLE_NAME + " WHERE " + CONFIG_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(res));
+        multiplicador = res.getString(0);
+        if (multiplicador==null){
+            multiplicador="1.0";
+            multiplicadornumerico = Double.valueOf(multiplicador);
+        }
+        else {
+            multiplicadornumerico = Double.valueOf(multiplicador);
+        }
+        return multiplicadornumerico;
+    }
+
+    public String getValorConfig(String codigo, String valor, Double multiplicador) {
         Cursor res;
         String flagTexto;
 
@@ -412,14 +436,19 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         if (flagTexto == null){
         }
         else {
-            int valorNumerico;
-            valorNumerico = Integer.valueOf(valor);
+            Double valorNumerico;
+            valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico + 1;
-            valor = Integer.toString(valorNumerico);
-            res = db.rawQuery("SELECT "+ "texto_" + valor + " FROM " + CONFIG_1_TABLE_NAME + " WHERE " + CONFIG_1_col_1 + "=" + "'"+codigo+"'", null);
-            res.moveToFirst();
-            valor = res.getString(0);
-        }
+            valorNumerico = valorNumerico*multiplicador;
+
+            if (valorNumerico - valorNumerico.intValue() == 0){
+                Integer valorInt;
+                valorInt = valorNumerico.intValue();
+                valor = Integer.toString(valorInt);
+            }
+            else{
+                valor = Double.toString(valorNumerico);}
+            }
 
         return valor;
     }
@@ -435,7 +464,26 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         return label;
     }
 
-    public String getValorDisplay(String codigo, String valor) {
+    public Double getMultiplicadorDisplay(String codigo) {
+        Cursor res;
+        String multiplicador;
+        Double multiplicadornumerico;
+        SQLiteDatabase db = this.getWritableDatabase();
+        res = db.rawQuery("SELECT "+ DISPLAY_1_col_16 + " FROM " + DISPLAY_1_TABLE_NAME + " WHERE " + DISPLAY_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(res));
+        multiplicador = res.getString(0);
+        if (multiplicador==null){
+            multiplicador="1.0";
+            multiplicadornumerico = Double.valueOf(multiplicador);
+        }
+        else {
+            multiplicadornumerico = Double.valueOf(multiplicador);
+        }
+        return multiplicadornumerico;
+    }
+
+    public String getValorDisplay(String codigo, String valor, Double multiplicador) {
         Cursor res;
         String flagTexto;
 
@@ -447,22 +495,21 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         if (flagTexto == null){
         }
         else {
-            int valorNumerico;
-            valorNumerico = Integer.valueOf(valor);
+            Double valorNumerico;
+            valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico + 1;
-            valor = Integer.toString(valorNumerico);
-            res = db.rawQuery("SELECT "+ "texto_" + valor + " FROM " + DISPLAY_1_TABLE_NAME + " WHERE " + DISPLAY_1_col_1 + "=" + "'"+codigo+"'", null);
-            res.moveToFirst();
-            valor = res.getString(0);
+            valorNumerico = valorNumerico*multiplicador;
+
+            if (valorNumerico - valorNumerico.intValue() == 0){
+                Integer valorInt;
+                valorInt = valorNumerico.intValue();
+                valor = Integer.toString(valorInt);
+            }
+            else{
+                valor = Double.toString(valorNumerico);}
         }
 
         return valor;
     }
-
-
-
-
-
-
 
 }

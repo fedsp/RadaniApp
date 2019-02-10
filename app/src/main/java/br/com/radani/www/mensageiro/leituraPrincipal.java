@@ -1065,7 +1065,6 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
         String tipoDado;
         String label;
         String tipoSequencia;
-//        Double multiplicador;
 
         String msg = rx.getStringValue(0);
         rindex = rindex + msg.length();
@@ -1083,6 +1082,7 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                     writeLine("Param:"+hexatual);
                     Double multiplicador;
                     multiplicador = meuBanco.getMultiplicadorParametro(codigo);
+                    writeLine("Param:"+multiplicador+"valor:"+valor);
                     label = meuBanco.getLabelParametro(codigo);
                     valor = meuBanco.getValorParametro(codigo,valor,multiplicador);
 
@@ -1179,8 +1179,11 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
             else if (tipoDado.equals("6")) {
                 if (!header.equals("19")) {
                     writeLine("Config:"+hexatual);
+                    double multiplicador;
+                    multiplicador = meuBanco.getMultiplicadorConfig(codigo);
                     label = meuBanco.getLabelConfig(codigo);
-                    valor = meuBanco.getValorConfig(codigo,valor);
+                    valor = meuBanco.getValorConfig(codigo,valor,multiplicador);
+
                     bundletodosDados.putString(codigo+"L",label);
                     bundletodosDados.putString(codigo+"V",valor);
                     //            meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -1194,8 +1197,11 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
             else if (tipoDado.equals("7")) {
                 if (!header.equals("19")) {
                     writeLine("Display:"+hexatual);
+                    double multiplicador;
+                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
                     label = meuBanco.getLabelDisplay(codigo);
-                    valor = meuBanco.getValorDisplay(codigo,valor);
+                    valor = meuBanco.getValorDisplay(codigo,valor,multiplicador);
+
                     bundletodosDados.putString(codigo+"L",label);
                     bundletodosDados.putString(codigo+"V",valor);
                     //            meuBanco.insertData_DISPLAY_ATUAL(codigo,valor);
