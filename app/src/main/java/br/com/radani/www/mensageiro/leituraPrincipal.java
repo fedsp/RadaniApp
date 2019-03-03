@@ -1086,6 +1086,7 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                     multiplicador = meuBanco.getMultiplicadorParametro(codigo);
                     label = meuBanco.getLabelParametro(codigo);
                     valor = meuBanco.getValorParametro(codigo,valor,multiplicador);
+                    bundletodosDados.putString(codigo+"U",unidade);
                     bundletodosDados.putString(codigo+"L",label);
                     bundletodosDados.putString(codigo+"V",valor);
                     //            meuBanco.insertData_PARAM_ATUAL(codigo,valor);
