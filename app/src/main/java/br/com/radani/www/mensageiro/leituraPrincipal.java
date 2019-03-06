@@ -251,12 +251,12 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
 
         // cria tabela de DISPLAY 1 já com valores
         meuBanco.insertData_DISPLAY_1("D00","Contador",null,null,null, "Producao", "Lote de Pecas", null, null, null, null, null, null,null,null,null);
-        meuBanco.insertData_DISPLAY_1("D01","Valor Lote", 1.0, 9999.0, 1.0,null, null, null, null, null, null, null, null,null,"uni",1.0);
-        meuBanco.insertData_DISPLAY_1("D02","Val. Parada", 0.0, 8000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni",1.0);
-        meuBanco.insertData_DISPLAY_1("D03","Tol. Parada", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni",10.0);
+        meuBanco.insertData_DISPLAY_1("D01","Valor Lote", 1.0, 9999.0, 1.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
+        meuBanco.insertData_DISPLAY_1("D02","Val. Parada", 0.0, 8000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
+        meuBanco.insertData_DISPLAY_1("D03","Tol. Parada", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",10.0);
         meuBanco.insertData_DISPLAY_1("D04","Produtiv.",null,null,null, "Pecas/Hora", "Pecas/Min", null, null, null, null, null, null,null,null,null);
         meuBanco.insertData_DISPLAY_1("D05","Info Linha",null,null,null, "Nenhuma", "Qtd.Pecas Lote", "Qtd.Pecas Prog", "Passo Seq.", "Tempo T0", "Tempo T1", "Tmp. Ent. Ciclos", "Tmp. Do Ciclo","Nr. da Receita",null,null);
-        meuBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni",null);
+        meuBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",null);
 
         // cria 32 linhas iniciais na tabela de parametro atual com os ID's
         for (int i = 0; i < 32; i++){
@@ -314,16 +314,13 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
 
 
 
-
-
-
-            // Grab references to UI elements.
+            // Referencia aos elementos visuais na tela
             messages = (TextView) findViewById(R.id.messages);
             input = (EditText) findViewById(R.id.input);
             input.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
             input.setFilters(new InputFilter[]{new Utils.InputFilterHex()});
 
-            // Enable auto-scroll in the TextView
+            // Habilita auto scroll na text view
             messages.setMovementMethod(new ScrollingMovementMethod());
 
             connect = (Button) findViewById(R.id.connect);
@@ -421,7 +418,8 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
             @Override
             public void run() {
                 connect = (Button) findViewById(R.id.connect);
-                connect.setText(R.string.send);
+                //connect.setText(R.string.send);
+                connect.setEnabled(false);
 
                 // Pedido de valores de parâmetros
                 sharedData.setValue(true);
@@ -1031,11 +1029,15 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
     @Override
     public void onDisconnected(Context context) {
         //when device disconnected.
+
         writeLine("Disconnected!");
+
         // update the send button text to connect
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                Toast.makeText(getApplicationContext(),"Erro ao tentar conectar. Por favor tente novamente.", Toast.LENGTH_SHORT).show();
                 connect = (Button)findViewById(R.id.connect);
                 connect.setText(R.string.connect);
             }
@@ -1181,10 +1183,13 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 if (!header.equals("19")) {
                     writeLine("Config:"+hexatual);
                     double multiplicador;
+                    String unidade;
+                    unidade = meuBanco.getUnidadeConfig(codigo);
                     multiplicador = meuBanco.getMultiplicadorConfig(codigo);
                     label = meuBanco.getLabelConfig(codigo);
                     valor = meuBanco.getValorConfig(codigo,valor,multiplicador);
 
+                    bundletodosDados.putString(codigo+"U",unidade);
                     bundletodosDados.putString(codigo+"L",label);
                     bundletodosDados.putString(codigo+"V",valor);
                     //            meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -1199,10 +1204,13 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 if (!header.equals("19")) {
                     writeLine("Display:"+hexatual);
                     double multiplicador;
+                    String unidade;
                     multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
                     label = meuBanco.getLabelDisplay(codigo);
                     valor = meuBanco.getValorDisplay(codigo,valor,multiplicador);
+                    unidade = meuBanco.getUnidadeDisplay(codigo);
 
+                    bundletodosDados.putString(codigo+"U",unidade);
                     bundletodosDados.putString(codigo+"L",label);
                     bundletodosDados.putString(codigo+"V",valor);
                     //            meuBanco.insertData_DISPLAY_ATUAL(codigo,valor);

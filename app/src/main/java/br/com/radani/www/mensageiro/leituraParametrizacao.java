@@ -4,26 +4,28 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 
 
 public class leituraParametrizacao extends Fragment {
     private static final String TAG = "leituraParametrizacao";
-    public TextView messagesParametrizacao;
     public Bundle dadosTotais;
+    private ListView listView;
+    private ListaLeituraAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.leitura_parametrizacao,container,false);
-        messagesParametrizacao = view.findViewById(R.id.messagesParametros);
-        messagesParametrizacao.setMovementMethod((new ScrollingMovementMethod()));
+        ArrayList<Frases> listaParametro;
+        listaParametro = new ArrayList<>();
+
         if (dadosTotais != null) {
             for (String key: dadosTotais.keySet())
             {
@@ -46,23 +48,23 @@ public class leituraParametrizacao extends Fragment {
                         valor_atual = dadosTotais.getString(key_valor);
                         unidade_atual = dadosTotais.getString(key_unidade);
                         if (unidade_atual!=null) {
-                            messagesParametrizacao.append("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n");
+                           listaParametro.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
                         }
                         else {
-                            messagesParametrizacao.append("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n");
+                           listaParametro.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n"));
                         }
                     }
                     else {}
-
-
                 }
                 else {}
 
             }
         }
+        listView = view.findViewById(R.id.lista_parametros);
+        mAdapter = new ListaLeituraAdapter(getActivity(),listaParametro);
+        listView.setAdapter(mAdapter);
         return view;
     }
-
 
     public void escreveParametros(Bundle dados) {
         if (dados != null) {

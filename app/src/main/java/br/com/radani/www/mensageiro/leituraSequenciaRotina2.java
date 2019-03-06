@@ -9,44 +9,57 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class leituraSequenciaRotina2 extends Fragment {
     private static final String TAG = "leituraSequenciaRotina2";
-    public TextView messageSequenciaRotina2;
     public Bundle dadosTotais;
+    private ListView listView;
+    private ListaLeituraAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.leitura_sequencia_rotina_2,container,false);
-        messageSequenciaRotina2 = view.findViewById(R.id.messagesSequenciaRotina2);
-        messageSequenciaRotina2.setMovementMethod((new ScrollingMovementMethod()));
+        View view = inflater.inflate(R.layout.leitura_sequencia_rotina_2, container, false);
+        ArrayList<Frases> listaSequenciaRotina2;
+        listaSequenciaRotina2 = new ArrayList<>();
         if (dadosTotais != null) {
             for (String key : dadosTotais.keySet()) {
                 String tipoDado;
                 String labelOuValor;
-                tipoDado = key.substring(0,2);
-
-                if (tipoDado.equals("S2")) {
-                    labelOuValor = key.substring(4,5);
+                tipoDado = key.substring(0, 2);
+                String valor_atual = "123";
+                String key_valor = "SC" + key.substring(1, 3) + "V";
+                if (tipoDado.equals("SC")) {
+                    labelOuValor = key.substring(4, 5);
+                    valor_atual = dadosTotais.getString(key_valor);
                     if (labelOuValor.equals("L")) {
                         String passo;
-                        passo = key.substring(0,1)+key.substring(2,4);
-                        messageSequenciaRotina2.append("["+passo+"] ");
-                        messageSequenciaRotina2.append(dadosTotais.getString(key));
+                        passo = key.substring(0, 1) + key.substring(2, 4);
+                        if (valor_atual != null) {
+                            listaSequenciaRotina2.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                        } else {
+                            listaSequenciaRotina2.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                        }
                     }
-                    else if (labelOuValor.equals("V")) {
-                        messageSequenciaRotina2.append(dadosTotais.getString(key)+"\n");
+                    else {
                     }
-                    else {messageSequenciaRotina2.append("[Dado inválido]");}
                 }
-                else {}
+                else {
+                }
             }
         }
+        else {
+        }
+        listView = view.findViewById(R.id.lista_seq_rot_2);
+        mAdapter = new ListaLeituraAdapter(getActivity(), listaSequenciaRotina2);
+        listView.setAdapter(mAdapter);
         return view;
-    }
 
+    }
     public void escreveSequenciaRotina2(Bundle dados) {
         if (dados != null) {
             for (String key : dados.keySet()) {

@@ -4,29 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSequenciaRotina2">
+    android:background="@color/background">
     <RelativeLayout android:layout_height="match_parent" android:layout_width="match_parent">
 
         <TextView
             android:id="@+id/titulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"
-            android:text="Sequência Rotina 2 \n" />
-
-        <TextView
-            android:id="@+id/messagesSequenciaRotina2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:layout_below="@id/titulo"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="vertical"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:background="#F0F0F0"
+            android:text="Sequência Rotina 2 \n" />
+
+
+
+        <ListView
+            android:id="@+id/lista_seq_rot_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/titulo"/>
+
 
     </RelativeLayout>
 

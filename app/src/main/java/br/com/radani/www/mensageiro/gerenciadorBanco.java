@@ -410,18 +410,31 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         return valor;
     }
 
-    // obtém dados da tabela mestre de Configurações 1
+    // obtém unidades da tabela mestre de Parâmetros 1
+    public String getUnidadeConfig(String codigo) {
+        Cursor res;
+        String unidade;
+        SQLiteDatabase db = this.getWritableDatabase();
+        res = db.rawQuery("SELECT "+ CONFIG_1_col_14 + " FROM " + CONFIG_1_TABLE_NAME + " WHERE " + CONFIG_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        unidade = res.getString(0);
+        return unidade;
+    }
+
+
+
+    // obtém labels da tabela mestre de Configurações 1
     public String getLabelConfig(String codigo) {
         Cursor res;
         String label;
         SQLiteDatabase db = this.getWritableDatabase();
         res = db.rawQuery("SELECT "+ CONFIG_1_col_2 + " FROM " + CONFIG_1_TABLE_NAME + " WHERE " + CONFIG_1_col_1 + "=" + "'"+codigo+"'", null);
         res.moveToFirst();
-        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(res));
         label = res.getString(0);
         return label;
     }
 
+    // obtém multiplicador da tabela mestre de Configurações 1
     public Double getMultiplicadorConfig(String codigo) {
         Cursor res;
         String multiplicador;
@@ -429,7 +442,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         res = db.rawQuery("SELECT "+ CONFIG_1_col_15 + " FROM " + CONFIG_1_TABLE_NAME + " WHERE " + CONFIG_1_col_1 + "=" + "'"+codigo+"'", null);
         res.moveToFirst();
-        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(res));
         multiplicador = res.getString(0);
         if (multiplicador==null){
             multiplicador="1.0";
@@ -441,6 +453,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         return multiplicadornumerico;
     }
 
+    // obtém valor da tabela mestre de Configurações 1
     public String getValorConfig(String codigo, String valor, Double multiplicador) {
         Cursor res;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -473,7 +486,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         return valor;
     }
 
-    // obtém dados da tabela mestre de Display 1
+    // obtém label da tabela mestre de Display 1
     public String getLabelDisplay(String codigo) {
         Cursor res;
         String label;
@@ -484,6 +497,18 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         return label;
     }
 
+    // obtém unidade de medida da tabela mestre de Display 1
+    public String getUnidadeDisplay(String codigo) {
+        Cursor res;
+        String label;
+        SQLiteDatabase db = this.getWritableDatabase();
+        res = db.rawQuery("SELECT "+ DISPLAY_1_col_15 + " FROM " + DISPLAY_1_TABLE_NAME + " WHERE " + DISPLAY_1_col_1 + "=" + "'"+codigo+"'", null);
+        res.moveToFirst();
+        label = res.getString(0);
+        return label;
+    }
+
+    // obtém dados da tabela mestre de Display 1
     public Double getMultiplicadorDisplay(String codigo) {
         Cursor res;
         String multiplicador;

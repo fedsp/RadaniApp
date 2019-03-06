@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="br.com.radani.www.mensageiro.MainActivity">
+    tools:context="br.com.radani.www.mensageiro.leituraPrincipal">
 
     <RelativeLayout android:layout_height="match_parent"
         android:layout_width="match_parent">
@@ -22,16 +22,16 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_below="@id/tabs"
-        android:layout_height="500px"
+        android:layout_height="400dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
 
-
+<!--Bloco com o texto recebido pela placa-->
     <TextView
         android:id="@+id/messages"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="0dp"
         android:background="@color/colorAccent"
         android:fontFamily="monospace"
         android:scrollbarAlwaysDrawVerticalTrack="true"
@@ -39,11 +39,12 @@
         android:layout_below="@id/container"
         />
 
+     <!--Bloco com a caixa de texto para mandar mensagens(Oculto com 0dp)   -->
     <EditText
         android:id="@+id/input"
         android:layout_marginRight="130dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/colorPrimaryDark"
         android:layout_below="@id/messages"
         />
@@ -53,7 +54,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="260dp"
+        android:layout_marginLeft="0dp"
         android:focusable="true"
         android:text="connect"
         android:textColor="@color/colorContent"

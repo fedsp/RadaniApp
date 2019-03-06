@@ -15,6 +15,13 @@
     <color name="colorSequenciaFinal">#ff9999</color>
     <color name="colorSequenciaRotina1">#cccc00</color>
     <color name="colorSequenciaRotina2">#009933</color>
+    <color name="gray">#C0C0C0</color>
+    <color name="gradient_start">#F0F0F0</color>
+    <color name="gradient_middle">#F0F0F0</color>
+    <color name="gradient_end">#808080</color>
+    <color name="background">#808080</color>
+
+
 
 
 
