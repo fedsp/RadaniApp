@@ -36,13 +36,13 @@ public class leituraConfiguracao extends Fragment {
                 String tipoDado;
                 String labelOuValor;
                 String valor_atual = "123";
-                String key_valor = "P"+key.substring(1,3)+"V";
+                String key_valor = "C"+key.substring(1,3)+"V";
                 String label_atual = "ABC";
                 String unidade_atual = "XYZ";
-                String key_unidade = "P"+key.substring(1,3)+"U";
+                String key_unidade = "C"+key.substring(1,3)+"U";
                 tipoDado = key.substring(0,1);
                 labelOuValor = key.substring(3,4);
-                if (tipoDado.equals("P")) {
+                if (tipoDado.equals("C")) {
                     if (labelOuValor.equals("L")) {
                         label_atual = dadosTotais.getString(key);
                         valor_atual = dadosTotais.getString(key_valor);

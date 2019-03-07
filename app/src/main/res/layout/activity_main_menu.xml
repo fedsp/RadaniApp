@@ -24,61 +24,50 @@
 
     <TextView
         android:id="@+id/tituloMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="165dp"
+        android:layout_height="45dp"
         android:layout_below="@+id/container_foto"
         android:layout_centerHorizontal="true"
-        android:textSize="40dp"
-        android:text="Radani App" />
+        android:text="Radani App"
+        android:textSize="30dp" />
 
 
     <Button
+
         android:id="@+id/botao_leitura"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tituloMain"
-        android:text="Ler dados da Placa"
         android:onClick="vaiparaleitura"
-        android:background="@android:color/transparent"
-        android:drawableTop="@drawable/bot_leitura" />
+        android:background="@drawable/bot_leitura_selector" />
 
     <Button
         android:id="@+id/botao_edicao"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="40dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tituloMain"
-        android:text="Editar dados da Placa"
-        android:background="@android:color/transparent"
-        android:drawableTop="@drawable/bot_escrita" />
+        android:background="@drawable/bot_escrita_selector"/>
 
     <Button
     android:id="@+id/botao_galeria"
-    android:layout_width="100dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="30dp"
-    android:layout_marginLeft="50dp"
+        android:layout_marginLeft="38dp"
     android:layout_alignParentLeft="true"
-    android:layout_below="@+id/botao_leitura"
-    android:text="Galeria de dados"
-    android:background="@android:color/transparent"
-    android:drawableTop="@drawable/bot_galeria" />
+        android:layout_below="@+id/botao_leitura"
+    android:background="@drawable/bot_galeria_selector"/>
 
     <Button
         android:id="@+id/botao_estatistica"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="40dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/botao_leitura"
-        android:text="Dados Estatísticos"
-        android:background="@android:color/transparent"
-        android:drawableTop="@drawable/but_estatistica" />
+        android:layout_below="@+id/botao_edicao"
+        android:background="@drawable/but_estatistica_selector" />
 
 </RelativeLayout>

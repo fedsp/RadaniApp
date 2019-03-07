@@ -32,7 +32,7 @@ public class leituraSequenciaCiclica extends Fragment {
                 String labelOuValor;
                 tipoDado = key.substring(0, 2);
                 String valor_atual = "123";
-                String key_valor = "SC" + key.substring(1, 3) + "V";
+                String key_valor = "SC" + key.substring(2, 4) + "V";
                 if (tipoDado.equals("SC")) {
                     labelOuValor = key.substring(4, 5);
                     valor_atual = dadosTotais.getString(key_valor);
@@ -41,8 +41,9 @@ public class leituraSequenciaCiclica extends Fragment {
                         passo = key.substring(0, 1) + key.substring(2, 4);
                         if (valor_atual != null) {
                             listaSequenciaCiclica.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+
                         } else {
-                            listaSequenciaCiclica.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                            listaSequenciaCiclica.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key))));
                         }
                     }
                     else {

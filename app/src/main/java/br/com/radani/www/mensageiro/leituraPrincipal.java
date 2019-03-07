@@ -1,7 +1,6 @@
 package br.com.radani.www.mensageiro;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -15,9 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentContainer;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
@@ -31,6 +27,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.concurrent.TimeUnit;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 
 
@@ -45,7 +43,7 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
     private EditText input;
     private Button   connect;
     private static final String TAG2 = "MainActivity";
-    final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    final android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
 
     private SectionsPageAdapter mSectionsPageAdapter;
 
@@ -198,13 +196,6 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        leituraParametrizacao leitura = new leituraParametrizacao();
-    // Passando um link
-        String link = "google.com";
-        Bundle bundleteste = new Bundle();
-        bundleteste.putString("link", link);
-        leitura.setArguments(bundleteste);
-
         meuBanco = new gerenciadorBanco(this);
         query = gerenciadorBanco.retornaquery(query);
 
@@ -256,7 +247,8 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
         meuBanco.insertData_DISPLAY_1("D03","Tol. Parada", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",10.0);
         meuBanco.insertData_DISPLAY_1("D04","Produtiv.",null,null,null, "Pecas/Hora", "Pecas/Min", null, null, null, null, null, null,null,null,null);
         meuBanco.insertData_DISPLAY_1("D05","Info Linha",null,null,null, "Nenhuma", "Qtd.Pecas Lote", "Qtd.Pecas Prog", "Passo Seq.", "Tempo T0", "Tempo T1", "Tmp. Ent. Ciclos", "Tmp. Do Ciclo","Nr. da Receita",null,null);
-        meuBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",null);
+        meuBanco.insertData_DISPLAY_1("D06","Display Dummy1", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
+        meuBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
 
         // cria 32 linhas iniciais na tabela de parametro atual com os ID's
         for (int i = 0; i < 32; i++){
@@ -309,6 +301,9 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
 
         super.onCreate(savedInstanceState);
 
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.minilogo);
             setContentView(R.layout.activity_main);
             mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
@@ -329,6 +324,9 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
             // bind and start the bluetooth service
             Intent bindIntent = new Intent(this, BLeSerialPortService.class);
             bindService(bindIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+
+        Intent intent = new Intent(this, DeviceListActivity.class);
+        startActivityForResult(intent, REQUEST_DEVICE);
     }
 
     // OnResume, called right before UI is displayed.  Connect to the bluetooth device.
@@ -520,26 +518,26 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA64000D69")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000E6A")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64000F6B")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001074")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001175")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001276")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001377")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001470")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001571")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001672")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA64001773")));
-//                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000E6A")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64000F6B")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001074")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001175")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001276")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001377")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001470")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001571")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001672")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA64001773")));
+                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA6400187C")));
 //                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA6400197D")));
@@ -632,8 +630,8 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA74000377")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA74000470")));
-//                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA74000470")));
+                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA74000571")));
 //                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA74000672")));
@@ -665,10 +663,10 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA04000206")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA04000307")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA04000400")));
-//                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000307")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA04000400")));
+                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA04000501")));
 //                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA04000602")));
@@ -739,8 +737,8 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA14000410")));
                 sharedData.setValue(false);
-                serialPort.send(Utils.comando(controlePacotes("FA14000511")));
-                sharedData.setValue(false);
+//                serialPort.send(Utils.comando(controlePacotes("FA14000511")));
+//                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA14000612")));
 //                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA14000713")));
@@ -802,11 +800,11 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA24000226")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA24000327")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA24000420")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA24000521")));
+                serialPort.send(Utils.comando(controlePacotes("FA24000327")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000420")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA24000521")));
 //                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA24000622")));
 //                sharedData.setValue(false);
@@ -869,10 +867,10 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA34000236")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA34000337")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA34000430")));
-//                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000337")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA34000430")));
+                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA34000531")));
 //                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA34000632")));
@@ -936,11 +934,11 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                 sharedData.setValue(false);
                 serialPort.send(Utils.comando(controlePacotes("FA44000246")));
                 sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA44000347")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA44000440")));
-//                sharedData.setValue(false);
-//                serialPort.send(Utils.comando(controlePacotes("FA44000541")));
+                serialPort.send(Utils.comando(controlePacotes("FA44000347")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000440")));
+                sharedData.setValue(false);
+                serialPort.send(Utils.comando(controlePacotes("FA44000541")));
 //                sharedData.setValue(false);
 //                serialPort.send(Utils.comando(controlePacotes("FA44000642")));
 //                sharedData.setValue(false);

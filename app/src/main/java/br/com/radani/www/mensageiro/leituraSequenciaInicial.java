@@ -32,8 +32,8 @@ public class leituraSequenciaInicial extends Fragment {
                 String labelOuValor;
                 tipoDado = key.substring(0, 2);
                 String valor_atual = "123";
-                String key_valor = "SC" + key.substring(1, 3) + "V";
-                if (tipoDado.equals("SC")) {
+                String key_valor = "SI" + key.substring(2, 4) + "V";
+                if (tipoDado.equals("SI")) {
                     labelOuValor = key.substring(4, 5);
                     valor_atual = dadosTotais.getString(key_valor);
                     if (labelOuValor.equals("L")) {
@@ -42,7 +42,7 @@ public class leituraSequenciaInicial extends Fragment {
                         if (valor_atual != null) {
                             listaSequenciaInicial.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
                         } else {
-                            listaSequenciaInicial.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                            listaSequenciaInicial.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key))));
                         }
                     }
                     else {
