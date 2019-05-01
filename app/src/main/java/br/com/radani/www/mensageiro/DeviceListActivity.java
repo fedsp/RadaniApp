@@ -10,11 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DeviceListActivity extends AppCompatActivity {
+public class DeviceListActivity extends Activity {
     private final String TAG = DeviceListActivity.class.getSimpleName();
 
     private BluetoothAdapter mBluetoothAdapter;
@@ -47,10 +44,6 @@ public class DeviceListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.minilogo);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_device_list);
         scan_init();
