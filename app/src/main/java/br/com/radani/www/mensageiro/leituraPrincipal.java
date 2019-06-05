@@ -197,7 +197,6 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
 
 
         meuBanco = new gerenciadorBanco(this);
-        query = gerenciadorBanco.retornaquery(query);
 
         // cria tabela de parametros 1 já com valores
         meuBanco.insertData_PARAM_1("P00","Tmp.Ciclos",0.0,8.0,0.5, null, null, null, null, null, null, null, null,"s",0.1);
@@ -1251,6 +1250,7 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
                     showMessage(device.getName());
                 }
                 break;
+
             case REQUEST_ENABLE_BT:
                 // When the request to enable Bluetooth returns
                 if (resultCode == Activity.RESULT_OK) {
