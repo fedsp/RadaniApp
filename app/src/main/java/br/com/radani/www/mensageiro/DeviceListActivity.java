@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -184,25 +183,17 @@ public class DeviceListActivity extends Activity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            BluetoothDevice device = deviceList.get(position);
+            mBluetoothAdapter.stopLeScan(mLeScanCallback);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //codigo novo
-                Toast.makeText(getApplicationContext(),"Teste Versão", Toast.LENGTH_SHORT).show();
+            Bundle b = new Bundle();
+            b.putString(BluetoothDevice.EXTRA_DEVICE, deviceList.get(position).getAddress());
 
-            }
-            else {
-                BluetoothDevice device = deviceList.get(position);
-                mBluetoothAdapter.stopLeScan(mLeScanCallback);
-
-                Bundle b = new Bundle();
-                b.putString(BluetoothDevice.EXTRA_DEVICE, deviceList.get(position).getAddress());
-
-                Intent result = new Intent();
-                result.putExtras(b);
-                setResult(Activity.RESULT_OK, result);
-                showMessage(deviceList.get(position).getAddress());
-                finish();
-            }
+            Intent result = new Intent();
+            result.putExtras(b);
+            setResult(Activity.RESULT_OK, result);
+            showMessage(deviceList.get(position).getAddress());
+            finish();
         }
     };
 

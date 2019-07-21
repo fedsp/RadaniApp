@@ -7,13 +7,8 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
 
+/** Métodos auxiliares */
 
-
-
-/**
- * Métodos auxiliares
- * Created by sash0k on 29.01.14.
- */
 public class Utils {
     /**
      * Método geral para a saída de mensagens de depuração para o log
@@ -85,7 +80,7 @@ public class Utils {
 
 
     /**
-     * Modulo
+     * achar o Modulo de um valor
      */
     public static int mod(int x, int y) {
         int result = x % y;

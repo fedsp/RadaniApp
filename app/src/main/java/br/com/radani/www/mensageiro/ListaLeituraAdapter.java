@@ -18,7 +18,7 @@ public class ListaLeituraAdapter extends ArrayAdapter<Frases> {
     private Context mContext;
     private List<Frases> frasesList;
 
-    public ListaLeituraAdapter(@NonNull Context context, @LayoutRes ArrayList<Frases> list) {
+    public ListaLeituraAdapter(@NonNull Context context, ArrayList<Frases> list) {
         super(context, 0 , list);
         mContext = context;
         frasesList = list;

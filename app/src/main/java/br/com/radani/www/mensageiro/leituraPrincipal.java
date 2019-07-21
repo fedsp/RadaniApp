@@ -1,5 +1,6 @@
 package br.com.radani.www.mensageiro;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -14,6 +15,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
@@ -181,11 +184,11 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
             //Do something based on grantResults
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
-                Log.d(TAG, "coarse location permission granted");
+                Log.d(TAG, "Fine location permissão concedida");
             }
             else
             {
-                Log.d(TAG, "coarse location permission denied");
+                Log.d(TAG, "Fine location permissão negada");
             }
         }
     }
@@ -194,6 +197,37 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
     // Assim que main activity é criada
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        // Checar permissões
+        if (ContextCompat.checkSelfPermission(leituraPrincipal.this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(leituraPrincipal.this,
+                    Manifest.permission.READ_CONTACTS)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                //ActivityCompat.requestPermissions(leituraPrincipal.this,
+                //        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                //        MY_PERMISSIONS_REQUEST_FINE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+
+
 
 
         meuBanco = new gerenciadorBanco(this);
@@ -295,7 +329,7 @@ public class leituraPrincipal extends AppCompatActivity implements BLeSerialPort
         Log.d(TAG, "Request Location Permissions:");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
-            requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_CODE);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
         }
 
         super.onCreate(savedInstanceState);
