@@ -15,7 +15,7 @@ public class Utils {
      */
     public static void log(String message) {
         if (BuildConfig.DEBUG) {
-            if (message != null) Log.i(Const.TAG, message);
+            if (message != null) Log.i(Constants.TAG, message);
         }
     }
     // ============================================================================
@@ -114,7 +114,7 @@ public class Utils {
      */
     public static String getPrefence(Context context, String item) {
         final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        return settings.getString(item, Const.TAG);
+        return settings.getString(item, Constants.TAG);
     }
     // ============================================================================
 

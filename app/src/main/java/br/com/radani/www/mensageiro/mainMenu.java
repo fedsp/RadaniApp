@@ -1,14 +1,11 @@
 package br.com.radani.www.mensageiro;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class mainMenu extends AppCompatActivity {
+public class mainMenu extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +15,7 @@ public class mainMenu extends AppCompatActivity {
 
     public void vaiparaleitura(View view)
     {
-        Intent intent = new Intent(mainMenu.this, leituraPrincipal.class);
+        Intent intent = new Intent(mainMenu.this, DeviceListActivity.class);
         startActivity(intent);
     }
 

@@ -20,6 +20,8 @@
     <color name="gradient_middle">#F0F0F0</color>
     <color name="gradient_end">#808080</color>
     <color name="background">#808080</color>
+    <color name="colorSendText">#FF0000</color>
+
 
 
 
