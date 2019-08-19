@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,8 +19,6 @@
             android:background="#F0F0F0"
             android:text="Sequência Cíclica \n" />
 
-
-
         <ListView
             android:id="@+id/lista_seq_ciclica"
             android:layout_width="match_parent"
@@ -31,4 +29,4 @@
     </RelativeLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

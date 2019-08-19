@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class DeviceListActivity  extends ListActivity {
     private IntentFilter bleDiscoveryIntentFilter;
     private ArrayList<String> listItems = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    Button buttonScan;
 
     public DeviceListActivity() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -65,15 +67,21 @@ public class DeviceListActivity  extends ListActivity {
         adapter = new ArrayAdapter<>(this, R.layout.device_list_items, listItems);
         setListAdapter(adapter); //Fill List
         Toast.makeText(getApplicationContext(),"Inicializando", Toast.LENGTH_SHORT).show();
+        final Button buttonScan = findViewById(R.id.scanButton);
+        buttonScan.setText("SCAN");
+        buttonScan.setOnClickListener(v -> {
+            if (buttonScan.getText()=="SCAN"){
+                buttonScan.setText("STOP");
+                startScan();
+            }
+            else {
+                buttonScan.setText("SCAN");
+                startScan();
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_devices, menu);
-        return true;
-    }
-
-    @Override
+        @Override
     public void onResume() {
         super.onResume();
         registerReceiver(bleDiscoveryBroadcastReceiver, bleDiscoveryIntentFilter);
@@ -82,7 +90,7 @@ public class DeviceListActivity  extends ListActivity {
         else if(!mBluetoothAdapter.isEnabled())
             Toast.makeText(getApplicationContext(), "Por favor ative o bluetooth antes de iniciar o APP", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(getApplicationContext(),"Acesse o menu-> SCAN para encontrar novos dispositivos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Aperte SCAN para encontrar novos dispositivos", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -92,24 +100,6 @@ public class DeviceListActivity  extends ListActivity {
         this.unregisterReceiver(bleDiscoveryBroadcastReceiver);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.ble_scan) {
-            startScan();
-            return true;
-        } else if (id == R.id.ble_scan_stop) {
-            stopScan();
-            return true;
-        } else if (id == R.id.bt_settings) {
-            Intent intent = new Intent();
-            intent.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-            startActivity(intent);
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
 
     private void startScan() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

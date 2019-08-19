@@ -5,23 +5,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-/**
- * Created by Chirag on 30-Jul-17.
- */
 
 public class SectionsPageAdapter extends FragmentStatePagerAdapter {
 
-    int mNoOfTabs;
 
-    public PagerAdapter(FragmentManager fm, int NumberOfTabs)
-    {
+    public SectionsPageAdapter(FragmentManager fm) {
         super(fm);
-        this.mNoOfTabs = NumberOfTabs;
     }
-
 
     @Override
     public Fragment getItem(int position) {
+        Fragment fragment = null;
         switch(position)
         {
 
@@ -44,12 +38,12 @@ public class SectionsPageAdapter extends FragmentStatePagerAdapter {
             case 8:
                 return new leituraSequenciaRotina2();
             default:
-                return null;
+                return fragment;
         }
     }
 
     @Override
     public int getCount() {
-        return mNoOfTabs;
+        return 9;
     }
 }
