@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Process;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -74,9 +75,12 @@ public class DeviceListActivity  extends ListActivity {
                 buttonScan.setText("STOP");
                 startScan();
             }
-            else {
+            if (buttonScan.getText()=="STOP"){
                 buttonScan.setText("SCAN");
                 startScan();
+            }
+            else {
+                finish();
             }
         });
     }
@@ -87,8 +91,10 @@ public class DeviceListActivity  extends ListActivity {
         registerReceiver(bleDiscoveryBroadcastReceiver, bleDiscoveryIntentFilter);
         if(mBluetoothAdapter == null || !getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE))
             Toast.makeText(getApplicationContext(),"Bluetooth LE não suportado", Toast.LENGTH_SHORT).show();
-        else if(!mBluetoothAdapter.isEnabled())
-            Toast.makeText(getApplicationContext(), "Por favor ative o bluetooth antes de iniciar o APP", Toast.LENGTH_SHORT).show();
+        else if(!mBluetoothAdapter.isEnabled()) {
+            listItems.add("Por favor reinicie o Radani App com o bluetooth ativado. ");
+            //buttonScan.setText("FECHAR APP");
+        }
         else
             Toast.makeText(getApplicationContext(),"Aperte SCAN para encontrar novos dispositivos", Toast.LENGTH_SHORT).show();
     }
@@ -147,6 +153,12 @@ public class DeviceListActivity  extends ListActivity {
     //    Toast.makeText(getApplicationContext(),"Nenhum dispositivo encontrado", Toast.LENGTH_SHORT).show();
         mBluetoothAdapter.cancelDiscovery();
     }
+
+    public void onDestroy() {
+        Process.killProcess(Process.myPid());
+       super.onDestroy();
+    }
+
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
