@@ -92,8 +92,8 @@ public class DeviceListActivity  extends ListActivity {
         if(mBluetoothAdapter == null || !getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE))
             Toast.makeText(getApplicationContext(),"Bluetooth LE não suportado", Toast.LENGTH_SHORT).show();
         else if(!mBluetoothAdapter.isEnabled()) {
-            listItems.add("Por favor reinicie o Radani App com o bluetooth ativado. ");
-            //buttonScan.setText("FECHAR APP");
+            listItems.add("\n \n Por favor reinicie o Radani App com o bluetooth ativado. ");
+
         }
         else
             Toast.makeText(getApplicationContext(),"Aperte SCAN para encontrar novos dispositivos", Toast.LENGTH_SHORT).show();
@@ -162,18 +162,17 @@ public class DeviceListActivity  extends ListActivity {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        stopScan();
-        String adress = listItems.get(position);
-        adress = adress.substring(0, 17);
-        Bundle args = new Bundle();
-        args.putString("Endereço", adress);
-        Toast.makeText(getApplicationContext(), adress, Toast.LENGTH_SHORT).show();
-        Bundle b = new Bundle();
-        b.putString(BluetoothDevice.EXTRA_DEVICE, adress);
-        Intent result = new Intent();
-        result.putExtras(b);
-        Intent vaipraleitura = new Intent(DeviceListActivity.this, leitura.class);
-        startActivity(vaipraleitura);
+        if ((listItems.get(0))=="\n \n Por favor reinicie o Radani App com o bluetooth ativado. ") {
+            finish();
+        }
+        else {
+            stopScan();
+            String address = listItems.get(position);
+            address = address.substring(0, 17);
+            Intent vaipraleitura = new Intent(DeviceListActivity.this, leitura.class);
+            vaipraleitura.putExtra("address",address);
+            startActivity(vaipraleitura);
+        }
     }
 
 }
