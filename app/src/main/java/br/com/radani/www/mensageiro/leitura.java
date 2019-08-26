@@ -29,55 +29,54 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             texto_leitura_seqi,texto_leitura_seqc,texto_leitura_seqf,texto_leitura_seq1,texto_leitura_seq2;
     ViewPager viewPager;
     SectionsPageAdapter viewAdapter;
-    Globals sharedData = Globals.getInstance();
 
-    List<String> messages = Arrays.asList(",FA54000054",",FA54000155",",FA54000256",",FA54000357",
-            ",FA54000450",",FA54000551",",FA54000652",",FA54000753",",FA5400085C",",FA5400095D",
-            ",FA54000A5E",",FA54000B5F",",FA54000C58",",FA54000D59",",FA54000E5A",",FA54000F5B",
-            ",FA54001044",",FA54001145",",FA54001246",",FA54001347",",FA54001440",",FA54001541",
-            ",FA54001642",",FA54001743",",FA5400184C",",FA5400194D",",FA54001A4E",",FA54001B4F",
-            ",FA54001C48",",FA54001D49",",FA54001E4A",",FA54001F4B",",FA54002074",",FA64000064",
-            ",FA64000165",",FA64000266",",FA64000367",",FA64000460",",FA64000561",",FA64000662",
-            ",FA64000763",",FA6400086C",",FA6400096D",",FA64000A6E",",FA64000B6F",",FA64000C68",
-            ",FA64000D69",",FA64000E6A",",FA64000F6B",",FA64001074",",FA64001175",",FA64001276",
-            ",FA64001377",",FA64001470",",FA64001571",",FA64001672",",FA64001773",",FA6400187C",
-            ",FA6400197D",",FA64001A7E",",FA64001B7F",",FA64001C78",",FA64001D79",",FA64001E7A",
-            ",FA64001F7B",",FA64002044",",FA64002145",",FA64002246",",FA64002347",",FA64002440",
-            ",FA64002541",",FA64002642",",FA64002743",",FA6400284C",",FA6400294D",",FA64002A4E",
-            ",FA64002B4F",",FA64002C48",",FA64002D49",",FA64002E4A",",FA64002F4B",",FA64003054",
-            ",FA64003155",",FA64003256",",FA64003357",",FA64003450",",FA64003551",",FA64003652",
-            ",FA64003753",",FA6400385C",",FA6400395D",",FA64003A5E",",FA64003B5F",",FA64003C58",
-            ",FA64003D59",",FA64003E5A",",FA64003F5B",",FA64004024",",FA74000074",",FA74000175",
-            ",FA74000276",",FA74000377",",FA74000470",",FA74000571",",FA74000672",",FA74000773",
-            ",FA7400087C",",FA7400097D",",FA74001064",",FA74001165",",FA74001266",",FA74001367",
-            ",FA74001460",",FA74001561",",FA04000004",",FA04000105",",FA04000206",",FA04000307",
-            ",FA04000400",",FA04000501",",FA04000602",",FA04000703",",FA0400080C",",FA0400090D",
-            ",FA04000A0E",",FA04000B0F",",FA04000C08",",FA04000D09",",FA04000E0A",",FA04000F0B",
-            ",FA04001014",",FA04001115",",FA04001216",",FA04001317",",FA04001410",",FA04001511",
-            ",FA04001612",",FA04001713",",FA0400181C",",FA0400191D",",FA04001A1E",",FA04001B1F",
-            ",FA04001C18",",FA04001D19",",FA04001E1A",",FA04001F1B",",FA04002024",",FA14000014",
-            ",FA14000115",",FA14000216",",FA14000317",",FA14000410",",FA14000511",",FA14000612",
-            ",FA14000713",",FA1400081C",",FA1400091D",",FA14000A1E",",FA14000B1F",",FA14000C18",
-            ",FA14000D19",",FA14000E1A",",FA14000F1B",",FA14001004",",FA14001105",",FA14001206",
-            ",FA14001307",",FA14001400",",FA14001501",",FA14001602",",FA14001703",",FA1400180C",
-            ",FA1400190D",",FA14001A0E",",FA14001B0F",",FA14001C08",",FA14001D09",",FA14001E0A",
-            ",FA14001F0B",",FA24000024",",FA24000125",",FA24000226",",FA24000327",",FA24000420",
-            ",FA24000521",",FA24000622",",FA24000723",",FA2400082C",",FA2400092D",",FA24000A2E",
-            ",FA24000B2F",",FA24000C28",",FA24000D29",",FA24000E2A",",FA24000F2B",",FA24001034",
-            ",FA24001135",",FA24001236",",FA24001337",",FA24001430",",FA24001531",",FA24001632",
-            ",FA24001733",",FA2400183C",",FA2400193D",",FA24001A3E",",FA24001B3F",",FA24001C38",
-            ",FA24001D39",",FA24001E3A",",FA24001F3B",",FA34000034",",FA34000135",",FA34000236",
-            ",FA34000337",",FA34000430",",FA34000531",",FA34000632",",FA34000733",",FA3400083C",
-            ",FA3400093D",",FA34000A3E",",FA34000B3F",",FA34000C38",",FA34000D39",",FA34000E3A",
-            ",FA34000F3B",",FA34001024",",FA34001125",",FA34001226",",FA34001327",",FA34001420",
-            ",FA34001521",",FA34001622",",FA34001723",",FA3400182C",",FA3400192D",",FA34001A2E",
-            ",FA34001B2F",",FA34001C28",",FA34001D29",",FA34001E2A",",FA34001F2B",",FA44000044",
-            ",FA44000145",",FA44000246",",FA44000347",",FA44000440",",FA44000541",",FA44000642",
-            ",FA44000743",",FA4400084C",",FA4400094D",",FA44000A4E",",FA44000B4F",",FA44000C48",
-            ",FA44000D49",",FA44000E4A",",FA44000F4B",",FA44001054",",FA44001155",",FA44001256",
-            ",FA44001357",",FA44001450",",FA44001551",",FA44001652",",FA44001753",",FA4400185C",
-            ",FA4400195D",",FA44001A5E",",FA44001B5F",",FA44001C58",",FA44001D59",",FA44001E5A",
-            ",FA44001F5B");
+    List<String> pedidos = Arrays.asList("FA54000155","FA54000256","FA54000357",
+            "FA54000450","FA54000551","FA54000652","FA54000753","FA5400085C","FA5400095D",
+            "FA54000A5E","FA54000B5F","FA54000C58","FA54000D59","FA54000E5A","FA54000F5B",
+            "FA54001044","FA54001145","FA54001246","FA54001347","FA54001440","FA54001541",
+            "FA54001642","FA54001743","FA5400184C","FA5400194D","FA54001A4E","FA54001B4F",
+            "FA54001C48","FA54001D49","FA54001E4A","FA54001F4B","FA54002074","FA64000064",
+            "FA64000165","FA64000266","FA64000367","FA64000460","FA64000561","FA64000662",
+            "FA64000763","FA6400086C","FA6400096D","FA64000A6E","FA64000B6F","FA64000C68",
+            "FA64000D69","FA64000E6A","FA64000F6B","FA64001074","FA64001175","FA64001276",
+            "FA64001377","FA64001470","FA64001571","FA64001672","FA64001773","FA6400187C",
+            "FA6400197D","FA64001A7E","FA64001B7F","FA64001C78","FA64001D79","FA64001E7A",
+            "FA64001F7B","FA64002044","FA64002145","FA64002246","FA64002347","FA64002440",
+            "FA64002541","FA64002642","FA64002743","FA6400284C","FA6400294D","FA64002A4E",
+            "FA64002B4F","FA64002C48","FA64002D49","FA64002E4A","FA64002F4B","FA64003054",
+            "FA64003155","FA64003256","FA64003357","FA64003450","FA64003551","FA64003652",
+            "FA64003753","FA6400385C","FA6400395D","FA64003A5E","FA64003B5F","FA64003C58",
+            "FA64003D59","FA64003E5A","FA64003F5B","FA64004024","FA74000074","FA74000175",
+            "FA74000276","FA74000377","FA74000470","FA74000571","FA74000672","FA74000773",
+            "FA7400087C","FA7400097D","FA74001064","FA74001165","FA74001266","FA74001367",
+            "FA74001460","FA74001561","FA04000004","FA04000105","FA04000206","FA04000307",
+            "FA04000400","FA04000501","FA04000602","FA04000703","FA0400080C","FA0400090D",
+            "FA04000A0E","FA04000B0F","FA04000C08","FA04000D09","FA04000E0A","FA04000F0B",
+            "FA04001014","FA04001115","FA04001216","FA04001317","FA04001410","FA04001511",
+            "FA04001612","FA04001713","FA0400181C","FA0400191D","FA04001A1E","FA04001B1F",
+            "FA04001C18","FA04001D19","FA04001E1A","FA04001F1B","FA04002024","FA14000014",
+            "FA14000115","FA14000216","FA14000317","FA14000410","FA14000511","FA14000612",
+            "FA14000713","FA1400081C","FA1400091D","FA14000A1E","FA14000B1F","FA14000C18",
+            "FA14000D19","FA14000E1A","FA14000F1B","FA14001004","FA14001105","FA14001206",
+            "FA14001307","FA14001400","FA14001501","FA14001602","FA14001703","FA1400180C",
+            "FA1400190D","FA14001A0E","FA14001B0F","FA14001C08","FA14001D09","FA14001E0A",
+            "FA14001F0B","FA24000024","FA24000125","FA24000226","FA24000327","FA24000420",
+            "FA24000521","FA24000622","FA24000723","FA2400082C","FA2400092D","FA24000A2E",
+            "FA24000B2F","FA24000C28","FA24000D29","FA24000E2A","FA24000F2B","FA24001034",
+            "FA24001135","FA24001236","FA24001337","FA24001430","FA24001531","FA24001632",
+            "FA24001733","FA2400183C","FA2400193D","FA24001A3E","FA24001B3F","FA24001C38",
+            "FA24001D39","FA24001E3A","FA24001F3B","FA34000034","FA34000135","FA34000236",
+            "FA34000337","FA34000430","FA34000531","FA34000632","FA34000733","FA3400083C",
+            "FA3400093D","FA34000A3E","FA34000B3F","FA34000C38","FA34000D39","FA34000E3A",
+            "FA34000F3B","FA34001024","FA34001125","FA34001226","FA34001327","FA34001420",
+            "FA34001521","FA34001622","FA34001723","FA3400182C","FA3400192D","FA34001A2E",
+            "FA34001B2F","FA34001C28","FA34001D29","FA34001E2A","FA34001F2B","FA44000044",
+            "FA44000145","FA44000246","FA44000347","FA44000440","FA44000541","FA44000642",
+            "FA44000743","FA4400084C","FA4400094D","FA44000A4E","FA44000B4F","FA44000C48",
+            "FA44000D49","FA44000E4A","FA44000F4B","FA44001054","FA44001155","FA44001256",
+            "FA44001357","FA44001450","FA44001551","FA44001652","FA44001753","FA4400185C",
+            "FA4400195D","FA44001A5E","FA44001B5F","FA44001C58","FA44001D59","FA44001E5A",
+            "FA44001F5B");
 
     gerenciadorBanco meuBanco;
     Bundle bundletodosDados = new Bundle();
@@ -90,8 +89,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     private SerialService service;
     private boolean initialStart = true;
     private Connected connected = Connected.False;
-    private Integer contador;
-
+    private Integer contadorPedido=1;
+    private Integer limiteContadorPedido= pedidos.size();
 
 
 
@@ -367,9 +366,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo+"L",label);
                 bundletodosDados.putString(codigo+"V",valor);
                 //meuBanco.insertData_PARAM_ATUAL(codigo,valor);
-                sharedData.setValue(true);
             } else {
-                sharedData.setValue(true);
             }
         }
 
@@ -381,9 +378,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo+"L",label);
                 bundletodosDados.putString(codigo+"V",valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
-                sharedData.setValue(true);
             } else {
-                sharedData.setValue(true);
             }
         }
 
@@ -395,9 +390,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo+"L",label);
                 bundletodosDados.putString(codigo+"V",valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
-                sharedData.setValue(true);
             } else {
-                sharedData.setValue(true);
             }
         }
 
@@ -409,9 +402,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo+"L",label);
                 bundletodosDados.putString(codigo+"V",valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
-                sharedData.setValue(true);
             } else {
-                sharedData.setValue(true);
             }
         }
 
@@ -423,9 +414,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo+"L",label);
                 bundletodosDados.putString(codigo+"V",valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
-                sharedData.setValue(true);
-            } else {
-                sharedData.setValue(true);
             }
         }
 
@@ -437,9 +425,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo+"L",label);
                 bundletodosDados.putString(codigo+"V",valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
-                sharedData.setValue(true);
-            } else {
-                sharedData.setValue(true);
             }
         }
 
@@ -456,9 +441,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo+"L",label);
                 bundletodosDados.putString(codigo+"V",valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
-                sharedData.setValue(true);
-            } else {
-                sharedData.setValue(true);
             }
         }
 
@@ -475,13 +457,20 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo+"L",label);
                 bundletodosDados.putString(codigo+"V",valor);
                 //meuBanco.insertData_DISPLAY_ATUAL(codigo,valor);
-                sharedData.setValue(true);
-            } else {
-                sharedData.setValue(true);
             }
         }
-        Toast.makeText(getApplicationContext(),bundletodosDados.toString(), Toast.LENGTH_SHORT).show();
-    }
+
+        String pedido;
+        pedido = pedidos.get(contadorPedido);
+        contadorPedido = contadorPedido+1;
+            if (contadorPedido<limiteContadorPedido){
+                //Toast.makeText(getApplicationContext(),"Enviando pedido: "+pedido, Toast.LENGTH_SHORT).show();
+                send(Utils.comando(pedido));
+            }
+            else {
+                Toast.makeText(getApplicationContext(),bundletodosDados.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
 
     /*
      * SerialListener
@@ -492,11 +481,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             connected = Connected.True;
             Toast.makeText(getApplicationContext(), "Conexão bem sucedida", Toast.LENGTH_SHORT).show();
 
-            sharedData.setValue(true);
             // Pedido de valores de parâmetros
-            send(Utils.comando(controlePacotes("FA54000054")));
-
-
+            send(Utils.comando("FA54000054"));
     }
 
     @Override
@@ -507,7 +493,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     @Override
     public void onSerialRead(byte[] data) {
         receive(data);
-        sharedData.setValue(true);
     }
 
     @Override
@@ -515,18 +500,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         disconnect();
     }
 
-    public String controlePacotes(String comandotexto)
-    {
 
-        Boolean flagControle;
-        flagControle = sharedData.getValue();
-
-
-        while (!flagControle){
-            flagControle = sharedData.getValue();
-        }
-
-        return comandotexto;
-    }
 
 }
