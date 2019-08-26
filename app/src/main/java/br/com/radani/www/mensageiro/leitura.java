@@ -81,6 +81,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     gerenciadorBanco meuBanco;
     Bundle bundletodosDados = new Bundle();
 
+
     //Bluetooth connection variables
     private enum Connected { False, Pending, True }
     private String deviceAddress;
@@ -90,7 +91,10 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     private boolean initialStart = true;
     private Connected connected = Connected.False;
     private Integer contadorPedido=1;
-    private Integer limiteContadorPedido= pedidos.size();
+    private Integer limiteContadorPedido = pedidos.size();
+    private Double progresso =0.0;
+    private Long progressoInt;
+
 
 
 
@@ -343,14 +347,13 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         String tipoSequencia;
 
 
-
         byte[] msgbyte = data;
         hexatual = Utils.bytesToHex(msgbyte);
         Log.i("HEXATUAL RECEBIDO", hexatual);
         tipoDado = Utils.obterTipoDado(hexatual);
-        codigo = Utils.obterCodigo(hexatual,tipoDado);
+        codigo = Utils.obterCodigo(hexatual, tipoDado);
         header = Utils.obterHeader(hexatual);
-        valor = Utils.obterValor(hexatual,tipoDado);
+        valor = Utils.obterValor(hexatual, tipoDado);
         tipoSequencia = Utils.obterTipoSequencia(hexatual);
 
         //trata o dado recebido se for do tipo 'Parametro' (5)
@@ -361,10 +364,10 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 unidade = meuBanco.getUnidadeParametro(codigo);
                 multiplicador = meuBanco.getMultiplicadorParametro(codigo);
                 label = meuBanco.getLabelParametro(codigo);
-                valor = meuBanco.getValorParametro(codigo,valor,multiplicador);
-                bundletodosDados.putString(codigo+"U",unidade);
-                bundletodosDados.putString(codigo+"L",label);
-                bundletodosDados.putString(codigo+"V",valor);
+                valor = meuBanco.getValorParametro(codigo, valor, multiplicador);
+                bundletodosDados.putString(codigo + "U", unidade);
+                bundletodosDados.putString(codigo + "L", label);
+                bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_PARAM_ATUAL(codigo,valor);
             } else {
             }
@@ -375,8 +378,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             if (!header.equals("19")) {
                 label = Utils.obterLabelSequencia(tipoSequencia);
                 valor = Utils.obterValorSequencia(hexatual);
-                bundletodosDados.putString(codigo+"L",label);
-                bundletodosDados.putString(codigo+"V",valor);
+                bundletodosDados.putString(codigo + "L", label);
+                bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
@@ -387,8 +390,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             if (!header.equals("19")) {
                 label = Utils.obterLabelSequencia(tipoSequencia);
                 valor = Utils.obterValorSequencia(hexatual);
-                bundletodosDados.putString(codigo+"L",label);
-                bundletodosDados.putString(codigo+"V",valor);
+                bundletodosDados.putString(codigo + "L", label);
+                bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
@@ -399,8 +402,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             if (!header.equals("19")) {
                 label = Utils.obterLabelSequencia(tipoSequencia);
                 valor = Utils.obterValorSequencia(hexatual);
-                bundletodosDados.putString(codigo+"L",label);
-                bundletodosDados.putString(codigo+"V",valor);
+                bundletodosDados.putString(codigo + "L", label);
+                bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
@@ -411,8 +414,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             if (!header.equals("19")) {
                 label = Utils.obterLabelSequencia(tipoSequencia);
                 valor = Utils.obterValorSequencia(hexatual);
-                bundletodosDados.putString(codigo+"L",label);
-                bundletodosDados.putString(codigo+"V",valor);
+                bundletodosDados.putString(codigo + "L", label);
+                bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             }
         }
@@ -422,8 +425,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             if (!header.equals("19")) {
                 label = Utils.obterLabelSequencia(tipoSequencia);
                 valor = Utils.obterValorSequencia(hexatual);
-                bundletodosDados.putString(codigo+"L",label);
-                bundletodosDados.putString(codigo+"V",valor);
+                bundletodosDados.putString(codigo + "L", label);
+                bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             }
         }
@@ -436,10 +439,10 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 unidade = meuBanco.getUnidadeConfig(codigo);
                 multiplicador = meuBanco.getMultiplicadorConfig(codigo);
                 label = meuBanco.getLabelConfig(codigo);
-                valor = meuBanco.getValorConfig(codigo,valor,multiplicador);
-                bundletodosDados.putString(codigo+"U",unidade);
-                bundletodosDados.putString(codigo+"L",label);
-                bundletodosDados.putString(codigo+"V",valor);
+                valor = meuBanco.getValorConfig(codigo, valor, multiplicador);
+                bundletodosDados.putString(codigo + "U", unidade);
+                bundletodosDados.putString(codigo + "L", label);
+                bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             }
         }
@@ -451,27 +454,58 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 String unidade;
                 multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
                 label = meuBanco.getLabelDisplay(codigo);
-                valor = meuBanco.getValorDisplay(codigo,valor,multiplicador);
+                valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
                 unidade = meuBanco.getUnidadeDisplay(codigo);
-                bundletodosDados.putString(codigo+"U",unidade);
-                bundletodosDados.putString(codigo+"L",label);
-                bundletodosDados.putString(codigo+"V",valor);
+                bundletodosDados.putString(codigo + "U", unidade);
+                bundletodosDados.putString(codigo + "L", label);
+                bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_DISPLAY_ATUAL(codigo,valor);
             }
         }
 
         String pedido;
         pedido = pedidos.get(contadorPedido);
-        contadorPedido = contadorPedido+1;
-            if (contadorPedido<limiteContadorPedido){
-                //Toast.makeText(getApplicationContext(),"Enviando pedido: "+pedido, Toast.LENGTH_SHORT).show();
-                send(Utils.comando(pedido));
-            }
-            else {
-                Toast.makeText(getApplicationContext(),bundletodosDados.toString(), Toast.LENGTH_LONG).show();
-            }
-        }
+        contadorPedido = contadorPedido + 1;
+        if (contadorPedido < limiteContadorPedido) {
+            //Toast.makeText(getApplicationContext(),"Enviando pedido: "+pedido, Toast.LENGTH_SHORT).show();
+            send(Utils.comando(pedido));
+            progresso = contadorPedido.doubleValue()/limiteContadorPedido.doubleValue();
+            progresso = progresso*100;
+            progressoInt = Math.round(progresso);
 
+            if (progressoInt == 10 || progressoInt==11) {
+                Toast.makeText(getApplicationContext(), "10%", Toast.LENGTH_SHORT).show();
+            }
+            if (progressoInt == 20 || progressoInt==21) {
+                Toast.makeText(getApplicationContext(), "20%", Toast.LENGTH_SHORT).show();
+            }
+            if (progressoInt == 30 || progressoInt==31) {
+                Toast.makeText(getApplicationContext(), "30%", Toast.LENGTH_SHORT).show();
+            }
+            if (progressoInt == 40 || progressoInt==41) {
+                Toast.makeText(getApplicationContext(), "40%", Toast.LENGTH_SHORT).show();
+            }
+            if (progressoInt == 50 || progressoInt==51) {
+                Toast.makeText(getApplicationContext(), "50%", Toast.LENGTH_SHORT).show();
+            }
+            if (progressoInt == 60 || progressoInt==61) {
+                Toast.makeText(getApplicationContext(), "60%", Toast.LENGTH_SHORT).show();
+            }
+            if (progressoInt == 70 || progressoInt==71) {
+                Toast.makeText(getApplicationContext(), "70%", Toast.LENGTH_SHORT).show();
+            }
+            if (progressoInt == 80 || progressoInt==81) {
+                Toast.makeText(getApplicationContext(), "80%", Toast.LENGTH_SHORT).show();
+            }
+            if (progressoInt == 90 || progressoInt==91) {
+                Toast.makeText(getApplicationContext(), "90%", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        else {
+            Toast.makeText(getApplicationContext(), bundletodosDados.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
     /*
      * SerialListener
      */
