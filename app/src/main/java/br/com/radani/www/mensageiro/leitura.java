@@ -95,6 +95,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     private Double progresso =0.0;
     private Long progressoInt;
 
+    private Integer next_percent;
+
 
 
 
@@ -102,6 +104,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        next_percent=0;
         meuBanco = new gerenciadorBanco(this);
         // cria tabela de parametros 1 já com valores
         meuBanco.insertData_PARAM_1("P00","Tmp.Ciclos",0.0,8.0,0.5, null, null, null, null, null, null, null, null,"s",0.1);
@@ -473,32 +476,69 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             progresso = progresso*100;
             progressoInt = Math.round(progresso);
 
-            if (progressoInt == 10 || progressoInt==11) {
-                Toast.makeText(getApplicationContext(), "10%", Toast.LENGTH_SHORT).show();
+
+            if ((progressoInt == 10 || progressoInt==11)) {
+                if (next_percent==0) {
+                    Toast.makeText(getApplicationContext(), "10%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=10;
+                }
             }
             if (progressoInt == 20 || progressoInt==21) {
-                Toast.makeText(getApplicationContext(), "20%", Toast.LENGTH_SHORT).show();
+                if (next_percent==10) {
+                    Toast.makeText(getApplicationContext(), "20%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=20;
+                }
             }
             if (progressoInt == 30 || progressoInt==31) {
-                Toast.makeText(getApplicationContext(), "30%", Toast.LENGTH_SHORT).show();
+                if (next_percent==20) {
+                    Toast.makeText(getApplicationContext(), "30%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=30;
+                }
             }
             if (progressoInt == 40 || progressoInt==41) {
-                Toast.makeText(getApplicationContext(), "40%", Toast.LENGTH_SHORT).show();
+                if (next_percent==30) {
+                    Toast.makeText(getApplicationContext(), "40%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=40;
+                }
             }
             if (progressoInt == 50 || progressoInt==51) {
-                Toast.makeText(getApplicationContext(), "50%", Toast.LENGTH_SHORT).show();
+                if (next_percent==40) {
+                    Toast.makeText(getApplicationContext(), "50%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=50;
+                }
             }
             if (progressoInt == 60 || progressoInt==61) {
-                Toast.makeText(getApplicationContext(), "60%", Toast.LENGTH_SHORT).show();
+                if (next_percent==50) {
+                    Toast.makeText(getApplicationContext(), "60%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=60;
+                }
             }
             if (progressoInt == 70 || progressoInt==71) {
-                Toast.makeText(getApplicationContext(), "70%", Toast.LENGTH_SHORT).show();
+                if (next_percent==60) {
+                    Toast.makeText(getApplicationContext(), "70%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=70;
+                }
             }
             if (progressoInt == 80 || progressoInt==81) {
-                Toast.makeText(getApplicationContext(), "80%", Toast.LENGTH_SHORT).show();
+                if (next_percent==70) {
+                    Toast.makeText(getApplicationContext(), "80%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=80;
+                }
             }
             if (progressoInt == 90 || progressoInt==91) {
-                Toast.makeText(getApplicationContext(), "90%", Toast.LENGTH_SHORT).show();
+                if (next_percent==80) {
+                    Toast.makeText(getApplicationContext(), "90%", Toast.LENGTH_SHORT).show();
+                    Log.d("PERCENTAGE", progressoInt.toString());
+                    next_percent=90;
+                }
             }
 
         }
