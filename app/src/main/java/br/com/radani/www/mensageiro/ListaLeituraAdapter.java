@@ -29,17 +29,12 @@ public class ListaLeituraAdapter extends ArrayAdapter<Frases> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if(listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.simple_list_item_1,parent,false);
+            listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item,parent,false);
 
         Frases currentFrases = frasesList.get(position);
-
-
-
         TextView name = listItem.findViewById(R.id.textView_name);
         name.setText(currentFrases.getmName());
-
-
-
         return listItem;
     }
+
 }

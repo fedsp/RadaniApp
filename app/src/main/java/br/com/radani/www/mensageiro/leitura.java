@@ -7,20 +7,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +23,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             texto_leitura_seqi,texto_leitura_seqc,texto_leitura_seqf,texto_leitura_seq1,texto_leitura_seq2;
     ViewPager viewPager;
     SectionsPageAdapter viewAdapter;
-
+    gerenciadorBanco meuBanco;
+    Bundle bundletodosDados = new Bundle();
     List<String> pedidos = Arrays.asList("FA54000155","FA54000256","FA54000357",
             "FA54000450","FA54000551","FA54000652","FA54000753","FA5400085C","FA5400095D",
             "FA54000A5E","FA54000B5F","FA54000C58","FA54000D59","FA54000E5A","FA54000F5B",
@@ -78,8 +73,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             "FA4400195D","FA44001A5E","FA44001B5F","FA44001C58","FA44001D59","FA44001E5A",
             "FA44001F5B");
 
-    gerenciadorBanco meuBanco;
-    Bundle bundletodosDados = new Bundle();
+
 
 
     //Bluetooth connection variables
@@ -216,6 +210,9 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         viewPager.setAdapter(viewAdapter);
         this.bindService(new Intent(this, SerialService.class), this, Context.BIND_AUTO_CREATE);
 
+
+
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -226,6 +223,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+
 
 
 
@@ -544,6 +542,35 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         }
         else {
             Toast.makeText(getApplicationContext(), bundletodosDados.toString(), Toast.LENGTH_LONG).show();
+
+            //Captura a instancia de cada fragment para poder operar eles
+            leituraConfiguracao fragmentConfiguracao = (leituraConfiguracao) viewAdapter.getItem(0);
+            fragmentConfiguracao.escreveConfiguracoes(bundletodosDados);
+
+            leituraDisplay fragmentDisplay = (leituraDisplay) viewAdapter.getItem(1);
+            fragmentDisplay.escreveDisplay(bundletodosDados);
+
+            leituraFalhas fragmentFalhas = (leituraFalhas) viewAdapter.getItem(2);
+            fragmentFalhas.escreveFalhas(bundletodosDados);
+
+            leituraParametrizacao fragmentParametrizacao = (leituraParametrizacao) viewAdapter.getItem(3);
+            fragmentParametrizacao.escreveParametros(bundletodosDados);
+
+            leituraSequenciaInicial fragmentSequenciaInicial = (leituraSequenciaInicial) viewAdapter.getItem(4);
+            fragmentSequenciaInicial.escreveSequenciaInicial(bundletodosDados);
+
+            leituraSequenciaCiclica fragmentSequenciaCiclica = (leituraSequenciaCiclica) viewAdapter.getItem(5);
+            fragmentSequenciaCiclica.escreveSequenciaCiclica(bundletodosDados);
+
+            leituraSequenciaFinal fragmentSequenciaFinal = (leituraSequenciaFinal) viewAdapter.getItem(6);
+            fragmentSequenciaFinal.escreveSequenciaFinal(bundletodosDados);
+
+            leituraSequenciaRotina1 fragmentSequenciaRotina1 = (leituraSequenciaRotina1) viewAdapter.getItem(7);
+            fragmentSequenciaRotina1.escreveSequenciaRotina1(bundletodosDados);
+
+            leituraSequenciaRotina2 fragmentSequenciaRotina2 = (leituraSequenciaRotina2) viewAdapter.getItem(8);
+            fragmentSequenciaRotina2.escreveSequenciaRotina2(bundletodosDados);
+
         }
     }
     /*
