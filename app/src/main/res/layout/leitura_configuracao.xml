@@ -16,7 +16,7 @@
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:background="#F0F0F0"
-            android:text="Configurações" />
+            android:text="Configurações \n" />
 
 
 
@@ -24,7 +24,8 @@
             android:id="@+id/lista_configuracao"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/titulo"/>
+            android:layout_below="@+id/titulo"
+            android:background="@color/colorPrimary"/>
 
 
     </RelativeLayout>

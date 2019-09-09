@@ -18,16 +18,11 @@
         android:layout_centerHorizontal="true"
         android:background="#F0F0F0"
         android:text="Parâmetros \n" />
-
-
-
         <ListView
             android:id="@+id/lista_parametros"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/titulo"/>
-
-
     </RelativeLayout>
 
 
