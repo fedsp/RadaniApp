@@ -1,5 +1,7 @@
 package br.com.radani.www.mensageiro;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -16,22 +19,43 @@ import java.util.ArrayList;
 public class leituraDisplay extends Fragment {
     private static final String TAG = "leituraDisplay";
     public Bundle dadosTotais;
-    private ListView listView;
-    private ListaLeituraAdapter mAdapter;
+    public ListView listView;
+    public ListaLeituraAdapter mAdapter;
+    public Activity a;
+    private Context mContext;
+
+    // Initialise it from onAttach()
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getArguments()!=null) {
+            dadosTotais = getArguments();
+            populaLista(dadosTotais);
+        }
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.leitura_display,container,false);
+        listView = view.findViewById(R.id.lista_display);
+        return view;
+    }
+
+    public void populaLista(Bundle listaFinal) {
         ArrayList<Frases> listaDisplay;
         listaDisplay = new ArrayList<>();
-
-        if (dadosTotais != null) {
-            for (String key: dadosTotais.keySet())
-            {
-                Log.d ("myApplication", key + " is a key in the bundle");
+        if (listaFinal != null) {
+            for (String key : listaFinal.keySet()) {
+                Log.d("myApplication", key + " is a key in the bundle");
             }
-
             for (String key : dadosTotais.keySet()) {
                 String tipoDado;
                 String labelOuValor;
@@ -59,21 +83,18 @@ public class leituraDisplay extends Fragment {
                 else {}
 
             }
+            mAdapter = new ListaLeituraAdapter(mContext,listaDisplay);
+            listView.setAdapter(mAdapter);
+
+
         }
-        listView = view.findViewById(R.id.lista_display);
-        mAdapter = new ListaLeituraAdapter(getActivity(),listaDisplay);
-        listView.setAdapter(mAdapter);
-        return view;
+        else {
+            Toast.makeText(getContext(), "LISTA DE DADOS VAZIA", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
-    public void escreveDisplay(Bundle dados) {
-        if (dados != null) {
-            for (String key : dados.keySet()) {
-                Log.d("Debug no Fragment", key + " = \"" + dados.get(key) + "\"");
-                dadosTotais = dados;
-            }
-        }
-    }
 
 
 }

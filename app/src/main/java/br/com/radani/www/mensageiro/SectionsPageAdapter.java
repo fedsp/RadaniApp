@@ -21,25 +21,41 @@ public class SectionsPageAdapter extends FragmentStatePagerAdapter {
         switch(position)
         {
             case 0:
-                return new leituraConfiguracao();
+                leituraConfiguracao leituraConfiguracao = new leituraConfiguracao();
+                leituraConfiguracao.setArguments(bundleLocal);
+                return leituraConfiguracao;
             case 1:
-                return new leituraDisplay();
+                leituraDisplay leituraDisplay = new leituraDisplay();
+                leituraDisplay.setArguments(bundleLocal);
+                return leituraDisplay;
             case 2:
-                return new leituraFalhas();
+                leituraFalhas leituraFalhas = new leituraFalhas();
+                leituraFalhas.setArguments(bundleLocal);
+                return leituraFalhas;
             case 3:
                 leituraParametrizacao leituraParametrizacao = new leituraParametrizacao();
                 leituraParametrizacao.setArguments(bundleLocal);
                 return leituraParametrizacao;
             case 4:
-                return new leituraSequenciaInicial();
+                leituraSequenciaInicial leituraSequenciaInicial = new leituraSequenciaInicial();
+                leituraSequenciaInicial.setArguments(bundleLocal);
+                return leituraSequenciaInicial;
             case 5:
-                return new leituraSequenciaCiclica();
+                leituraSequenciaCiclica leituraSequenciaCiclica = new leituraSequenciaCiclica();
+                leituraSequenciaCiclica.setArguments(bundleLocal);
+                return leituraSequenciaCiclica;
             case 6:
-                return new leituraSequenciaFinal();
+                leituraSequenciaFinal leituraSequenciaFinal = new leituraSequenciaFinal();
+                leituraSequenciaFinal.setArguments(bundleLocal);
+                return leituraSequenciaFinal;
             case 7:
-                return new leituraSequenciaRotina1();
+                leituraSequenciaRotina1 leituraSequenciaRotina1 = new leituraSequenciaRotina1();
+                leituraSequenciaRotina1.setArguments(bundleLocal);
+                return leituraSequenciaRotina1;
             case 8:
-                return new leituraSequenciaRotina2();
+                leituraSequenciaRotina2 leituraSequenciaRotina2 = new leituraSequenciaRotina2();
+                leituraSequenciaRotina2.setArguments(bundleLocal);
+                return leituraSequenciaRotina2;
             default:
                 return fragment;
         }

@@ -25,7 +25,8 @@
             android:id="@+id/lista_seq_inicial"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/titulo"/>
+            android:layout_below="@+id/titulo"
+            android:background="@color/colorPrimary"/>
 
 
     </RelativeLayout>

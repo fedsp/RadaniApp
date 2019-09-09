@@ -10,7 +10,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorConfiguracao"
+        android:textColor="@color/colorContent"
         />
     <TextView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorDisplay"
+        android:textColor="@color/colorContent"
         />
     <TextView
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorFalhas"
+        android:textColor="@color/colorContent"
         />
     <TextView
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorParametrizacao"
+        android:textColor="@color/colorContent"
         />
     <TextView
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorSequenciaInicial"
+        android:textColor="@color/colorContent"
         />
     <TextView
         android:layout_width="match_parent"
@@ -60,7 +60,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorSequenciaCiclica"
+        android:textColor="@color/colorContent"
         />
     <TextView
         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorSequenciaFinal"
+        android:textColor="@color/colorContent"
         />
     <TextView
         android:layout_width="match_parent"
@@ -80,7 +80,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorSequenciaRotina1"
+        android:textColor="@color/colorContent"
         />
     <TextView
         android:layout_width="match_parent"
@@ -90,6 +90,6 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_weight="1"
-        android:textColor="@color/colorSequenciaRotina2"
+        android:textColor="@color/colorContent"
         />
 </LinearLayout>
