@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,11 +37,14 @@ public class DeviceListActivity  extends ListActivity {
     private BroadcastReceiver bleDiscoveryBroadcastReceiver;
     private IntentFilter bleDiscoveryIntentFilter;
     private ArrayList<String> listItems = new ArrayList<>();
+    private BluetoothDevice previousDevice;
+
     ArrayAdapter<String> adapter;
     Button buttonScan;
 
     public DeviceListActivity() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
 
         bleDiscoveryBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -141,11 +145,17 @@ public class DeviceListActivity  extends ListActivity {
 
     private void updateScan(BluetoothDevice device) {
         if(listItems.indexOf(device) < 0) {
-            listItems.add(device.getAddress() + "\n" + device.getName());
-            adapter.notifyDataSetChanged();
-            Log.i("Endereço", device.getAddress());
-            Log.i("Nome", device.getName());
-            Log.i("Nome", listItems.toString());
+            if (device.getName() != previousDevice.getName()) {
+                listItems.add(device.getAddress() + "\n" + device.getName());
+                adapter.notifyDataSetChanged();
+                Log.i("Endereço", device.getAddress());
+                Log.i("Nome", device.getName());
+                Log.i("Nome", listItems.toString());
+                previousDevice = device;
+            }
+            else {
+
+            }
         }
     }
 
