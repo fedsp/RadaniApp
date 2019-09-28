@@ -37,7 +37,8 @@ public class DeviceListActivity  extends ListActivity {
     private BroadcastReceiver bleDiscoveryBroadcastReceiver;
     private IntentFilter bleDiscoveryIntentFilter;
     private ArrayList<String> listItems = new ArrayList<>();
-    private BluetoothDevice previousDevice;
+    private String deviceName;
+    private String previousDeviceName = "dummy";
 
     ArrayAdapter<String> adapter;
     Button buttonScan;
@@ -52,7 +53,13 @@ public class DeviceListActivity  extends ListActivity {
                 if(intent.getAction().equals(BluetoothDevice.ACTION_FOUND)) {
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     if(device.getType() != BluetoothDevice.DEVICE_TYPE_CLASSIC) {
-                        runOnUiThread(() -> updateScan(device));
+                        deviceName = device.getAddress();
+                        if (deviceName.equals(previousDeviceName)) {
+                        }
+                        else {
+                            runOnUiThread(() -> updateScan(device));
+                        }
+                        previousDeviceName = deviceName;
                     }
                 }
                 if(intent.getAction().equals((BluetoothAdapter.ACTION_DISCOVERY_FINISHED))) {
@@ -145,17 +152,11 @@ public class DeviceListActivity  extends ListActivity {
 
     private void updateScan(BluetoothDevice device) {
         if(listItems.indexOf(device) < 0) {
-            if (device.getName() != previousDevice.getName()) {
-                listItems.add(device.getAddress() + "\n" + device.getName());
-                adapter.notifyDataSetChanged();
-                Log.i("Endereço", device.getAddress());
-                Log.i("Nome", device.getName());
-                Log.i("Nome", listItems.toString());
-                previousDevice = device;
-            }
-            else {
-
-            }
+            listItems.add(device.getAddress() + "\n" + device.getName());
+            adapter.notifyDataSetChanged();
+            Log.i("Endereço", device.getAddress());
+            Log.i("Nome", device.getName());
+            Log.i("Nome", listItems.toString());
         }
     }
 
