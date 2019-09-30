@@ -145,9 +145,9 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
 
         // cria tabela de DISPLAY 1 já com valores
         meuBanco.insertData_DISPLAY_1("D00","Contador",null,null,null, "Producao", "Lote de Pecas", null, null, null, null, null, null,null,null,null);
-        meuBanco.insertData_DISPLAY_1("D01","Valor Lote", 1.0, 9999.0, 1.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
-        meuBanco.insertData_DISPLAY_1("D02","Val. Parada", 0.0, 8000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
-        meuBanco.insertData_DISPLAY_1("D03","Tol. Parada", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",10.0);
+        meuBanco.insertData_DISPLAY_1("D01","Valor Lote", 1.0, 9999.0, 1.0,null, null, null, null, null, null, null, null,null,"peças",1.0);
+        meuBanco.insertData_DISPLAY_1("D02","Val. Parada", 0.0, 8000.0, 10.0,null, null, null, null, null, null, null, null,null,"peças",1.0);
+        meuBanco.insertData_DISPLAY_1("D03","Tol. Parada", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"peças",10.0);
         meuBanco.insertData_DISPLAY_1("D04","Produtiv.",null,null,null, "Pecas/Hora", "Pecas/Min", null, null, null, null, null, null,null,null,null);
         meuBanco.insertData_DISPLAY_1("D05","Info Linha",null,null,null, "Nenhuma", "Qtd.Pecas Lote", "Qtd.Pecas Prog", "Passo Seq.", "Tempo T0", "Tempo T1", "Tmp. Ent. Ciclos", "Tmp. Do Ciclo","Nr. da Receita",null,null);
         meuBanco.insertData_DISPLAY_1("D06","Display Dummy1", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
@@ -450,17 +450,77 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
 
         //trata o dado recebido se for do tipo 'Display' (7)
         else if (tipoDado.equals("7")) {
+
             if (!header.equals("19")) {
-                double multiplicador;
-                String unidade;
-                multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
-                label = meuBanco.getLabelDisplay(codigo);
-                valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
-                unidade = meuBanco.getUnidadeDisplay(codigo);
-                bundletodosDados.putString(codigo + "U", unidade);
-                bundletodosDados.putString(codigo + "L", label);
-                bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_DISPLAY_ATUAL(codigo,valor);
+                // contorna a limitação da placa RD4011 combinando os bits de D01 e 06, d02 e D07
+                if (codigo.equals("D01")){
+                    double multiplicador;
+                    String unidade;
+                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
+                    label = meuBanco.getLabelDisplay(codigo);
+                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
+                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    bundletodosDados.putString(codigo + "U", unidade);
+                    bundletodosDados.putString(codigo + "L", label);
+                    bundletodosDados.putString(codigo + "V", valor);
+                }
+                else if (codigo.equals("D02")){
+                    double multiplicador;
+                    String unidade;
+                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
+                    label = meuBanco.getLabelDisplay(codigo);
+                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
+                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    bundletodosDados.putString(codigo + "U", unidade);
+                    bundletodosDados.putString(codigo + "L", label);
+                    bundletodosDados.putString(codigo + "V", valor);
+                }
+                else if (codigo.equals("D06")){
+                    double multiplicador;
+                    String unidade;
+                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
+                    label = meuBanco.getLabelDisplay(codigo);
+                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
+                    Float floatValor = Float.parseFloat(valor);
+                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    //bundletodosDados.putString(codigo + "U", unidade);
+                    //bundletodosDados.putString(codigo + "L", label);
+                    //bundletodosDados.putString(codigo + "V", valor);
+                    String strNovoValor = bundletodosDados.getString("D01V");
+                    Float floatNovoValor = Float.parseFloat(strNovoValor);
+                    floatNovoValor = (floatValor*256)+floatNovoValor;
+                    strNovoValor = String.valueOf(floatNovoValor);
+                    bundletodosDados.putString("D01" + "V", strNovoValor);
+                }
+                else if (codigo.equals("D07")){
+                    double multiplicador;
+                    String unidade;
+                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
+                    label = meuBanco.getLabelDisplay(codigo);
+                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
+                    Float floatValor = Float.parseFloat(valor);
+                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    //bundletodosDados.putString(codigo + "U", unidade);
+                    //bundletodosDados.putString(codigo + "L", label);
+                    //bundletodosDados.putString(codigo + "V", valor);
+                    String strNovoValor = bundletodosDados.getString("D02V");
+                    Float floatNovoValor = Float.parseFloat(strNovoValor);
+                    floatNovoValor = (floatValor*256)+floatNovoValor;
+                    strNovoValor = String.valueOf(floatNovoValor);
+                    bundletodosDados.putString("D02" + "V", strNovoValor);
+                }
+                else {
+                    double multiplicador;
+                    String unidade;
+                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
+                    label = meuBanco.getLabelDisplay(codigo);
+                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
+                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    bundletodosDados.putString(codigo + "U", unidade);
+                    bundletodosDados.putString(codigo + "L", label);
+                    bundletodosDados.putString(codigo + "V", valor);
+                }
+
             }
         }
 
@@ -555,6 +615,13 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             leituraSequenciaFinal fragmentSequenciaFinal = (leituraSequenciaFinal) viewAdapter.getItem(6);
             leituraSequenciaRotina1 fragmentSequenciaRotina1 = (leituraSequenciaRotina1) viewAdapter.getItem(7);
             leituraSequenciaRotina2 fragmentSequenciaRotina2 = (leituraSequenciaRotina2) viewAdapter.getItem(8);
+
+        }
+        for (String key: bundletodosDados.keySet())
+        {
+
+            Log.d ("myApplication", key + " is a key in the bundle");
+            Log.d ("myApplication", bundletodosDados.getString(key) + " is a value");
 
         }
 

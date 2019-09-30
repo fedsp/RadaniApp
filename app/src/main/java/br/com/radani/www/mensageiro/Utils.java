@@ -296,12 +296,19 @@ public class Utils {
 //            valor = String.valueOf(valornumero);
             return valor;
         }
+        // Aqui é um tratamento para se o dado não for do tipo 0,1,2,3 ou 4 (estou debugando o valor c04, então ele é do tipo 6)
         else {
+            //declara uma string vazia para receber o valor
             String valor;
+            //atribuo uma 'fatia' do código hexadecimal, entre as posições 8 e 10.
             valor = hexatual.substring(8, 10);
+            //declaro uma variável vazia que vai receber o valor decimal correspondente ao hexa obtido acima
             Integer valornumero;
+            //uso uma função que converte o valor de base 16 para base 10
             valornumero = Integer.parseInt(valor, 16);
+            //transformo o valor recebido em string, por conveniência
             valor = String.valueOf(valornumero);
+            //retorno a string
             return valor;
         }
     }
