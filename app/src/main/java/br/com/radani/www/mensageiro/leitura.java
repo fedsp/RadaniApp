@@ -26,7 +26,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     SectionsPageAdapter viewAdapter;
     gerenciadorBanco meuBanco;
     Bundle bundletodosDados = new Bundle();
-    List<String> pedidos = Arrays.asList("FA54000155","FA54000256","FA54000357",
+    List<String> pedidos = Arrays.asList(
+            "FA54000054","FA54000155","FA54000256","FA54000357",
             "FA54000450","FA54000551","FA54000652","FA54000753","FA5400085C","FA5400095D",
             "FA54000A5E","FA54000B5F","FA54000C58","FA54000D59","FA54000E5A","FA54000F5B",
             "FA54001044","FA54001145","FA54001246","FA54001347","FA54001440","FA54001541",
@@ -72,7 +73,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             "FA44000D49","FA44000E4A","FA44000F4B","FA44001054","FA44001155","FA44001256",
             "FA44001357","FA44001450","FA44001551","FA44001652","FA44001753","FA4400185C",
             "FA4400195D","FA44001A5E","FA44001B5F","FA44001C58","FA44001D59","FA44001E5A",
-            "FA44001F5B");
+            "FA44001F5B"
+    );
 
 
 
