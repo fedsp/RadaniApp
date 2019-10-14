@@ -337,7 +337,7 @@ public class Utils {
         String valorSequencia;
         valorSequencia = hexatual.substring(8,9);
         if (tipoSequencia.equals("0") || tipoSequencia.equals("1") || tipoSequencia.equals("2") || tipoSequencia.equals("3")){
-            valorSequencia = "";
+            valorSequencia = "n/a";
         }
         else {
             valorSequencia = ": "+valorSequencia;

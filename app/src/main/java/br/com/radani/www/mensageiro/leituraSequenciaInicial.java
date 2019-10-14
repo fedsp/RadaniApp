@@ -68,8 +68,9 @@ public class leituraSequenciaInicial extends Fragment {
                     if (labelOuValor.equals("L")) {
                         String passo;
                         passo = key.substring(0, 1) + key.substring(2, 4);
-                        if (valor_atual != null) {
+                        if (valor_atual != "n/a") {
                             listaSequenciaInicial.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                            Log.d("@@@","ESSA SEQUENCIA TEM KEY E VALOR"+ dadosTotais.getString(key) + dadosTotais.getString(key_valor));
                         } else {
                             listaSequenciaInicial.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key))));
                         }
