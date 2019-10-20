@@ -103,7 +103,7 @@ public class DeviceListActivity  extends ListActivity {
         if(mBluetoothAdapter == null || !getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE))
             Toast.makeText(getApplicationContext(),"Bluetooth LE não suportado", Toast.LENGTH_SHORT).show();
         else if(!mBluetoothAdapter.isEnabled()) {
-            listItems.add("\n \n Por favor reinicie o Radani App com o bluetooth ativado. ");
+            listItems.add("\n \n Por favor ative o Bluetooth");
 
         }
         else

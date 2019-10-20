@@ -337,12 +337,29 @@ public class Utils {
         String valorSequencia;
         valorSequencia = hexatual.substring(8,9);
         if (tipoSequencia.equals("0") || tipoSequencia.equals("1") || tipoSequencia.equals("2") || tipoSequencia.equals("3")){
-            valorSequencia = "n/a";
+            valorSequencia = "";
         }
         else {
             valorSequencia = ": "+valorSequencia;
         }
         return valorSequencia;
+    }
+
+    public static String trataValor(String value)
+    {
+        Integer decimal_int_value;
+        String result[] = value.split("\\.");
+        String decimal_string_value = result[result.length-1];
+        try {
+            decimal_int_value =  Integer.parseInt(decimal_string_value);
+            if (decimal_int_value==0){
+                value=result[result.length-2];
+            }
+            else{
+            }
+        }
+        catch(Exception e){}
+        return value;
     }
 
     public static String obterLabelSequencia(String tipoSequencia) {

@@ -65,6 +65,7 @@ public class leituraSequenciaInicial extends Fragment {
                 if (tipoDado.equals("SI")) {
                     labelOuValor = key.substring(4, 5);
                     valor_atual = dadosTotais.getString(key_valor);
+                    valor_atual = Utils.trataValor(valor_atual);
                     if (labelOuValor.equals("L")) {
                         String passo;
                         passo = key.substring(0, 1) + key.substring(2, 4);

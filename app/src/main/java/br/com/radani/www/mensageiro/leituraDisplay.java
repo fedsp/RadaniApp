@@ -64,12 +64,14 @@ public class leituraDisplay extends Fragment {
                 String label_atual = "ABC";
                 String unidade_atual = "XYZ";
                 String key_unidade = "D"+key.substring(1,3)+"U";
+
                 tipoDado = key.substring(0,1);
                 labelOuValor = key.substring(3,4);
                 if (tipoDado.equals("D")) {
                     if (labelOuValor.equals("L")) {
                         label_atual = dadosTotais.getString(key);
                         valor_atual = dadosTotais.getString(key_valor);
+                        valor_atual = Utils.trataValor(valor_atual);
                         unidade_atual = dadosTotais.getString(key_unidade);
                         if (unidade_atual!=null) {
                             listaDisplay.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));

@@ -70,6 +70,7 @@ public class leituraFalhas extends Fragment {
                     if (labelOuValor.equals("L")) {
                         label_atual = dadosTotais.getString(key);
                         valor_atual = dadosTotais.getString(key_valor);
+                        valor_atual = Utils.trataValor(valor_atual);
                         unidade_atual = dadosTotais.getString(key_unidade);
                         if (unidade_atual!=null) {
                             listaFalhas.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
