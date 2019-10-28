@@ -7,6 +7,8 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /** Métodos auxiliares */
 
 public class Utils {
@@ -345,23 +347,6 @@ public class Utils {
         return valorSequencia;
     }
 
-    public static String trataValor(String value)
-    {
-        Integer decimal_int_value;
-        String result[] = value.split("\\.");
-        String decimal_string_value = result[result.length-1];
-        try {
-            decimal_int_value =  Integer.parseInt(decimal_string_value);
-            if (decimal_int_value==0){
-                value=result[result.length-2];
-            }
-            else{
-            }
-        }
-        catch(Exception e){}
-        return value;
-    }
-
     public static String obterLabelSequencia(String tipoSequencia) {
         switch (tipoSequencia) {
             case "0":
@@ -380,9 +365,12 @@ public class Utils {
                 tipoSequencia = "Aguarda Entrada ";
                 break;
             case "5":
-                tipoSequencia = "Alterna Saída ";
+                tipoSequencia = "Libera Entrada ";
                 break;
             case "6":
+                tipoSequencia = "Alterna Saída ";
+                break;
+            case "7":
                 tipoSequencia = "Aguarda Tempo ";
                 break;
             default:
@@ -393,6 +381,65 @@ public class Utils {
 
 
 
+    public static String trata_valor_multiplicador (String valor, Double multiplicador) {
+        switch (String.valueOf(multiplicador)) {
+            case "10.0":
+                Integer decimal_int_value;
+                String[] result;
+                result = valor.split("\\.");
+                String decimal_string_value = result[result.length - 1];
+                try {
+                    decimal_int_value = Integer.parseInt(decimal_string_value);
+                    if (decimal_int_value == 0) {
+                        valor = result[result.length - 2];
+                    } else {
+                    }
+                } catch (Exception e) {
+                }
+                break;
+            case "1.0":
+                result = valor.split("\\.");
+                decimal_string_value = result[result.length - 1];
+                try {
+                    decimal_int_value = Integer.parseInt(decimal_string_value);
+                    if (decimal_int_value == 0) {
+                        valor = result[result.length - 2];
+                    } else {
+                    }
+                } catch (Exception e) {
+                }
+                break;
+            case "0.1":
+                String result_case1[];
+                result_case1 = valor.split("\\.");
+                try {
+                    result_case1[1] = result_case1[1] + "00000";
+                    valor = result_case1[0] +"."+result_case1[1];
+                } catch (Exception e) {
+                    valor = valor+".00000";
+                }
+                String result_case1_2[];
+                result_case1_2 = valor.split("\\.");
+                result_case1_2[1] = result_case1_2[1].substring(0, 1);
+                valor = result_case1_2[0] +"."+ result_case1_2[1];
+                break;
+            case "0.01":
+                String result_case2[];
+                result_case2 = valor.split("\\.");
+                try {
+                    result_case2[1] = result_case2[1] + "00000";
+                    valor = result_case2[0] +"."+result_case2[1];
+                } catch (Exception e) {
+                    valor = valor+".00000";
+                }
+                String result_case2_2[];
+                result_case2_2 = valor.split("\\.");
+                result_case2_2[1] = result_case2_2[1].substring(0, 2);
+                valor = result_case2_2[0] +"."+ result_case2_2[1];
+                break;
+        }
+        return valor;
+    }
 }
 
 

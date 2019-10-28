@@ -397,16 +397,9 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             Double valorNumerico;
             valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico*multiplicador;
-
-            if (valorNumerico - valorNumerico.intValue() == 0){
-                Integer valorInt;
-                valorInt = valorNumerico.intValue();
-                valor = Integer.toString(valorInt);
+            valor = String.valueOf(valorNumerico);
+            valor = Utils.trata_valor_multiplicador(valor,multiplicador);
             }
-            else{
-                valor = Double.toString(valorNumerico);
-            }
-        }
         return valor;
     }
 
@@ -473,16 +466,9 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             Double valorNumerico;
             valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico*multiplicador;
-
-            if (valorNumerico - valorNumerico.intValue() == 0){
-                Integer valorInt;
-                valorInt = valorNumerico.intValue();
-                valor = Integer.toString(valorInt);
-            }
-            else{
-                valor = Double.toString(valorNumerico);}
-            }
-
+            valor = String.valueOf(valorNumerico);
+            valor = Utils.trata_valor_multiplicador(valor,multiplicador);
+        }
         return valor;
     }
 
@@ -547,16 +533,9 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             Double valorNumerico;
             valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico*multiplicador;
-
-            if (valorNumerico - valorNumerico.intValue() == 0){
-                Integer valorInt;
-                valorInt = valorNumerico.intValue();
-                valor = Integer.toString(valorInt);
-            }
-            else{
-                valor = Double.toString(valorNumerico);}
+            valor = String.valueOf(valorNumerico);
+            valor = Utils.trata_valor_multiplicador(valor,multiplicador);
         }
-
         return valor;
     }
 

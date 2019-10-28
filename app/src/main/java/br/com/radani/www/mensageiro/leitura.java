@@ -108,7 +108,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         meuBanco.insertData_PARAM_1("P00","Tmp.Ciclos",0.0,8.0,0.5, null, null, null, null, null, null, null, null,"s",0.1);
         meuBanco.insertData_PARAM_1("P01","Sel.Ciclo", null, null, null,"Contínuo", "Único", null, null, null, null, null, null,null,null);
         meuBanco.insertData_PARAM_1("P02","Impressão", null, null, null,"Monocolor", "Bicolor", "Tricolor", "Estendido", null, null, null, null,null,null);
-        meuBanco.insertData_PARAM_1("P03","Nr.Mistura",1.0,5.0,1.0, null, null, null, null, null, null, null, null,null,1.0);
+        meuBanco.insertData_PARAM_1("P03","Nr.Mistura",1.0,5.0,1.0, null, null, null, null, null, null, null, null,"Vezes",1.0);
         meuBanco.insertData_PARAM_1("P04","Tempo_00",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
         meuBanco.insertData_PARAM_1("P05","Tempo_01",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
         meuBanco.insertData_PARAM_1("P06","Tempo_Topo",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
@@ -383,6 +383,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 valor = Utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
+
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
