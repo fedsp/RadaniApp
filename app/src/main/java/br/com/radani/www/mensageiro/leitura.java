@@ -255,10 +255,12 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     //Bluetooth connections
     @Override
     public void onDestroy() {
-        if (connected != Connected.False)
             disconnect();
-        stopService(new Intent(this, SerialService.class));
-        super.onDestroy();
+            service.disconnect();
+            service.detach();
+            service = null;
+            super.onDestroy();
+
     }
 
     @Override
@@ -271,6 +273,9 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     public void onStop() {
         if(service != null && !this.isChangingConfigurations())
             service.detach();
+
+        stopService(new Intent(this, SerialService.class)); // prevents service destroy on unbind from recreated activity caused by orientation change
+
         super.onStop();
     }
 
@@ -308,6 +313,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             socket = new SerialSocket();
             service.connect(this, "Connected to " + deviceName);
             socket.connect(this, service, device);
+
             Toast.makeText(getApplicationContext(),"Tentando conexão...", Toast.LENGTH_SHORT).show();
 
 
@@ -481,35 +487,31 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 else if (codigo.equals("D06")){
                     double multiplicador;
                     String unidade;
-                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
+                    multiplicador = meuBanco.getMultiplicadorDisplay("D01");
                     label = meuBanco.getLabelDisplay(codigo);
                     valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
                     Float floatValor = Float.parseFloat(valor);
                     unidade = meuBanco.getUnidadeDisplay(codigo);
-                    //bundletodosDados.putString(codigo + "U", unidade);
-                    //bundletodosDados.putString(codigo + "L", label);
-                    //bundletodosDados.putString(codigo + "V", valor);
                     String strNovoValor = bundletodosDados.getString("D01V");
                     Float floatNovoValor = Float.parseFloat(strNovoValor);
                     floatNovoValor = (floatValor*256)+floatNovoValor;
                     strNovoValor = String.valueOf(floatNovoValor);
+                    strNovoValor = Utils.trata_valor_multiplicador(strNovoValor,multiplicador);
                     bundletodosDados.putString("D01" + "V", strNovoValor);
                 }
                 else if (codigo.equals("D07")){
                     double multiplicador;
                     String unidade;
-                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
+                    multiplicador = meuBanco.getMultiplicadorDisplay("D02");
                     label = meuBanco.getLabelDisplay(codigo);
                     valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
                     Float floatValor = Float.parseFloat(valor);
                     unidade = meuBanco.getUnidadeDisplay(codigo);
-                    //bundletodosDados.putString(codigo + "U", unidade);
-                    //bundletodosDados.putString(codigo + "L", label);
-                    //bundletodosDados.putString(codigo + "V", valor);
                     String strNovoValor = bundletodosDados.getString("D02V");
                     Float floatNovoValor = Float.parseFloat(strNovoValor);
                     floatNovoValor = (floatValor*256)+floatNovoValor;
                     strNovoValor = String.valueOf(floatNovoValor);
+                    strNovoValor = Utils.trata_valor_multiplicador(strNovoValor,multiplicador);
                     bundletodosDados.putString("D02" + "V", strNovoValor);
                 }
                 else {

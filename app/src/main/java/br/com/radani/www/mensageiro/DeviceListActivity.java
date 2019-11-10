@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static android.bluetooth.BluetoothAdapter.ACTION_REQUEST_ENABLE;
 
 /**
  * show list of BLE devices
@@ -103,7 +106,10 @@ public class DeviceListActivity  extends ListActivity {
         if(mBluetoothAdapter == null || !getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE))
             Toast.makeText(getApplicationContext(),"Bluetooth LE não suportado", Toast.LENGTH_SHORT).show();
         else if(!mBluetoothAdapter.isEnabled()) {
-            listItems.add("\n \n Por favor ative o Bluetooth");
+            Intent intentOpenBluetoothSettings = new Intent();
+            intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+            startActivity(intentOpenBluetoothSettings);
+            //listItems.add("\n \n Por favor ative o Bluetooth");
 
         }
         else
@@ -173,17 +179,12 @@ public class DeviceListActivity  extends ListActivity {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        if ((listItems.get(0))=="\n \n Por favor reinicie o Radani App com o bluetooth ativado. ") {
-            finish();
-        }
-        else {
             stopScan();
             String address = listItems.get(position);
             address = address.substring(0, 17);
             Intent vaipraleitura = new Intent(DeviceListActivity.this, leitura.class);
             vaipraleitura.putExtra("address",address);
             startActivity(vaipraleitura);
-        }
     }
 
 }
