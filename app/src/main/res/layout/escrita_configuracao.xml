@@ -16,16 +16,18 @@
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:background="#F0F0F0"
-            android:text="Configurações \n" />
+            android:text="Configurações \n"
+            />
 
 
 
         <ListView
-            android:id="@+id/lista_leitura_configuracao"
+            android:id="@+id/lista_escrita_configuracao"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/titulo"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimary"
+            />
 
 
     </RelativeLayout>

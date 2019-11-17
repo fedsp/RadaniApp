@@ -16,11 +16,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class leituraConfiguracao extends Fragment {
-    private static final String TAG = "leituraConfiguracao";
+public class escritaParametrizacao extends Fragment {
+    private static final String TAG = "leituraParametrizacao";
     public Bundle dadosTotais;
     public ListView listView;
-    public ListaLeituraAdapter mAdapter;
+    public listaEscritaAdapter mAdapter;
     public Activity a;
     private Context mContext;
 
@@ -44,46 +44,45 @@ public class leituraConfiguracao extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.leitura_configuracao,container,false);
-        listView = view.findViewById(R.id.lista_leitura_configuracao);
+        View view = inflater.inflate(R.layout.leitura_parametrizacao,container,false);
+        listView = view.findViewById(R.id.lista_parametros);
         return view;
     }
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaConf;
-        listaConf = new ArrayList<>();
+        ArrayList<Frases> listaParametro;
+        listaParametro = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
                 Log.d("myApplication", key + " is a key in the bundle");
             }
-            for (String key : dadosTotais.keySet()) {
+            for (String key : listaFinal.keySet()) {
                 String tipoDado;
                 String labelOuValor;
                 String valor_atual = "123";
-                String key_valor = "C"+key.substring(1,3)+"V";
+                String key_valor = "P" + key.substring(1, 3) + "V";
                 String label_atual = "ABC";
                 String unidade_atual = "XYZ";
-                String key_unidade = "C"+key.substring(1,3)+"U";
-                tipoDado = key.substring(0,1);
-                labelOuValor = key.substring(3,4);
-                if (tipoDado.equals("C")) {
+                String key_unidade = "P" + key.substring(1, 3) + "U";
+                tipoDado = key.substring(0, 1);
+                labelOuValor = key.substring(3, 4);
+                if (tipoDado.equals("P")) {
                     if (labelOuValor.equals("L")) {
-                        label_atual = dadosTotais.getString(key);
-                        valor_atual = dadosTotais.getString(key_valor);
-                        unidade_atual = dadosTotais.getString(key_unidade);
-                        if (unidade_atual!=null) {
-                            listaConf.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
+                        label_atual = listaFinal.getString(key);
+                        valor_atual = listaFinal.getString(key_valor);
+                        unidade_atual = listaFinal.getString(key_unidade);
+                        if (unidade_atual != null) {
+                            listaParametro.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
+                        } else {
+                            listaParametro.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + "\n"));
                         }
-                        else {
-                            listaConf.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n"));
-                        }
+                    } else {
                     }
-                    else {}
+                } else {
                 }
-                else {}
 
             }
-            mAdapter = new ListaLeituraAdapter(mContext,listaConf);
+            mAdapter = new listaEscritaAdapter(mContext,listaParametro);
             listView.setAdapter(mAdapter);
 
 

@@ -50,7 +50,8 @@
         android:layout_marginRight="40dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tituloMain"
-        android:background="@drawable/bot_escrita_selector"/>
+        android:background="@drawable/bot_escrita_selector"
+        android:onClick="vaiparaescrita"/>
 
     <Button
     android:id="@+id/botao_galeria"

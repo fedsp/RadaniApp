@@ -15,8 +15,17 @@ public class mainMenu extends Activity {
 
     public void vaiparaleitura(View view)
     {
-        Intent intent = new Intent(mainMenu.this, DeviceListActivity.class);
-        startActivity(intent);
+        Intent intentLeitura = new Intent(mainMenu.this, DeviceListActivity.class);
+        intentLeitura.putExtra("origin", "leitura");
+        startActivity(intentLeitura);
     }
+
+    public void vaiparaescrita(View view)
+    {
+        Intent intentEscrita = new Intent(mainMenu.this, DeviceListActivity.class);
+        intentEscrita.putExtra("origin", "escrita");
+        startActivity(intentEscrita);
+    }
+
 
 }

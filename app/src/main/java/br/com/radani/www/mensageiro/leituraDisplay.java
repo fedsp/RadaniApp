@@ -45,7 +45,7 @@ public class leituraDisplay extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.leitura_display,container,false);
-        listView = view.findViewById(R.id.lista_display);
+        listView = view.findViewById(R.id.lista_leitura_display);
         return view;
     }
 

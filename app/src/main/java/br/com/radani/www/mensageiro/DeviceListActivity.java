@@ -179,12 +179,20 @@ public class DeviceListActivity  extends ListActivity {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-            stopScan();
-            String address = listItems.get(position);
-            address = address.substring(0, 17);
-            Intent vaipraleitura = new Intent(DeviceListActivity.this, leitura.class);
-            vaipraleitura.putExtra("address",address);
-            startActivity(vaipraleitura);
+        stopScan();
+        String address = listItems.get(position);
+        address = address.substring(0, 17);
+        String opcao = getIntent().getExtras().getString("origin");
+        switch (opcao) {
+            case "leitura":
+                Intent vaiParaLeitura = new Intent(DeviceListActivity.this, leitura.class);
+                vaiParaLeitura.putExtra("address", address);
+                startActivity(vaiParaLeitura);
+            case "escrita":
+                Intent vaiParaEscrita = new Intent(DeviceListActivity.this, escrita.class);
+                vaiParaEscrita.putExtra("address", address);
+                startActivity(vaiParaEscrita);
+        }
     }
 
 }

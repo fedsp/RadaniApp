@@ -8,28 +8,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListaLeituraAdapter extends ArrayAdapter<Frases> {
+public class listaEscritaAdapter extends ArrayAdapter<Frases> {
 
     private Context mContext;
     private List<Frases> frasesList;
 
-    public ListaLeituraAdapter(@NonNull Context context, ArrayList<Frases> list) {
+    public listaEscritaAdapter(@NonNull Context context, ArrayList<Frases> list) {
         super(context, 0 , list);
         mContext = context;
         frasesList = list;
     }
-
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if(listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.leitura_list_item,parent,false);
+            listItem = LayoutInflater.from(mContext).inflate(R.layout.escrita_list_item,parent,false);
 
         Frases currentFrases = frasesList.get(position);
         TextView name = listItem.findViewById(R.id.textView_name);

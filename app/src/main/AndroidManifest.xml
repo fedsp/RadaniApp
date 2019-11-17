@@ -39,6 +39,13 @@
             android:screenOrientation="portrait">
             ">
         </activity>
+        <activity
+            android:name=".escrita"
+            android:label="Radani App"
+            android:icon="@drawable/logo"
+            android:screenOrientation="portrait">
+            ">
+        </activity>
         <service android:name=".SerialService" />
     </application>
 

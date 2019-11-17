@@ -2,6 +2,7 @@ package br.com.radani.www.mensageiro;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,17 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
-public class leituraConfiguracao extends Fragment {
+public class escritaConfiguracao extends Fragment {
     private static final String TAG = "leituraConfiguracao";
     public Bundle dadosTotais;
     public ListView listView;
-    public ListaLeituraAdapter mAdapter;
+    public listaEscritaAdapter mAdapter;
     public Activity a;
     private Context mContext;
 
@@ -44,10 +46,12 @@ public class leituraConfiguracao extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.leitura_configuracao,container,false);
-        listView = view.findViewById(R.id.lista_leitura_configuracao);
+        View view = inflater.inflate(R.layout.escrita_configuracao,container,false);
+        listView = view.findViewById(R.id.lista_escrita_configuracao);
         return view;
     }
+
+
 
     public void populaLista(Bundle listaFinal) {
         ArrayList<Frases> listaConf;
@@ -83,7 +87,7 @@ public class leituraConfiguracao extends Fragment {
                 else {}
 
             }
-            mAdapter = new ListaLeituraAdapter(mContext,listaConf);
+            mAdapter = new listaEscritaAdapter(mContext,listaConf);
             listView.setAdapter(mAdapter);
 
 

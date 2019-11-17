@@ -19,14 +19,12 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 
-public class leitura extends AppCompatActivity implements ServiceConnection, SerialListener {
-    ListView texto_leitura_conf,texto_leitura_disp,texto_leitura_param,
-            texto_leitura_seqi,texto_leitura_seqc,texto_leitura_seqf,texto_leitura_seq1,texto_leitura_seq2;
+public class escrita extends AppCompatActivity implements ServiceConnection, SerialListener {
     ViewPager viewPager;
     SectionsPageAdapter viewAdapter;
     gerenciadorBanco meuBanco;
     Bundle bundletodosDados = new Bundle();
-    List<String> pedidos = Arrays.asList(
+    List<String> pedidos2 = Arrays.asList(
             "FA54000054","FA54000155","FA54000256","FA54000357",
             "FA54000450","FA54000551","FA54000652","FA54000753","FA5400085C","FA5400095D",
             "FA54000A5E","FA54000B5F","FA54000C58","FA54000D59","FA54000E5A","FA54000F5B",
@@ -76,7 +74,19 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             "FA44001F5B"
     );
 
-
+    List<String> pedidos = Arrays.asList("FA64000064",
+            "FA64000165","FA64000266","FA64000367","FA64000460","FA64000561","FA64000662",
+            "FA64000763","FA6400086C","FA6400096D","FA64000A6E","FA64000B6F","FA64000C68",
+            "FA64000D69","FA64000E6A","FA64000F6B","FA64001074","FA64001175","FA64001276",
+            "FA64001377","FA64001470","FA64001571","FA64001672","FA64001773","FA6400187C",
+            "FA6400197D","FA64001A7E","FA64001B7F","FA64001C78","FA64001D79","FA64001E7A",
+            "FA64001F7B","FA64002044","FA64002145","FA64002246","FA64002347","FA64002440",
+            "FA64002541","FA64002642","FA64002743","FA6400284C","FA6400294D","FA64002A4E",
+            "FA64002B4F","FA64002C48","FA64002D49","FA64002E4A","FA64002F4B","FA64003054",
+            "FA64003155","FA64003256","FA64003357","FA64003450","FA64003551","FA64003652",
+            "FA64003753","FA6400385C","FA6400395D","FA64003A5E","FA64003B5F","FA64003C58",
+            "FA64003D59","FA64003E5A","FA64003F5B","FA64004024"
+    );
 
 
     //Bluetooth connection variables
@@ -200,15 +210,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         Bundle b = getIntent().getExtras();
         deviceAddress = b.getString("address");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_leitura);
-        texto_leitura_conf = findViewById(R.id.lista_leitura_configuracao);
-        texto_leitura_disp = findViewById(R.id.lista_leitura_display);
-        texto_leitura_param = findViewById(R.id.lista_parametros);
-        texto_leitura_seqi = findViewById(R.id.lista_seq_inicial);
-        texto_leitura_seqc = findViewById(R.id.lista_seq_ciclica);
-        texto_leitura_seqf = findViewById(R.id.lista_seq_final);
-        texto_leitura_seq1 = findViewById(R.id.lista_seq_rot_1);
-        texto_leitura_seq2 = findViewById(R.id.lista_seq_rot_2);
+        setContentView(R.layout.layout_escrita);
         viewPager = findViewById(R.id.fragment_container);
         this.bindService(new Intent(this, SerialService.class), this, Context.BIND_AUTO_CREATE);
 
@@ -255,11 +257,11 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     //Bluetooth connections
     @Override
     public void onDestroy() {
-            disconnect();
-            service.disconnect();
-            service.detach();
-            service = null;
-            super.onDestroy();
+        disconnect();
+        service.disconnect();
+        service.detach();
+        service = null;
+        super.onDestroy();
 
     }
 
@@ -637,11 +639,11 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     @Override
     public void onSerialConnect() {
 
-            connected = Connected.True;
-            Toast.makeText(getApplicationContext(), "Conexão bem sucedida", Toast.LENGTH_SHORT).show();
+        connected = Connected.True;
+        Toast.makeText(getApplicationContext(), "Conexão bem sucedida", Toast.LENGTH_SHORT).show();
 
-            // Pedido de valores de parâmetros
-            send(Utils.comando("FA54000054"));
+        // Pedido de valores de parâmetros
+        send(Utils.comando("FA54000054"));
     }
 
     @Override
