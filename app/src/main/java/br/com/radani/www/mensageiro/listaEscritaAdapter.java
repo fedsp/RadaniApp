@@ -48,6 +48,7 @@ public class listaEscritaAdapter extends ArrayAdapter<frasesEscrita> {
         return listItem;
     }
 
+    
 
 
 }
