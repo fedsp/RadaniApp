@@ -20,7 +20,7 @@ public class leituraParametrizacao extends Fragment {
     private static final String TAG = "leituraParametrizacao";
     public Bundle dadosTotais;
     public ListView listView;
-    public ListaLeituraAdapter mAdapter;
+    public listaLeituraAdapter mAdapter;
     public Activity a;
     private Context mContext;
 
@@ -50,7 +50,7 @@ public class leituraParametrizacao extends Fragment {
     }
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaParametro;
+        ArrayList<frasesLeitura> listaParametro;
         listaParametro = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
@@ -72,9 +72,9 @@ public class leituraParametrizacao extends Fragment {
                         valor_atual = listaFinal.getString(key_valor);
                         unidade_atual = listaFinal.getString(key_unidade);
                         if (unidade_atual != null) {
-                            listaParametro.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
+                            listaParametro.add(new frasesLeitura("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
                         } else {
-                            listaParametro.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + "\n"));
+                            listaParametro.add(new frasesLeitura("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + "\n"));
                         }
                     } else {
                     }
@@ -82,7 +82,7 @@ public class leituraParametrizacao extends Fragment {
                 }
 
             }
-            mAdapter = new ListaLeituraAdapter(mContext,listaParametro);
+            mAdapter = new listaLeituraAdapter(mContext,listaParametro);
             listView.setAdapter(mAdapter);
 
 

@@ -7,11 +7,9 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 /** Métodos auxiliares */
 
-public class Utils {
+public class utils {
     /**
      * Método geral para a saída de mensagens de depuração para o log
      */
@@ -99,7 +97,7 @@ public class Utils {
         for (int i = 0; i< command.length(); i++) {
             crc += (int)command.charAt(i);
         }
-        return Integer.toHexString(Utils.mod(crc, 256));
+        return Integer.toHexString(utils.mod(crc, 256));
     }
     // ============================================================================
 
@@ -177,7 +175,7 @@ public class Utils {
         if (commandString.length() % 2 == 1) {
             commandString = "0" + commandString;
         }
-        byte[] result = (bolha ? Utils.toHex(commandString) : commandString.getBytes());
+        byte[] result = (bolha ? utils.toHex(commandString) : commandString.getBytes());
 
         return result;
     }
@@ -384,6 +382,7 @@ public class Utils {
     public static String trata_valor_multiplicador (String valor, Double multiplicador) {
         switch (String.valueOf(multiplicador)) {
             case "10.0":
+
                 Integer decimal_int_value;
                 String[] result;
                 result = valor.split("\\.");

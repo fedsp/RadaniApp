@@ -50,7 +50,7 @@ public class escritaSequenciaCiclica extends Fragment {
     }
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaSequenciaCiclica;
+        ArrayList<frasesEscrita> listaSequenciaCiclica;
         listaSequenciaCiclica = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
@@ -69,10 +69,10 @@ public class escritaSequenciaCiclica extends Fragment {
                         String passo;
                         passo = key.substring(0, 1) + key.substring(2, 4);
                         if (valor_atual != null) {
-                            listaSequenciaCiclica.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                            listaSequenciaCiclica.add(new frasesEscrita(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
 
                         } else {
-                            listaSequenciaCiclica.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key))));
+                            listaSequenciaCiclica.add(new frasesEscrita(("[" + passo + "] " + dadosTotais.getString(key))));
                         }
                     }
                     else {

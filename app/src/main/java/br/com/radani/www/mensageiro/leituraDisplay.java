@@ -20,7 +20,7 @@ public class leituraDisplay extends Fragment {
     private static final String TAG = "leituraDisplay";
     public Bundle dadosTotais;
     public ListView listView;
-    public ListaLeituraAdapter mAdapter;
+    public listaLeituraAdapter mAdapter;
     public Activity a;
     private Context mContext;
 
@@ -50,7 +50,7 @@ public class leituraDisplay extends Fragment {
     }
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaDisplay;
+        ArrayList<frasesLeitura> listaDisplay;
         listaDisplay = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
@@ -73,10 +73,10 @@ public class leituraDisplay extends Fragment {
                         valor_atual = dadosTotais.getString(key_valor);
                         unidade_atual = dadosTotais.getString(key_unidade);
                         if (unidade_atual!=null) {
-                            listaDisplay.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
+                            listaDisplay.add(new frasesLeitura("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
                         }
                         else {
-                            listaDisplay.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n"));
+                            listaDisplay.add(new frasesLeitura("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n"));
                         }
                     }
                     else {}
@@ -84,7 +84,7 @@ public class leituraDisplay extends Fragment {
                 else {}
 
             }
-            mAdapter = new ListaLeituraAdapter(mContext,listaDisplay);
+            mAdapter = new listaLeituraAdapter(mContext,listaDisplay);
             listView.setAdapter(mAdapter);
 
 

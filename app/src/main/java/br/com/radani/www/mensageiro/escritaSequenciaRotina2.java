@@ -50,7 +50,7 @@ public class escritaSequenciaRotina2 extends Fragment {
     }
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaSequenciarotina2;
+        ArrayList<frasesEscrita> listaSequenciarotina2;
         listaSequenciarotina2 = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
@@ -69,9 +69,9 @@ public class escritaSequenciaRotina2 extends Fragment {
                         String passo;
                         passo = key.substring(0, 1) + key.substring(2, 4);
                         if (valor_atual != null) {
-                            listaSequenciarotina2.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                            listaSequenciarotina2.add(new frasesEscrita(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
                         } else {
-                            listaSequenciarotina2.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key))));
+                            listaSequenciarotina2.add(new frasesEscrita(("[" + passo + "] " + dadosTotais.getString(key))));
                         }
                     }
                     else {

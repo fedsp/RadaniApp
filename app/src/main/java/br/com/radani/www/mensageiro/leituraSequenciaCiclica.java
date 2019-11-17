@@ -20,7 +20,7 @@ public class leituraSequenciaCiclica extends Fragment {
     private static final String TAG = "leiturasequenciaciclica";
     public Bundle dadosTotais;
     public ListView listView;
-    public ListaLeituraAdapter mAdapter;
+    public listaLeituraAdapter mAdapter;
     public Activity a;
     private Context mContext;
 
@@ -50,7 +50,7 @@ public class leituraSequenciaCiclica extends Fragment {
     }
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaSequenciaCiclica;
+        ArrayList<frasesLeitura> listaSequenciaCiclica;
         listaSequenciaCiclica = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
@@ -69,10 +69,10 @@ public class leituraSequenciaCiclica extends Fragment {
                         String passo;
                         passo = key.substring(0, 1) + key.substring(2, 4);
                         if (valor_atual != null) {
-                            listaSequenciaCiclica.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                            listaSequenciaCiclica.add(new frasesLeitura(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
 
                         } else {
-                            listaSequenciaCiclica.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key))));
+                            listaSequenciaCiclica.add(new frasesLeitura(("[" + passo + "] " + dadosTotais.getString(key))));
                         }
                     }
                     else {
@@ -81,7 +81,7 @@ public class leituraSequenciaCiclica extends Fragment {
                 else {
                 }
             }
-            mAdapter = new ListaLeituraAdapter(mContext,listaSequenciaCiclica);
+            mAdapter = new listaLeituraAdapter(mContext,listaSequenciaCiclica);
             listView.setAdapter(mAdapter);
 
 

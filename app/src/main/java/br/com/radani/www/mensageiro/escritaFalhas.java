@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 
 public class escritaFalhas extends Fragment {
-    private static final String TAG = "leituraFalhas";
+    private static final String TAG = "escritaFalhas";
     public Bundle dadosTotais;
     public ListView listView;
     public listaEscritaAdapter mAdapter;
@@ -50,7 +50,7 @@ public class escritaFalhas extends Fragment {
     }
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaFalhas;
+        ArrayList<frasesEscrita> listaFalhas;
         listaFalhas = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
@@ -72,10 +72,10 @@ public class escritaFalhas extends Fragment {
                         valor_atual = dadosTotais.getString(key_valor);
                         unidade_atual = dadosTotais.getString(key_unidade);
                         if (unidade_atual!=null) {
-                            listaFalhas.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
+                            listaFalhas.add(new frasesEscrita("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
                         }
                         else {
-                            listaFalhas.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n"));
+                            listaFalhas.add(new frasesEscrita("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n"));
                         }
                     }
                     else {}

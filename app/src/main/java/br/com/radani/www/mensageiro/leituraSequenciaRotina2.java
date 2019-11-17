@@ -20,7 +20,7 @@ public class leituraSequenciaRotina2 extends Fragment {
     private static final String TAG = "leituraSequenciarotina2";
     public Bundle dadosTotais;
     public ListView listView;
-    public ListaLeituraAdapter mAdapter;
+    public listaLeituraAdapter mAdapter;
     public Activity a;
     private Context mContext;
 
@@ -50,7 +50,7 @@ public class leituraSequenciaRotina2 extends Fragment {
     }
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaSequenciarotina2;
+        ArrayList<frasesLeitura> listaSequenciarotina2;
         listaSequenciarotina2 = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
@@ -69,9 +69,9 @@ public class leituraSequenciaRotina2 extends Fragment {
                         String passo;
                         passo = key.substring(0, 1) + key.substring(2, 4);
                         if (valor_atual != null) {
-                            listaSequenciarotina2.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
+                            listaSequenciarotina2.add(new frasesLeitura(("[" + passo + "] " + dadosTotais.getString(key) + dadosTotais.getString(key_valor))));
                         } else {
-                            listaSequenciarotina2.add(new Frases(("[" + passo + "] " + dadosTotais.getString(key))));
+                            listaSequenciarotina2.add(new frasesLeitura(("[" + passo + "] " + dadosTotais.getString(key))));
                         }
                     }
                     else {
@@ -80,7 +80,7 @@ public class leituraSequenciaRotina2 extends Fragment {
                 else {
                 }
             }
-            mAdapter = new ListaLeituraAdapter(mContext,listaSequenciarotina2);
+            mAdapter = new listaLeituraAdapter(mContext,listaSequenciarotina2);
             listView.setAdapter(mAdapter);
 
 

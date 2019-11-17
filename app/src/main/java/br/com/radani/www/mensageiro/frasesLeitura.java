@@ -1,13 +1,13 @@
 package br.com.radani.www.mensageiro;
 
-public class Frases {
+public class frasesLeitura {
 
 
     //guarda a frase a ser exibida
     private String mName;
 
     // Construtor usado para criar uma instância do objeto da frase
-    public Frases(String mName) {
+    public frasesLeitura(String mName) {
         this.mName = mName;
     }
 

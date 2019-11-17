@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 
-public class SectionsPageAdapter extends FragmentStatePagerAdapter {
+public class leituraSectionsPageAdapter extends FragmentStatePagerAdapter {
 
     Bundle bundleLocal = new Bundle();
-    public SectionsPageAdapter(FragmentManager fm) {
+    public leituraSectionsPageAdapter(FragmentManager fm) {
         super(fm);
     }
 

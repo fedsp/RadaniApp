@@ -2,7 +2,6 @@ package br.com.radani.www.mensageiro;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 
 
 public class escritaConfiguracao extends Fragment {
-    private static final String TAG = "leituraConfiguracao";
+    private static final String TAG = "escritaConfiguracao";
     public Bundle dadosTotais;
     public ListView listView;
     public listaEscritaAdapter mAdapter;
@@ -54,7 +52,7 @@ public class escritaConfiguracao extends Fragment {
 
 
     public void populaLista(Bundle listaFinal) {
-        ArrayList<Frases> listaConf;
+        ArrayList<frasesEscrita> listaConf;
         listaConf = new ArrayList<>();
         if (listaFinal != null) {
             for (String key : listaFinal.keySet()) {
@@ -76,10 +74,10 @@ public class escritaConfiguracao extends Fragment {
                         valor_atual = dadosTotais.getString(key_valor);
                         unidade_atual = dadosTotais.getString(key_unidade);
                         if (unidade_atual!=null) {
-                            listaConf.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
+                            listaConf.add(new frasesEscrita("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " + unidade_atual + "\n"));
                         }
                         else {
-                            listaConf.add(new Frases("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n"));
+                            listaConf.add(new frasesEscrita("[" + key.substring(0, 3) + "] " + label_atual + ": " + valor_atual + " " +"\n"));
                         }
                     }
                     else {}

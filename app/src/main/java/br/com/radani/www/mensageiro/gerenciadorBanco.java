@@ -398,7 +398,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico*multiplicador;
             valor = String.valueOf(valorNumerico);
-            valor = Utils.trata_valor_multiplicador(valor,multiplicador);
+            valor = utils.trata_valor_multiplicador(valor,multiplicador);
             }
         return valor;
     }
@@ -467,7 +467,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico*multiplicador;
             valor = String.valueOf(valorNumerico);
-            valor = Utils.trata_valor_multiplicador(valor,multiplicador);
+            valor = utils.trata_valor_multiplicador(valor,multiplicador);
         }
         return valor;
     }
@@ -534,7 +534,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             valorNumerico = Double.valueOf(valor);
             valorNumerico = valorNumerico*multiplicador;
             valor = String.valueOf(valorNumerico);
-            valor = Utils.trata_valor_multiplicador(valor,multiplicador);
+            valor = utils.trata_valor_multiplicador(valor,multiplicador);
         }
         return valor;
     }

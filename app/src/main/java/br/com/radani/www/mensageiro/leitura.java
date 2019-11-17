@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,10 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class leitura extends AppCompatActivity implements ServiceConnection, SerialListener {
-    ListView texto_leitura_conf,texto_leitura_disp,texto_leitura_param,
-            texto_leitura_seqi,texto_leitura_seqc,texto_leitura_seqf,texto_leitura_seq1,texto_leitura_seq2;
     ViewPager viewPager;
-    SectionsPageAdapter viewAdapter;
+    leituraSectionsPageAdapter viewAdapter;
     gerenciadorBanco meuBanco;
     Bundle bundletodosDados = new Bundle();
     List<String> pedidos = Arrays.asList(
@@ -101,7 +97,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        viewAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        viewAdapter = new leituraSectionsPageAdapter(getSupportFragmentManager());
         next_percent=0;
         meuBanco = new gerenciadorBanco(this);
         // cria tabela de parametros 1 já com valores
@@ -201,14 +197,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         deviceAddress = b.getString("address");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_leitura);
-        texto_leitura_conf = findViewById(R.id.lista_leitura_configuracao);
-        texto_leitura_disp = findViewById(R.id.lista_leitura_display);
-        texto_leitura_param = findViewById(R.id.lista_parametros);
-        texto_leitura_seqi = findViewById(R.id.lista_seq_inicial);
-        texto_leitura_seqc = findViewById(R.id.lista_seq_ciclica);
-        texto_leitura_seqf = findViewById(R.id.lista_seq_final);
-        texto_leitura_seq1 = findViewById(R.id.lista_seq_rot_1);
-        texto_leitura_seq2 = findViewById(R.id.lista_seq_rot_2);
         viewPager = findViewById(R.id.fragment_container);
         this.bindService(new Intent(this, SerialService.class), this, Context.BIND_AUTO_CREATE);
 
@@ -357,13 +345,13 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
 
 
         byte[] msgbyte = data;
-        hexatual = Utils.bytesToHex(msgbyte);
+        hexatual = utils.bytesToHex(msgbyte);
         Log.i("HEXATUAL RECEBIDO", hexatual);
-        tipoDado = Utils.obterTipoDado(hexatual);
-        codigo = Utils.obterCodigo(hexatual, tipoDado);
-        header = Utils.obterHeader(hexatual);
-        valor = Utils.obterValor(hexatual, tipoDado);
-        tipoSequencia = Utils.obterTipoSequencia(hexatual);
+        tipoDado = utils.obterTipoDado(hexatual);
+        codigo = utils.obterCodigo(hexatual, tipoDado);
+        header = utils.obterHeader(hexatual);
+        valor = utils.obterValor(hexatual, tipoDado);
+        tipoSequencia = utils.obterTipoSequencia(hexatual);
 
         //trata o dado recebido se for do tipo 'Parametro' (5)
         if (tipoDado.equals("5")) {
@@ -385,8 +373,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Inicial' (0)
         else if (tipoDado.equals("0")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
 
@@ -398,8 +386,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Cíclica' (1)
         else if (tipoDado.equals("1")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -410,8 +398,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Final' (2)
         else if (tipoDado.equals("2")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -422,8 +410,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Rotina 1' (3)
         else if (tipoDado.equals("3")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -433,8 +421,8 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Rotina 2' (4)
         else if (tipoDado.equals("4")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -496,7 +484,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                     Float floatNovoValor = Float.parseFloat(strNovoValor);
                     floatNovoValor = (floatValor*256)+floatNovoValor;
                     strNovoValor = String.valueOf(floatNovoValor);
-                    strNovoValor = Utils.trata_valor_multiplicador(strNovoValor,multiplicador);
+                    strNovoValor = utils.trata_valor_multiplicador(strNovoValor,multiplicador);
                     bundletodosDados.putString("D01" + "V", strNovoValor);
                 }
                 else if (codigo.equals("D07")){
@@ -511,7 +499,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                     Float floatNovoValor = Float.parseFloat(strNovoValor);
                     floatNovoValor = (floatValor*256)+floatNovoValor;
                     strNovoValor = String.valueOf(floatNovoValor);
-                    strNovoValor = Utils.trata_valor_multiplicador(strNovoValor,multiplicador);
+                    strNovoValor = utils.trata_valor_multiplicador(strNovoValor,multiplicador);
                     bundletodosDados.putString("D02" + "V", strNovoValor);
                 }
                 else {
@@ -534,7 +522,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         contadorPedido = contadorPedido + 1;
         if (contadorPedido < limiteContadorPedido) {
             //Toast.makeText(getApplicationContext(),"Enviando pedido: "+pedido, Toast.LENGTH_SHORT).show();
-            send(Utils.comando(pedido));
+            send(utils.comando(pedido));
             progresso = contadorPedido.doubleValue()/limiteContadorPedido.doubleValue();
             progresso = progresso*100;
             progressoInt = Math.round(progresso);
@@ -641,7 +629,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             Toast.makeText(getApplicationContext(), "Conexão bem sucedida", Toast.LENGTH_SHORT).show();
 
             // Pedido de valores de parâmetros
-            send(Utils.comando("FA54000054"));
+            send(utils.comando("FA54000054"));
     }
 
     @Override

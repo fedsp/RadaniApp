@@ -9,19 +9,16 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 
 public class escrita extends AppCompatActivity implements ServiceConnection, SerialListener {
     ViewPager viewPager;
-    SectionsPageAdapter viewAdapter;
+    escritaSectionsPageAdapter viewAdapter;
     gerenciadorBanco meuBanco;
     Bundle bundletodosDados = new Bundle();
     List<String> pedidos2 = Arrays.asList(
@@ -92,7 +89,6 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
     //Bluetooth connection variables
     private enum Connected { False, Pending, True }
     private String deviceAddress;
-    private String newline = "\r\n";
     private SerialSocket socket;
     private SerialService service;
     private boolean initialStart = true;
@@ -111,7 +107,7 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        viewAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        viewAdapter = new escritaSectionsPageAdapter(getSupportFragmentManager());
         next_percent=0;
         meuBanco = new gerenciadorBanco(this);
         // cria tabela de parametros 1 já com valores
@@ -359,13 +355,13 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
 
 
         byte[] msgbyte = data;
-        hexatual = Utils.bytesToHex(msgbyte);
+        hexatual = utils.bytesToHex(msgbyte);
         Log.i("HEXATUAL RECEBIDO", hexatual);
-        tipoDado = Utils.obterTipoDado(hexatual);
-        codigo = Utils.obterCodigo(hexatual, tipoDado);
-        header = Utils.obterHeader(hexatual);
-        valor = Utils.obterValor(hexatual, tipoDado);
-        tipoSequencia = Utils.obterTipoSequencia(hexatual);
+        tipoDado = utils.obterTipoDado(hexatual);
+        codigo = utils.obterCodigo(hexatual, tipoDado);
+        header = utils.obterHeader(hexatual);
+        valor = utils.obterValor(hexatual, tipoDado);
+        tipoSequencia = utils.obterTipoSequencia(hexatual);
 
         //trata o dado recebido se for do tipo 'Parametro' (5)
         if (tipoDado.equals("5")) {
@@ -387,8 +383,8 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Inicial' (0)
         else if (tipoDado.equals("0")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
 
@@ -400,8 +396,8 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Cíclica' (1)
         else if (tipoDado.equals("1")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -412,8 +408,8 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Final' (2)
         else if (tipoDado.equals("2")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -424,8 +420,8 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Rotina 1' (3)
         else if (tipoDado.equals("3")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -435,8 +431,8 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         //trata o dado recebido se for do tipo 'Sequência Rotina 2' (4)
         else if (tipoDado.equals("4")) {
             if (!header.equals("19")) {
-                label = Utils.obterLabelSequencia(tipoSequencia);
-                valor = Utils.obterValorSequencia(hexatual);
+                label = utils.obterLabelSequencia(tipoSequencia);
+                valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
                 //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
@@ -498,7 +494,7 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                     Float floatNovoValor = Float.parseFloat(strNovoValor);
                     floatNovoValor = (floatValor*256)+floatNovoValor;
                     strNovoValor = String.valueOf(floatNovoValor);
-                    strNovoValor = Utils.trata_valor_multiplicador(strNovoValor,multiplicador);
+                    strNovoValor = utils.trata_valor_multiplicador(strNovoValor,multiplicador);
                     bundletodosDados.putString("D01" + "V", strNovoValor);
                 }
                 else if (codigo.equals("D07")){
@@ -513,7 +509,7 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                     Float floatNovoValor = Float.parseFloat(strNovoValor);
                     floatNovoValor = (floatValor*256)+floatNovoValor;
                     strNovoValor = String.valueOf(floatNovoValor);
-                    strNovoValor = Utils.trata_valor_multiplicador(strNovoValor,multiplicador);
+                    strNovoValor = utils.trata_valor_multiplicador(strNovoValor,multiplicador);
                     bundletodosDados.putString("D02" + "V", strNovoValor);
                 }
                 else {
@@ -536,7 +532,7 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         contadorPedido = contadorPedido + 1;
         if (contadorPedido < limiteContadorPedido) {
             //Toast.makeText(getApplicationContext(),"Enviando pedido: "+pedido, Toast.LENGTH_SHORT).show();
-            send(Utils.comando(pedido));
+            send(utils.comando(pedido));
             progresso = contadorPedido.doubleValue()/limiteContadorPedido.doubleValue();
             progresso = progresso*100;
             progressoInt = Math.round(progresso);
@@ -613,15 +609,15 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
             viewPager.setAdapter(viewAdapter);
 
             //Captura a instancia de cada fragment para poder operar eles
-            leituraConfiguracao fragmentConfiguracao = (leituraConfiguracao) viewAdapter.getItem(0);
-            leituraDisplay fragmentDisplay = (leituraDisplay) viewAdapter.getItem(1);
-            leituraFalhas fragmentFalhas = (leituraFalhas) viewAdapter.getItem(2);
-            leituraParametrizacao fragmentParametrizacao = (leituraParametrizacao) viewAdapter.getItem(3);
-            leituraSequenciaInicial fragmentSequenciaInicial = (leituraSequenciaInicial) viewAdapter.getItem(4);
-            leituraSequenciaCiclica fragmentSequenciaCiclica = (leituraSequenciaCiclica) viewAdapter.getItem(5);
-            leituraSequenciaFinal fragmentSequenciaFinal = (leituraSequenciaFinal) viewAdapter.getItem(6);
-            leituraSequenciaRotina1 fragmentSequenciaRotina1 = (leituraSequenciaRotina1) viewAdapter.getItem(7);
-            leituraSequenciaRotina2 fragmentSequenciaRotina2 = (leituraSequenciaRotina2) viewAdapter.getItem(8);
+            escritaConfiguracao fragmentConfiguracao = (escritaConfiguracao) viewAdapter.getItem(0);
+            escritaDisplay fragmentDisplay = (escritaDisplay) viewAdapter.getItem(1);
+            escritaFalhas fragmentFalhas = (escritaFalhas) viewAdapter.getItem(2);
+            escritaParametrizacao fragmentParametrizacao = (escritaParametrizacao) viewAdapter.getItem(3);
+            escritaSequenciaInicial fragmentSequenciaInicial = (escritaSequenciaInicial) viewAdapter.getItem(4);
+            escritaSequenciaCiclica fragmentSequenciaCiclica = (escritaSequenciaCiclica) viewAdapter.getItem(5);
+            escritaSequenciaFinal fragmentSequenciaFinal = (escritaSequenciaFinal) viewAdapter.getItem(6);
+            escritaSequenciaRotina1 fragmentSequenciaRotina1 = (escritaSequenciaRotina1) viewAdapter.getItem(7);
+            escritaSequenciaRotina2 fragmentSequenciaRotina2 = (escritaSequenciaRotina2) viewAdapter.getItem(8);
 
         }
         for (String key: bundletodosDados.keySet())
@@ -643,7 +639,7 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         Toast.makeText(getApplicationContext(), "Conexão bem sucedida", Toast.LENGTH_SHORT).show();
 
         // Pedido de valores de parâmetros
-        send(Utils.comando("FA54000054"));
+        send(utils.comando("FA54000054"));
     }
 
     @Override

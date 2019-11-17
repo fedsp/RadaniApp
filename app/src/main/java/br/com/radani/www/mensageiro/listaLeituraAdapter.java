@@ -12,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListaLeituraAdapter extends ArrayAdapter<Frases> {
+public class listaLeituraAdapter extends ArrayAdapter<frasesLeitura> {
 
     private Context mContext;
-    private List<Frases> frasesList;
+    private List<frasesLeitura> frasesLeituraList;
 
-    public ListaLeituraAdapter(@NonNull Context context, ArrayList<Frases> list) {
+    public listaLeituraAdapter(@NonNull Context context, ArrayList<frasesLeitura> list) {
         super(context, 0 , list);
         mContext = context;
-        frasesList = list;
+        frasesLeituraList = list;
     }
 
 
@@ -31,9 +31,9 @@ public class ListaLeituraAdapter extends ArrayAdapter<Frases> {
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.leitura_list_item,parent,false);
 
-        Frases currentFrases = frasesList.get(position);
-        TextView name = listItem.findViewById(R.id.textView_name);
-        name.setText(currentFrases.getmName());
+        frasesLeitura currentFrasesLeitura = frasesLeituraList.get(position);
+        TextView name = listItem.findViewById(R.id.text_view_leitura);
+        name.setText(currentFrasesLeitura.getmName());
         return listItem;
     }
 
