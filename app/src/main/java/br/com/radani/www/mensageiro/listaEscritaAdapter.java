@@ -1,6 +1,7 @@
 package br.com.radani.www.mensageiro;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -39,16 +40,21 @@ public class listaEscritaAdapter extends ArrayAdapter<frasesEscrita> {
 
         frasesEscrita currentFrasesEscrita = frasesEscritaList.get(position);
         TextView name = listItem.findViewById(R.id.text_view_escrita);
-
         name.setText(currentFrasesEscrita.getmName());
 
         ImageButton editaItem = listItem.findViewById(R.id.button_listview_escrita);
         editaItem.setOnClickListener(v -> Toast.makeText(getContext(),"[][][]", Toast.LENGTH_SHORT).show());
-
+        editaItem.setOnClickListener(v -> editaItem());
         return listItem;
     }
 
-    
+    public void editaItem(){
+        Context c = getContext();
+        Intent intent = new Intent(c, escritaEdicao.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.putExtra("key", currentFrasesEscrita);
+        c.startActivity(intent);
+    }
 
 
 }

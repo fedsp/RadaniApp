@@ -48,14 +48,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             + " TEXT" + ")";
 
 
-    //cria tabela de parametro atual
-    public static final String PARAM_ATUAL_TABLE_NAME = "parametro_atual";
-    public static final String PARAM_ATUAL_col_1 = "codigo";
-    public static final String PARAM_ATUAL_col_2 = "valor";
-    public static final String cria_parametro_atual = "CREATE TABLE IF NOT EXISTS "
-            + PARAM_ATUAL_TABLE_NAME + "(" + PARAM_ATUAL_col_1 + " TEXT PRIMARY KEY, " + PARAM_ATUAL_col_2
-            + " TEXT)";
-
     //cria tabela de configuracoes para maquina 1
     public static final String CONFIG_1_TABLE_NAME = "configuracoes_1";
     public static final String CONFIG_1_col_1 = "codigo";
@@ -90,15 +82,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             + " TEXT" + ")";
 
 
-    //cria tabela de configuração atual
-    public static final String CONFIG_ATUAL_TABLE_NAME = "config_atual";
-    public static final String CONFIG_ATUAL_col_1 = "codigo";
-    public static final String CONFIG_ATUAL_col_2 = "valor";
-    public static final String cria_configuracao_atual = "CREATE TABLE IF NOT EXISTS "
-            + CONFIG_ATUAL_TABLE_NAME + "(" + CONFIG_ATUAL_col_1 + " TEXT PRIMARY KEY, " + CONFIG_ATUAL_col_2
-            + " TEXT)";
-
-
     //cria tabela de display para maquina 1
     public static final String DISPLAY_1_TABLE_NAME = "display_1";
     public static final String DISPLAY_1_col_1 = "codigo";
@@ -117,7 +100,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
     public static final String DISPLAY_1_col_14 = "texto_9";
     public static final String DISPLAY_1_col_15 = "unidade_medida";
     public static final String DISPLAY_1_col_16 = "multiplicador";
-
     public static final String cria_display_1 = "CREATE TABLE IF NOT EXISTS "
             + DISPLAY_1_TABLE_NAME + "(" + DISPLAY_1_col_1 + " TEXT PRIMARY KEY, " + DISPLAY_1_col_2
             + " TEXT, " + DISPLAY_1_col_3 + " REAL," + DISPLAY_1_col_4
@@ -135,50 +117,40 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             + " TEXT, " + DISPLAY_1_col_16
             + " TEXT" + ")";
 
-
-    //cria tabela de display atual
-    public static final String DISPLAY_ATUAL_TABLE_NAME = "display_atual";
-    public static final String DISPLAY_ATUAL_col_1 = "codigo";
-    public static final String DISPLAY_ATUAL_col_2 = "valor";
-    public static final String cria_display_atual = "CREATE TABLE IF NOT EXISTS "
-            + DISPLAY_ATUAL_TABLE_NAME + "(" + DISPLAY_ATUAL_col_1 + " TEXT PRIMARY KEY, " + DISPLAY_ATUAL_col_2
-            + " TEXT)";
-
+    public static final String VALORES_ATUAIS_TABLE_NAME = "valores_atuais";
+    public static final String valores_atuais_col_1 = "codigo";
+    public static final String valores_atuais_col_2 = "label";
+    public static final String valores_atuais_col_3 = "unidade";
+    public static final String valores_atuais_col_4 = "valor";
+    public static final String cria_valores_atuais = "CREATE TABLE IF NOT EXISTS "
+            + VALORES_ATUAIS_TABLE_NAME + "("
+            + valores_atuais_col_1 + " TEXT PRIMARY KEY, "
+            + valores_atuais_col_2 + " TEXT,"
+            + valores_atuais_col_3 + " TEXT,"
+            + valores_atuais_col_4 + " TEXT"
+            + ")";
 
     public gerenciadorBanco(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(cria_parametro_1);
-        db.execSQL(cria_parametro_atual);
         db.execSQL(cria_configuracao_1);
-        db.execSQL(cria_configuracao_atual);
         db.execSQL(cria_display_1);
-        db.execSQL(cria_display_atual);
-    }
-
-
-//    para fins de debug
-    public static String retornaquery(String query)
-    {
-        query = "SELECT "+ PARAM_1_col_2 + " FROM " + PARAM_1_TABLE_NAME + " WHERE " + PARAM_1_col_1 + "=" + "'"+"P00"+"'";
-        return query;
+        db.execSQL(cria_valores_atuais);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE "+ PARAM_1_TABLE_NAME);
-        db.execSQL("DROP TABLE "+ PARAM_ATUAL_TABLE_NAME);
         db.execSQL("DROP TABLE "+ CONFIG_1_TABLE_NAME);
-        db.execSQL("DROP TABLE "+ CONFIG_ATUAL_TABLE_NAME);
-        db.execSQL("DROP TABLE "+ DISPLAY_ATUAL_TABLE_NAME);
+        db.execSQL("DROP TABLE "+ DISPLAY_1_TABLE_NAME);
+        db.execSQL("DROP TABLE "+ VALORES_ATUAIS_TABLE_NAME);
         onCreate(db);
     }
-
 
     // metodo para inserir no parametro 1
     public boolean insertData_PARAM_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String unidademedida, Double multiplicador) {
@@ -199,23 +171,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         contentValues.put(PARAM_1_col_13, texto8);
         contentValues.put(PARAM_1_col_14, unidademedida);
         contentValues.put(PARAM_1_col_15, multiplicador);
-
         long result_do_insert = db.insertWithOnConflict(PARAM_1_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
-        if (result_do_insert == -1)
-            return false;
-        else
-            return true;
-    }
-
-
-    // metodo para inserir no parametro atual
-    public boolean insertData_PARAM_ATUAL(String codigo, String valor) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(PARAM_ATUAL_col_1, codigo);
-        contentValues.put(PARAM_ATUAL_col_2, valor);
-
-        long result_do_insert = db.insertWithOnConflict(PARAM_ATUAL_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         if (result_do_insert == -1)
             return false;
         else
@@ -241,29 +197,12 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         contentValues.put(CONFIG_1_col_13, texto8);
         contentValues.put(CONFIG_1_col_14, unidademedida);
         contentValues.put(CONFIG_1_col_15, multiplicador);
-
         long result_do_insert = db.insertWithOnConflict(CONFIG_1_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         if (result_do_insert == -1)
             return false;
         else
             return true;
     }
-
-
-    // metodo para inserir na config atual
-    public boolean insertData_CONFIG_ATUAL(String codigo, String valor) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(CONFIG_ATUAL_col_1, codigo);
-        contentValues.put(CONFIG_ATUAL_col_2, valor);
-
-        long result_do_insert = db.insertWithOnConflict(CONFIG_ATUAL_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
-        if (result_do_insert == -1)
-            return false;
-        else
-            return true;
-    }
-
 
     // metodo para inserir no parametro 1
     public boolean insertData_DISPLAY_1(String codigo, String label, Double valor_min, Double valor_max, Double passo, String texto1, String texto2, String texto3, String texto4, String texto5, String texto6, String texto7, String texto8, String texto9, String unidademedida, Double multiplicador) {
@@ -285,7 +224,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         contentValues.put(DISPLAY_1_col_14, texto9);
         contentValues.put(DISPLAY_1_col_15, unidademedida);
         contentValues.put(DISPLAY_1_col_16, multiplicador);
-
         long result_do_insert = db.insertWithOnConflict(DISPLAY_1_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         if (result_do_insert == -1)
             return false;
@@ -293,45 +231,19 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
             return true;
     }
 
-
-
-    // metodo para inserir no display atual
-    public boolean insertData_DISPLAY_ATUAL(String codigo, String valor) {
+    public boolean insereDadosAtuais(String codigo, String label,String unidade, String valor) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DISPLAY_ATUAL_col_1, codigo);
-        contentValues.put(DISPLAY_ATUAL_col_2, valor);
+        contentValues.put(valores_atuais_col_1, codigo);
+        contentValues.put(valores_atuais_col_2, label);
+        contentValues.put(valores_atuais_col_3, unidade);
+        contentValues.put(valores_atuais_col_4, valor);
 
-        long result_do_insert = db.insertWithOnConflict(DISPLAY_ATUAL_TABLE_NAME, codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
+        long result_do_insert = db.insertWithOnConflict(VALORES_ATUAIS_TABLE_NAME,null, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         if (result_do_insert == -1)
             return false;
         else
             return true;
-    }
-
-
-
-
-
-//    public boolean updateData_PARAM_ATUAL(String codigo, String valor) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(PARAM_ATUAL_col_1, codigo);
-//        contentValues.put(PARAM_ATUAL_col_2, valor);
-//
-//        long result_do_update = db.update(PARAM_ATUAL_TABLE_NAME, null, contentValues);
-//        if (result_do_update == -1)
-//            return false;
-//        else
-//            return true;
-//
-//    }
-
-    // cursor que recebe todos dados
-    public Cursor getData() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + PARAM_ATUAL_TABLE_NAME, null);
-        return res;
     }
 
 
@@ -413,8 +325,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         unidade = res.getString(0);
         return unidade;
     }
-
-
 
     // obtém labels da tabela mestre de Configurações 1
     public String getLabelConfig(String codigo) {
@@ -538,5 +448,7 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         }
         return valor;
     }
+
+
 
 }

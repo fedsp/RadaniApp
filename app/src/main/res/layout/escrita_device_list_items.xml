@@ -1,4 +1,4 @@
 <TextView android:layout_width="match_parent"
-    android:id="@+id/texview1"
+    android:id="@+id/escrita_textview_items"
     android:layout_height="60dp"
     xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -161,47 +161,6 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         meuBanco.insertData_DISPLAY_1("D06","Display Dummy1", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
         meuBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
 
-        // cria 32 linhas iniciais na tabela de parametro atual com os ID's
-        for (int i = 0; i < 32; i++){
-            Integer codigo_numero;
-            String codigo;
-            codigo_numero = i;
-            if (i<=9){
-                codigo = "P0" + String.valueOf(codigo_numero);
-            }
-            else     {
-                codigo = "P" + String.valueOf(codigo_numero);
-            }
-            meuBanco.insertData_PARAM_ATUAL(codigo,null);
-        }
-
-        // cria 64 linhas iniciais na tabela de config atual com os ID's
-        for (int i = 0; i < 64; i++){
-            Integer codigo_numero;
-            String codigo;
-            codigo_numero = i;
-            if (i<=9){
-                codigo = "C0" + String.valueOf(codigo_numero);
-            }
-            else     {
-                codigo = "C" + String.valueOf(codigo_numero);
-            }
-            meuBanco.insertData_CONFIG_ATUAL(codigo,null);
-        }
-
-        // cria 16 linhas iniciais na tabela de display atual com os ID's
-        for (int i = 0; i < 16; i++){
-            Integer codigo_numero;
-            String codigo;
-            codigo_numero = i;
-            if (i<=9){
-                codigo = "D0" + String.valueOf(codigo_numero);
-            }
-            else     {
-                codigo = "D" + String.valueOf(codigo_numero);
-            }
-            meuBanco.insertData_DISPLAY_ATUAL(codigo,null);
-        }
 
         Bundle b = getIntent().getExtras();
         deviceAddress = b.getString("address");
@@ -209,8 +168,6 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
         setContentView(R.layout.layout_escrita);
         viewPager = findViewById(R.id.fragment_container);
         this.bindService(new Intent(this, SerialService.class), this, Context.BIND_AUTO_CREATE);
-
-
 
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -400,7 +357,6 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
         }
@@ -412,8 +368,6 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
-            } else {
             }
         }
 
@@ -424,7 +378,6 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             }
         }
 
@@ -435,7 +388,6 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
             }
         }
 
@@ -457,7 +409,6 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
 
         //trata o dado recebido se for do tipo 'Display' (7)
         else if (tipoDado.equals("7")) {
-
             if (!header.equals("19")) {
                 // contorna a limitação da placa RD4011 combinando os bits de D01 e 06, d02 e D07
                 if (codigo.equals("D01")){
@@ -519,13 +470,15 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                     label = meuBanco.getLabelDisplay(codigo);
                     valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
                     unidade = meuBanco.getUnidadeDisplay(codigo);
-                    bundletodosDados.putString(codigo + "U", unidade);
                     bundletodosDados.putString(codigo + "L", label);
+                    bundletodosDados.putString(codigo + "U", unidade);
                     bundletodosDados.putString(codigo + "V", valor);
+                    meuBanco.insereDadosAtuais(codigo,label,unidade,valor);
                 }
 
             }
         }
+
 
         String pedido;
         pedido = pedidos.get(contadorPedido);

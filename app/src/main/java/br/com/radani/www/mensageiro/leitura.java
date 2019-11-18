@@ -73,8 +73,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     );
 
 
-
-
     //Bluetooth connection variables
     private enum Connected { False, Pending, True }
     private String deviceAddress;
@@ -87,7 +85,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
     private Integer limiteContadorPedido = pedidos.size();
     private Double progresso =0.0;
     private Long progressoInt;
-
     private Integer next_percent;
 
 
@@ -151,57 +148,12 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
         meuBanco.insertData_DISPLAY_1("D06","Display Dummy1", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
         meuBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
 
-        // cria 32 linhas iniciais na tabela de parametro atual com os ID's
-        for (int i = 0; i < 32; i++){
-            Integer codigo_numero;
-            String codigo;
-            codigo_numero = i;
-            if (i<=9){
-                codigo = "P0" + String.valueOf(codigo_numero);
-            }
-            else     {
-                codigo = "P" + String.valueOf(codigo_numero);
-            }
-            meuBanco.insertData_PARAM_ATUAL(codigo,null);
-        }
-
-        // cria 64 linhas iniciais na tabela de config atual com os ID's
-        for (int i = 0; i < 64; i++){
-            Integer codigo_numero;
-            String codigo;
-            codigo_numero = i;
-            if (i<=9){
-                codigo = "C0" + String.valueOf(codigo_numero);
-            }
-            else     {
-                codigo = "C" + String.valueOf(codigo_numero);
-            }
-            meuBanco.insertData_CONFIG_ATUAL(codigo,null);
-        }
-
-        // cria 16 linhas iniciais na tabela de display atual com os ID's
-        for (int i = 0; i < 16; i++){
-            Integer codigo_numero;
-            String codigo;
-            codigo_numero = i;
-            if (i<=9){
-                codigo = "D0" + String.valueOf(codigo_numero);
-            }
-            else     {
-                codigo = "D" + String.valueOf(codigo_numero);
-            }
-            meuBanco.insertData_DISPLAY_ATUAL(codigo,null);
-        }
-
         Bundle b = getIntent().getExtras();
         deviceAddress = b.getString("address");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_leitura);
         viewPager = findViewById(R.id.fragment_container);
         this.bindService(new Intent(this, SerialService.class), this, Context.BIND_AUTO_CREATE);
-
-
-
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -213,10 +165,6 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
-
-
-
-
     }
 
     private void onChangeTab(int position) {

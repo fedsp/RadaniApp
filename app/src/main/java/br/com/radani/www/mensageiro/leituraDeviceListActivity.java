@@ -4,9 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,8 +17,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,12 +25,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static android.bluetooth.BluetoothAdapter.ACTION_REQUEST_ENABLE;
-
 /**
  * show list of BLE devices
  */
-public class DeviceListActivity  extends ListActivity {
+public class leituraDeviceListActivity extends ListActivity {
 
     private final BluetoothAdapter mBluetoothAdapter;
     private BroadcastReceiver bleDiscoveryBroadcastReceiver;
@@ -42,11 +36,11 @@ public class DeviceListActivity  extends ListActivity {
     private ArrayList<String> listItems = new ArrayList<>();
     private String deviceName;
     private String previousDeviceName = "dummy";
-
     ArrayAdapter<String> adapter;
-    Button buttonScan;
 
-    public DeviceListActivity() {
+
+
+    public leituraDeviceListActivity() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
@@ -78,11 +72,11 @@ public class DeviceListActivity  extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.device_list_item);
-        adapter = new ArrayAdapter<>(this, R.layout.device_list_items, listItems);
+        setContentView(R.layout.leitura_device_list_item);
+        adapter = new ArrayAdapter<>(this, R.layout.leitura_device_list_items, listItems);
         setListAdapter(adapter); //Fill List
         Toast.makeText(getApplicationContext(),"Inicializando", Toast.LENGTH_SHORT).show();
-        final Button buttonScan = findViewById(R.id.scanButton);
+        final Button buttonScan = findViewById(R.id.leitura_scan_button);
         buttonScan.setText("SCAN");
         buttonScan.setOnClickListener(v -> {
             if (buttonScan.getText()=="SCAN"){
@@ -182,17 +176,9 @@ public class DeviceListActivity  extends ListActivity {
         stopScan();
         String address = listItems.get(position);
         address = address.substring(0, 17);
-        String opcao = getIntent().getExtras().getString("origin");
-        switch (opcao) {
-            case "leitura":
-                Intent vaiParaLeitura = new Intent(DeviceListActivity.this, leitura.class);
-                vaiParaLeitura.putExtra("address", address);
-                startActivity(vaiParaLeitura);
-            case "escrita":
-                Intent vaiParaEscrita = new Intent(DeviceListActivity.this, escrita.class);
-                vaiParaEscrita.putExtra("address", address);
-                startActivity(vaiParaEscrita);
-        }
+            Intent vaiParaLeitura = new Intent(leituraDeviceListActivity.this, leitura.class);
+            vaiParaLeitura.putExtra("address", address);
+            startActivity(vaiParaLeitura);
     }
 
 }

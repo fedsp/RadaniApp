@@ -33,15 +33,14 @@
 
 
     <Button
-
         android:id="@+id/botao_leitura"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tituloMain"
-        android:onClick="vaiparaleitura"
-        android:background="@drawable/bot_leitura_selector" />
+        android:background="@drawable/bot_leitura_selector"
+        />
 
     <Button
         android:id="@+id/botao_edicao"
@@ -51,7 +50,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tituloMain"
         android:background="@drawable/bot_escrita_selector"
-        android:onClick="vaiparaescrita"/>
+        />
 
     <Button
     android:id="@+id/botao_galeria"

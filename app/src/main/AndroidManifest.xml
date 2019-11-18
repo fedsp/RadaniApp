@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="br.com.radani.www.mensageiro">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -13,9 +14,11 @@
     <application
         android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar"
         android:allowBackup="false"
+        android:debuggable="true"
         android:icon="@drawable/minilogo"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        tools:ignore="HardcodedDebugMode">
         <activity
             android:name=".mainMenu"
             android:label="@string/app_name"
@@ -26,12 +29,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DeviceListActivity"
+        android:name=".leituraDeviceListActivity"
+        android:label="Radani App"
+        android:icon="@drawable/logo"
+        android:screenOrientation="portrait">
+        ">
+        </activity>
+        <activity
+            android:name=".escritaDeviceListActivity"
             android:label="Radani App"
             android:icon="@drawable/logo"
             android:screenOrientation="portrait">
             ">
         </activity>
+
         <activity
             android:name=".leitura"
             android:label="Radani App"
@@ -41,6 +52,13 @@
         </activity>
         <activity
             android:name=".escrita"
+            android:label="Radani App"
+            android:icon="@drawable/logo"
+            android:screenOrientation="portrait">
+            ">
+        </activity>
+        <activity
+            android:name=".escritaEdicao"
             android:label="Radani App"
             android:icon="@drawable/logo"
             android:screenOrientation="portrait">
