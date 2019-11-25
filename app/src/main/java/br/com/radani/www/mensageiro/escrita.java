@@ -19,7 +19,7 @@ import java.util.List;
 public class escrita extends AppCompatActivity implements ServiceConnection, SerialListener {
     ViewPager viewPager;
     escritaSectionsPageAdapter viewAdapter;
-    gerenciadorBanco meuBanco;
+    gerenciadorBanco conectorBanco;
     Bundle bundletodosDados = new Bundle();
     List<String> pedidos2 = Arrays.asList(
             "FA54000054","FA54000155","FA54000256","FA54000357",
@@ -109,57 +109,57 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
 
         viewAdapter = new escritaSectionsPageAdapter(getSupportFragmentManager());
         next_percent=0;
-        meuBanco = new gerenciadorBanco(this);
+        conectorBanco = new gerenciadorBanco(this);
         // cria tabela de parametros 1 já com valores
-        meuBanco.insertData_PARAM_1("P00","Tmp.Ciclos",0.0,8.0,0.5, null, null, null, null, null, null, null, null,"s",0.1);
-        meuBanco.insertData_PARAM_1("P01","Sel.Ciclo", null, null, null,"Contínuo", "Único", null, null, null, null, null, null,null,null);
-        meuBanco.insertData_PARAM_1("P02","Impressão", null, null, null,"Monocolor", "Bicolor", "Tricolor", "Estendido", null, null, null, null,null,null);
-        meuBanco.insertData_PARAM_1("P03","Nr.Mistura",1.0,5.0,1.0, null, null, null, null, null, null, null, null,"Vezes",1.0);
-        meuBanco.insertData_PARAM_1("P04","Tempo_00",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
-        meuBanco.insertData_PARAM_1("P05","Tempo_01",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
-        meuBanco.insertData_PARAM_1("P06","Tempo_Topo",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
-        meuBanco.insertData_PARAM_1("P07","Tp.Clic.Av",0.0,0.5,0.1, null, null, null, null, null, null, null, null,"s",0.1);
-        meuBanco.insertData_PARAM_1("P08","Tp.Clic.Rv",0.0,0.5,0.1, null, null, null, null, null, null, null, null,"s",0.1);
-        meuBanco.insertData_PARAM_1("P09","Acel.Imp.",0.0,0.5,0.01, null, null, null, null, null, null, null, null,"s",0.01);
-        meuBanco.insertData_PARAM_1("P10","Edita_Seq.", null, null, null,"Não", "Sim", null, null, null, null, null, null,null,null);
-        meuBanco.insertData_PARAM_1("P11","Reset", null, null, null,"Não", "Sim", null, null, null, null, null, null,null,null);
+        conectorBanco.insertData_PARAM_1("P00","Tmp.Ciclos",0.0,8.0,0.5, null, null, null, null, null, null, null, null,"s",0.1);
+        conectorBanco.insertData_PARAM_1("P01","Sel.Ciclo", null, null, null,"Contínuo", "Único", null, null, null, null, null, null,null,null);
+        conectorBanco.insertData_PARAM_1("P02","Impressão", null, null, null,"Monocolor", "Bicolor", "Tricolor", "Estendido", null, null, null, null,null,null);
+        conectorBanco.insertData_PARAM_1("P03","Nr.Mistura",1.0,5.0,1.0, null, null, null, null, null, null, null, null,"Vezes",1.0);
+        conectorBanco.insertData_PARAM_1("P04","Tempo_00",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
+        conectorBanco.insertData_PARAM_1("P05","Tempo_01",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
+        conectorBanco.insertData_PARAM_1("P06","Tempo_Topo",0.1,10.0,0.1, null, null, null, null, null, null, null, null,"s",0.1);
+        conectorBanco.insertData_PARAM_1("P07","Tp.Clic.Av",0.0,0.5,0.1, null, null, null, null, null, null, null, null,"s",0.1);
+        conectorBanco.insertData_PARAM_1("P08","Tp.Clic.Rv",0.0,0.5,0.1, null, null, null, null, null, null, null, null,"s",0.1);
+        conectorBanco.insertData_PARAM_1("P09","Acel.Imp.",0.0,0.5,0.01, null, null, null, null, null, null, null, null,"s",0.01);
+        conectorBanco.insertData_PARAM_1("P10","Edita_Seq.", null, null, null,"Não", "Sim", null, null, null, null, null, null,null,null);
+        conectorBanco.insertData_PARAM_1("P11","Reset", null, null, null,"Não", "Sim", null, null, null, null, null, null,null,null);
 
 
         // cria tabela de configuracoes 1 já com valores
-        meuBanco.insertData_CONFIG_1("C00","Salva",null,null,null,"Não","Sim",null,null,null,null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C01","Master",null,null,null,"Não","Sim",null,null,null,null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C02","Tmp.Sensor",0.0,10.0,0.5,null,null,null,null,null,null,null,null,"s",0.1);
-        meuBanco.insertData_CONFIG_1("C03","Modo_Start",null,null,null,"Start Unico","Start Uni/Const","Start OU Tecla","Start E Tecla","Start Nivel",null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C04","Temp.Start",0.0,5.0,0.5,null,null,null,null,null,null,null,null,"s",0.1);
-        meuBanco.insertData_CONFIG_1("C05","Fim Impr.",null,null,null,"Sensor Topo","Sensor Tint.","Sensor Peca",null,null,null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C06","Tmp AV/Rec",0.0,0.5,0.1,null,null,null,null,null,null,null,null,"s",0.1);
-        meuBanco.insertData_CONFIG_1("C07","Tmp.Peca",0.0,0.5,0.01,null,null,null,null,null,null,null,null,"s",0.01);
-        meuBanco.insertData_CONFIG_1("C08","Modo E1",null,null,null,"Normal Aberto","Normal Fechado",null,null,null,null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C09","Funcao E1",null,null,null,"Sequencia","Start","Emergencia","Porta","Lib.Ciclo","Seq.Monit.",null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C10","Modo E7",null,null,null,"Normal Aberto","Normal Fechado",null,null,null,null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C11","Funcao E7",null,null,null,"Sequencia","Start","Emergencia","Porta","Lib.Ciclo","Seq.Monit.",null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C12","Modo E8",null,null,null,"Normal Aberto","Normal Fechado",null,null,null,null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C13","Funcao E8",null,null,null,"Sequencia","Start","Emergencia","Porta","Lib.Ciclo","Seq.Monit.",null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C14","Funcao S3",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
-        meuBanco.insertData_CONFIG_1("C15","Funcao S4",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
-        meuBanco.insertData_CONFIG_1("C16","Funcao S5",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
-        meuBanco.insertData_CONFIG_1("C17","Funcao S6",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
-        meuBanco.insertData_CONFIG_1("C18","Funcao S7",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
-        meuBanco.insertData_CONFIG_1("C19","Rst.Saídas",null,null,null,"Não","Sim",null,null,null,null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C20","Sens.Topo",null,null,null,"Magnetico","Otico",null,null,null,null,null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C21","Tmp.Tp.Col",0.0,0.5,0.1,null,null,null,null,null,null,null,null,"s",0.1);
-        meuBanco.insertData_CONFIG_1("C22","Bloqueio",null,null,null,"C+T","C+T+S","C+T+S+P","C+T+S+P+A","C+T+S+P+A+R","C+T+S+P+A+R+RT",null,null,null,null);
-        meuBanco.insertData_CONFIG_1("C23","Inicio Seq.",0.0,31.0,1.0,null,null,null,null,null,null,null,null,null,1.0);
+        conectorBanco.insertData_CONFIG_1("C00","Salva",null,null,null,"Não","Sim",null,null,null,null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C01","Master",null,null,null,"Não","Sim",null,null,null,null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C02","Tmp.Sensor",0.0,10.0,0.5,null,null,null,null,null,null,null,null,"s",0.1);
+        conectorBanco.insertData_CONFIG_1("C03","Modo_Start",null,null,null,"Start Unico","Start Uni/Const","Start OU Tecla","Start E Tecla","Start Nivel",null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C04","Temp.Start",0.0,5.0,0.5,null,null,null,null,null,null,null,null,"s",0.1);
+        conectorBanco.insertData_CONFIG_1("C05","Fim Impr.",null,null,null,"Sensor Topo","Sensor Tint.","Sensor Peca",null,null,null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C06","Tmp AV/Rec",0.0,0.5,0.1,null,null,null,null,null,null,null,null,"s",0.1);
+        conectorBanco.insertData_CONFIG_1("C07","Tmp.Peca",0.0,0.5,0.01,null,null,null,null,null,null,null,null,"s",0.01);
+        conectorBanco.insertData_CONFIG_1("C08","Modo E1",null,null,null,"Normal Aberto","Normal Fechado",null,null,null,null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C09","Funcao E1",null,null,null,"Sequencia","Start","Emergencia","Porta","Lib.Ciclo","Seq.Monit.",null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C10","Modo E7",null,null,null,"Normal Aberto","Normal Fechado",null,null,null,null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C11","Funcao E7",null,null,null,"Sequencia","Start","Emergencia","Porta","Lib.Ciclo","Seq.Monit.",null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C12","Modo E8",null,null,null,"Normal Aberto","Normal Fechado",null,null,null,null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C13","Funcao E8",null,null,null,"Sequencia","Start","Emergencia","Porta","Lib.Ciclo","Seq.Monit.",null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C14","Funcao S3",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
+        conectorBanco.insertData_CONFIG_1("C15","Funcao S4",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
+        conectorBanco.insertData_CONFIG_1("C16","Funcao S5",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
+        conectorBanco.insertData_CONFIG_1("C17","Funcao S6",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
+        conectorBanco.insertData_CONFIG_1("C18","Funcao S7",null,null,null,"Sequencia","Bicolor","Tricolor","Maq.Pronta","Maq.Ciclo","Ciclo Int.","Ciclo Bloq.","Parada Prog",null,null);
+        conectorBanco.insertData_CONFIG_1("C19","Rst.Saídas",null,null,null,"Não","Sim",null,null,null,null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C20","Sens.Topo",null,null,null,"Magnetico","Otico",null,null,null,null,null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C21","Tmp.Tp.Col",0.0,0.5,0.1,null,null,null,null,null,null,null,null,"s",0.1);
+        conectorBanco.insertData_CONFIG_1("C22","Bloqueio",null,null,null,"C+T","C+T+S","C+T+S+P","C+T+S+P+A","C+T+S+P+A+R","C+T+S+P+A+R+RT",null,null,null,null);
+        conectorBanco.insertData_CONFIG_1("C23","Inicio Seq.",0.0,31.0,1.0,null,null,null,null,null,null,null,null,null,1.0);
 
         // cria tabela de DISPLAY 1 já com valores
-        meuBanco.insertData_DISPLAY_1("D00","Contador",null,null,null, "Producao", "Lote de Pecas", null, null, null, null, null, null,null,null,null);
-        meuBanco.insertData_DISPLAY_1("D01","Valor Lote", 1.0, 9999.0, 1.0,null, null, null, null, null, null, null, null,null,"peças",1.0);
-        meuBanco.insertData_DISPLAY_1("D02","Val. Parada", 0.0, 8000.0, 10.0,null, null, null, null, null, null, null, null,null,"peças",1.0);
-        meuBanco.insertData_DISPLAY_1("D03","Tol. Parada", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"peças",10.0);
-        meuBanco.insertData_DISPLAY_1("D04","Produtiv.",null,null,null, "Pecas/Hora", "Pecas/Min", null, null, null, null, null, null,null,null,null);
-        meuBanco.insertData_DISPLAY_1("D05","Info Linha",null,null,null, "Nenhuma", "Qtd.Pecas Lote", "Qtd.Pecas Prog", "Passo Seq.", "Tempo T0", "Tempo T1", "Tmp. Ent. Ciclos", "Tmp. Do Ciclo","Nr. da Receita",null,null);
-        meuBanco.insertData_DISPLAY_1("D06","Display Dummy1", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
-        meuBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
+        conectorBanco.insertData_DISPLAY_1("D00","Contador",null,null,null, "Producao", "Lote de Pecas", null, null, null, null, null, null,null,null,null);
+        conectorBanco.insertData_DISPLAY_1("D01","Valor Lote", 1.0, 9999.0, 1.0,null, null, null, null, null, null, null, null,null,"peças",1.0);
+        conectorBanco.insertData_DISPLAY_1("D02","Val. Parada", 0.0, 8000.0, 10.0,null, null, null, null, null, null, null, null,null,"peças",1.0);
+        conectorBanco.insertData_DISPLAY_1("D03","Tol. Parada", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"peças",10.0);
+        conectorBanco.insertData_DISPLAY_1("D04","Produtiv.",null,null,null, "Pecas/Hora", "Pecas/Min", null, null, null, null, null, null,null,null,null);
+        conectorBanco.insertData_DISPLAY_1("D05","Info Linha",null,null,null, "Nenhuma", "Qtd.Pecas Lote", "Qtd.Pecas Prog", "Passo Seq.", "Tempo T0", "Tempo T1", "Tmp. Ent. Ciclos", "Tmp. Do Ciclo","Nr. da Receita",null,null);
+        conectorBanco.insertData_DISPLAY_1("D06","Display Dummy1", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
+        conectorBanco.insertData_DISPLAY_1("D07","Display Dummy2", 0.0, 1000.0, 10.0,null, null, null, null, null, null, null, null,null,"uni.",1.0);
 
 
         Bundle b = getIntent().getExtras();
@@ -325,14 +325,14 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
             if (!header.equals("19")) {
                 Double multiplicador;
                 String unidade;
-                unidade = meuBanco.getUnidadeParametro(codigo);
-                multiplicador = meuBanco.getMultiplicadorParametro(codigo);
-                label = meuBanco.getLabelParametro(codigo);
-                valor = meuBanco.getValorParametro(codigo, valor, multiplicador);
+                unidade = conectorBanco.getUnidadeParametro(codigo);
+                multiplicador = conectorBanco.getMultiplicadorParametro(codigo);
+                label = conectorBanco.getLabelParametro(codigo);
+                valor = conectorBanco.getValorParametro(codigo, valor, multiplicador);
                 bundletodosDados.putString(codigo + "U", unidade);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_PARAM_ATUAL(codigo,valor);
+                //conectorBanco.insertData_PARAM_ATUAL(codigo,valor);
             } else {
             }
         }
@@ -345,7 +345,7 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
 
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                //conectorBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
         }
@@ -396,14 +396,14 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
             if (!header.equals("19")) {
                 double multiplicador;
                 String unidade;
-                unidade = meuBanco.getUnidadeConfig(codigo);
-                multiplicador = meuBanco.getMultiplicadorConfig(codigo);
-                label = meuBanco.getLabelConfig(codigo);
-                valor = meuBanco.getValorConfig(codigo, valor, multiplicador);
+                unidade = conectorBanco.getUnidadeConfig(codigo);
+                multiplicador = conectorBanco.getMultiplicadorConfig(codigo);
+                label = conectorBanco.getLabelConfig(codigo);
+                valor = conectorBanco.getValorConfig(codigo, valor, multiplicador);
                 bundletodosDados.putString(codigo + "U", unidade);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                conectorBanco.insereDadosAtuais(codigo,label,unidade,valor);
             }
         }
 
@@ -414,10 +414,10 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 if (codigo.equals("D01")){
                     double multiplicador;
                     String unidade;
-                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
-                    label = meuBanco.getLabelDisplay(codigo);
-                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
-                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    multiplicador = conectorBanco.getMultiplicadorDisplay(codigo);
+                    label = conectorBanco.getLabelDisplay(codigo);
+                    valor = conectorBanco.getValorDisplay(codigo, valor, multiplicador);
+                    unidade = conectorBanco.getUnidadeDisplay(codigo);
                     bundletodosDados.putString(codigo + "U", unidade);
                     bundletodosDados.putString(codigo + "L", label);
                     bundletodosDados.putString(codigo + "V", valor);
@@ -425,10 +425,10 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 else if (codigo.equals("D02")){
                     double multiplicador;
                     String unidade;
-                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
-                    label = meuBanco.getLabelDisplay(codigo);
-                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
-                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    multiplicador = conectorBanco.getMultiplicadorDisplay(codigo);
+                    label = conectorBanco.getLabelDisplay(codigo);
+                    valor = conectorBanco.getValorDisplay(codigo, valor, multiplicador);
+                    unidade = conectorBanco.getUnidadeDisplay(codigo);
                     bundletodosDados.putString(codigo + "U", unidade);
                     bundletodosDados.putString(codigo + "L", label);
                     bundletodosDados.putString(codigo + "V", valor);
@@ -436,11 +436,11 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 else if (codigo.equals("D06")){
                     double multiplicador;
                     String unidade;
-                    multiplicador = meuBanco.getMultiplicadorDisplay("D01");
-                    label = meuBanco.getLabelDisplay(codigo);
-                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
+                    multiplicador = conectorBanco.getMultiplicadorDisplay("D01");
+                    label = conectorBanco.getLabelDisplay(codigo);
+                    valor = conectorBanco.getValorDisplay(codigo, valor, multiplicador);
                     Float floatValor = Float.parseFloat(valor);
-                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    unidade = conectorBanco.getUnidadeDisplay(codigo);
                     String strNovoValor = bundletodosDados.getString("D01V");
                     Float floatNovoValor = Float.parseFloat(strNovoValor);
                     floatNovoValor = (floatValor*256)+floatNovoValor;
@@ -451,11 +451,11 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 else if (codigo.equals("D07")){
                     double multiplicador;
                     String unidade;
-                    multiplicador = meuBanco.getMultiplicadorDisplay("D02");
-                    label = meuBanco.getLabelDisplay(codigo);
-                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
+                    multiplicador = conectorBanco.getMultiplicadorDisplay("D02");
+                    label = conectorBanco.getLabelDisplay(codigo);
+                    valor = conectorBanco.getValorDisplay(codigo, valor, multiplicador);
                     Float floatValor = Float.parseFloat(valor);
-                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    unidade = conectorBanco.getUnidadeDisplay(codigo);
                     String strNovoValor = bundletodosDados.getString("D02V");
                     Float floatNovoValor = Float.parseFloat(strNovoValor);
                     floatNovoValor = (floatValor*256)+floatNovoValor;
@@ -466,14 +466,13 @@ public class escrita extends AppCompatActivity implements ServiceConnection, Ser
                 else {
                     double multiplicador;
                     String unidade;
-                    multiplicador = meuBanco.getMultiplicadorDisplay(codigo);
-                    label = meuBanco.getLabelDisplay(codigo);
-                    valor = meuBanco.getValorDisplay(codigo, valor, multiplicador);
-                    unidade = meuBanco.getUnidadeDisplay(codigo);
+                    multiplicador = conectorBanco.getMultiplicadorDisplay(codigo);
+                    label = conectorBanco.getLabelDisplay(codigo);
+                    valor = conectorBanco.getValorDisplay(codigo, valor, multiplicador);
+                    unidade = conectorBanco.getUnidadeDisplay(codigo);
                     bundletodosDados.putString(codigo + "L", label);
                     bundletodosDados.putString(codigo + "U", unidade);
                     bundletodosDados.putString(codigo + "V", valor);
-                    meuBanco.insereDadosAtuais(codigo,label,unidade,valor);
                 }
 
             }

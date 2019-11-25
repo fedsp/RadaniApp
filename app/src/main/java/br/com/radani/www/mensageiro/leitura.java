@@ -313,7 +313,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo + "U", unidade);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_PARAM_ATUAL(codigo,valor);
+                //conectorBanco.insertData_PARAM_ATUAL(codigo,valor);
             } else {
             }
         }
@@ -326,7 +326,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
 
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                //conectorBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
         }
@@ -338,7 +338,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                //conectorBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
         }
@@ -350,7 +350,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                //conectorBanco.insertData_CONFIG_ATUAL(codigo,valor);
             } else {
             }
         }
@@ -362,7 +362,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                //conectorBanco.insertData_CONFIG_ATUAL(codigo,valor);
             }
         }
 
@@ -373,7 +373,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 valor = utils.obterValorSequencia(hexatual);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                //conectorBanco.insertData_CONFIG_ATUAL(codigo,valor);
             }
         }
 
@@ -389,7 +389,7 @@ public class leitura extends AppCompatActivity implements ServiceConnection, Ser
                 bundletodosDados.putString(codigo + "U", unidade);
                 bundletodosDados.putString(codigo + "L", label);
                 bundletodosDados.putString(codigo + "V", valor);
-                //meuBanco.insertData_CONFIG_ATUAL(codigo,valor);
+                //conectorBanco.insertData_CONFIG_ATUAL(codigo,valor);
             }
         }
 

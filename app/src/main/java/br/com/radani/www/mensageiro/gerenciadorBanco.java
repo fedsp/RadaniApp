@@ -136,7 +136,6 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(cria_parametro_1);
         db.execSQL(cria_configuracao_1);
         db.execSQL(cria_display_1);
@@ -239,7 +238,8 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         contentValues.put(valores_atuais_col_3, unidade);
         contentValues.put(valores_atuais_col_4, valor);
 
-        long result_do_insert = db.insertWithOnConflict(VALORES_ATUAIS_TABLE_NAME,null, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
+        long result_do_insert = db.insertWithOnConflict(VALORES_ATUAIS_TABLE_NAME,codigo, contentValues,SQLiteDatabase.CONFLICT_REPLACE);
+
         if (result_do_insert == -1)
             return false;
         else
@@ -448,6 +448,16 @@ public class gerenciadorBanco extends SQLiteOpenHelper {
         }
         return valor;
     }
+
+    // Consulta genérica no banco
+    public Cursor consultaBanco(String query) {
+        Cursor res;
+        SQLiteDatabase db = this.getWritableDatabase();
+        res = db.rawQuery(query, null);
+        return res;
+    }
+
+
 
 
 

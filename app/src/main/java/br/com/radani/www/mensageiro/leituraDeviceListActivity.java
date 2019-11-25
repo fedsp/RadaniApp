@@ -80,12 +80,12 @@ public class leituraDeviceListActivity extends ListActivity {
         buttonScan.setText("SCAN");
         buttonScan.setOnClickListener(v -> {
             if (buttonScan.getText()=="SCAN"){
-                buttonScan.setText("STOP");
+                buttonScan.setVisibility(View.GONE);
                 startScan();
             }
-            if (buttonScan.getText()=="STOP"){
+            else if (buttonScan.getText()=="STOP"){
                 buttonScan.setText("SCAN");
-                startScan();
+                stopScan();
             }
             else {
                 finish();

@@ -4,7 +4,7 @@
     <color name="colorContent">@android:color/darker_gray</color>
 
 
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="azulEscuro">#303F9F</color>
     <color name="colorAccent">#C0C0C0</color>
     <color name="colorConfiguracao">#ff9a72</color>
     <color name="colorDisplay">#ffe271</color>
@@ -12,15 +12,15 @@
     <color name="colorParametrizacao">#71ffa7</color>
     <color name="colorSequenciaInicial">#71bfff</color>
     <color name="colorSequenciaCiclica">#ff99ff</color>
-    <color name="colorSequenciaFinal">#ff9999</color>
+    <color name="preto">#000000</color>
     <color name="colorSequenciaRotina1">#cccc00</color>
     <color name="colorSequenciaRotina2">#009933</color>
     <color name="gray">#C0C0C0</color>
     <color name="gradient_start">#F0F0F0</color>
     <color name="gradient_middle">#F0F0F0</color>
     <color name="gradient_end">#808080</color>
-    <color name="background">#808080</color>
-    <color name="colorSendText">#FF0000</color>
+    <color name="cinzaEscuro">#808080</color>
+    <color name="vermelho">#FF0000</color>
 
 
 

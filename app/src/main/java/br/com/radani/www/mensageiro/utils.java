@@ -2,10 +2,14 @@ package br.com.radani.www.mensageiro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /** Métodos auxiliares */
 
@@ -439,6 +443,41 @@ public class utils {
         }
         return valor;
     }
+
+    public static String literalObterCodigo(String frase)
+    {
+        String codigo = frase.substring(1);
+        codigo = codigo.substring(0,3);
+        return codigo;
+    }
+
+    public static String literalObterTipoDado(String codigo)
+    {
+        String tipoDado = codigo.substring(0,1);
+        return tipoDado;
+    }
+
+    public static String literalObterValor(String frase)
+    {
+        String valor = frase.substring(5);
+        return valor;
+    }
+
+    public static ArrayList ObterValoresDropdown(Cursor dados_mestre_linha)
+    {
+        ArrayList<String> textos = new ArrayList<>();
+        textos.add(dados_mestre_linha.getString(dados_mestre_linha.getColumnIndex("texto_1")));
+        textos.add(dados_mestre_linha.getString(dados_mestre_linha.getColumnIndex("texto_2")));
+        textos.add(dados_mestre_linha.getString(dados_mestre_linha.getColumnIndex("texto_3")));
+        textos.add(dados_mestre_linha.getString(dados_mestre_linha.getColumnIndex("texto_4")));
+        textos.add(dados_mestre_linha.getString(dados_mestre_linha.getColumnIndex("texto_5")));
+        textos.add(dados_mestre_linha.getString(dados_mestre_linha.getColumnIndex("texto_6")));
+        textos.add(dados_mestre_linha.getString(dados_mestre_linha.getColumnIndex("texto_7")));
+        textos.add(dados_mestre_linha.getString(dados_mestre_linha.getColumnIndex("texto_8")));
+        textos.removeAll(Collections.singleton(null));
+        return textos;
+    }
+
 }
 
 

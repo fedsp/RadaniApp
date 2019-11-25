@@ -74,18 +74,18 @@ public class escritaDeviceListActivity  extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.escrita_device_list_item);
         adapter = new ArrayAdapter<>(this, R.layout.escrita_device_list_items, listItems);
-        setListAdapter(adapter); //Fill List
+        setListAdapter(adapter);
         Toast.makeText(getApplicationContext(),"Inicializando", Toast.LENGTH_SHORT).show();
         final Button buttonScan = findViewById(R.id.escrita_scan_button);
         buttonScan.setText("SCAN");
         buttonScan.setOnClickListener(v -> {
             if (buttonScan.getText()=="SCAN"){
-                buttonScan.setText("STOP");
+                buttonScan.setVisibility(View.GONE);
                 startScan();
             }
-            if (buttonScan.getText()=="STOP"){
+            else if (buttonScan.getText()=="STOP"){
                 buttonScan.setText("SCAN");
-                startScan();
+                stopScan();
             }
             else {
                 finish();
